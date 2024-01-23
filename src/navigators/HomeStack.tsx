@@ -15,6 +15,7 @@ import ArrowBack from '../components/ArrowBack';
 import CommunityDetails from '../screens/CommunityDetails';
 import { RootState } from '../redux/store/dev';
 import { useSelector } from 'react-redux';
+import ChangePassword from '../screens/ChangePassword';
 
 const Stack = createNativeStackNavigator();
 
@@ -23,7 +24,7 @@ const HomeStack = () => {
     const { isLoggedIn, user } = useSelector((state: RootState) => state.user);
 
     return (
-        <Stack.Navigator initialRouteName="HomeScreen" >
+        <Stack.Navigator initialRouteName={user?.is_new_user ? "HomeScreen" : "ChangePassword"} >
             <Stack.Screen
                 name="HomeScreen"
                 component={HomeScreen}
@@ -64,8 +65,26 @@ const HomeStack = () => {
 
                 }}
             >
-
             </Stack.Screen>
+
+            {/* chnage password */}
+            <Stack.Screen
+                name="ChangePassword"
+                component={ChangePassword}
+                // options={{ animation: 'slide_from_bottom' }}
+                options={{
+                    animation: 'slide_from_bottom',
+                    title: 'Change Password',
+                    headerStyle: generalStyles.headerStyle,
+                    headerTitleStyle: generalStyles.titleHeaderStyles,
+                    headerTintColor: COLORS.primaryBlackHex,
+                    headerTitleAlign: 'center',
+                    headerLeft: () => <ArrowBack />
+
+                }}
+            >
+            </Stack.Screen>
+            {/* change password */}
             <Stack.Screen
                 name="Deposit"
                 component={Deposit}
