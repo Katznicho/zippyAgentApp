@@ -11,7 +11,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import SupportScreen from '../screens/ProfileScreens/SupportScreen';
 import EditProfile from '../screens/ProfileScreens/EditProfile';
 import { generalStyles } from '../screens/utils/generatStyles';
-import VerificationScreen from '../screens/ProfileScreens/VerificationScreen';
+
 
 
 
@@ -131,29 +131,7 @@ const ProfileStack = () => {
         }}
       />
 
-      <Stack.Screen
-        name="Verification"
-        component={VerificationScreen}
-        options={{
-          title: 'Verification',
-          headerStyle: generalStyles.headerStyle,
-          headerTitleStyle: generalStyles.titleHeaderStyles,
-          headerTintColor: COLORS.primaryBlackHex,
-          headerTitleAlign: 'center',
-          headerLeft: () => (
-            <TouchableOpacity
-              onPress={() => navigation.navigate('ProfileScreen')}
-              style={{ marginLeft: 10 }}
-            >
-              <Entypo
-                name="chevron-left"
-                color={COLORS.primaryBlackHex}
-                size={28}
-              />
-            </TouchableOpacity>
-          ),
-        }}
-      />
+
 
 
 

@@ -18,21 +18,27 @@ import Animated, {
 import { showMessage } from 'react-native-flash-message';
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { causeVibration, getErrorMessage } from './utils/helpers/helpers';
+import { causeVibration } from './utils/helpers/helpers';
 import { UPDATE_PASSWORD_FIRST_USER } from './utils/constants/routes';
 import { generalStyles } from './utils/generatStyles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { COLORS } from '../theme/theme';
 import { ActivityIndicator } from '../components/ActivityIndicator';
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutUser } from '../redux/store/slices/UserSlice';
+import { RootState } from '../redux/store/dev';
 
 
 const ChangePassword = () => {
-    const { params } = useRoute<any>();
 
-    const [otpCode, setOtpCode] = useState<any>('');
+    const dispatch = useDispatch<any>()
+    const { authToken } = useSelector((state: RootState) => state.user);
+
+
 
     const [password, setPassword] = useState<string>('');
     const [confirmPassword, setConfirmPassword] = useState<string>('');
+    // const [oldTimePassword, set] = useState<string>('');
 
     const [loading, setLoading] = useState<boolean>(false);
 
@@ -68,13 +74,8 @@ const ChangePassword = () => {
 
     function changePassword() {
         try {
-            if (otpCode == "") {
-                setErrors((prevErrors: any) => ({
-                    ...prevErrors,
-                    otpCode: "Code is required"
-                }));
-                return;
-            }
+
+
             if (password == "") {
                 setErrors((prevErrors: any) => ({
                     ...prevErrors,
@@ -107,10 +108,9 @@ const ChangePassword = () => {
 
             const headers = new Headers();
             headers.append('Accept', 'application/json');
+            headers.append('Authorization', `Bearer ${authToken}`);
 
             const body = new FormData();
-            body.append('email', params?.email.toLowerCase());
-            body.append('otp', otpCode);
             body.append('new_password', password);
             body.append('confirm_new_password', confirmPassword);
 
@@ -123,6 +123,7 @@ const ChangePassword = () => {
             })
                 .then(response => response.json())
                 .then(async result => {
+                    console.log(result, "change password result")
                     if (result?.errors) {
                         setErrors(result.errors);
                         causeVibration();
@@ -158,14 +159,13 @@ const ChangePassword = () => {
                     showMessage({
                         message: 'Password Changed Successfully',
                         description:
-                            'Your password has been changed successfully',
+                            'Please login with your new password',
                         type: 'success',
                         icon: 'success',
                         duration: 3000,
                         autoHide: true,
                     });
-                    navigation.navigate('Login');
-
+                    dispatch(logoutUser())
                     return setLoading(false);
                 })
                 .catch(error => {
@@ -213,46 +213,11 @@ const ChangePassword = () => {
                 </View>
                 <View style={{ marginHorizontal: 10, marginVertical: 10 }}>
                     <Text style={[generalStyles.textStyle]}>
-                        Check your email. We have sent you a code. You need the
-                        code to change your password
+                        Pleae create a new password to continue using the app
                     </Text>
                 </View>
 
-                {/* code */}
-                <View style={generalStyles.formContainer}>
-                    <View>
-                        <Text style={generalStyles.formInputTextStyle}>
-                            Code </Text>
-                    </View>
-                    <RNTextInput
-                        style={generalStyles.formInput}
-                        placeholder="Enter Code"
-                        placeholderTextColor={COLORS.primaryLightGreyHex}
-                        keyboardType="number-pad"
-                        value={otpCode}
-                        onChangeText={text => {
-                            setOtpCode(text);
 
-                            if (errors?.otp) {
-                                setErrors({
-                                    ...errors,
-                                    otp: '',
-                                });
-                            }
-                        }}
-                        maxLength={6}
-                    />
-
-                    <Animated.Text style={[styles.errorColor, errorStyle]}>
-                        {getErrorMessage(errors, 'otp')}
-                    </Animated.Text>
-                    <View>
-                        {errors.otpCode && <Text style={generalStyles.errorText}>{errors.otpCode}</Text>}
-                    </View>
-
-                </View>
-
-                {/* code */}
                 {/* password */}
                 <View style={generalStyles.formContainer}>
                     <View>

@@ -31,9 +31,7 @@ const useGetUserLocation = () => {
                     body,
                 }).then((response) => response.json())
                     .then((result) => {
-                        // console.log("============================")
-                        // console.log(result)
-                        // console.log("============================")
+
                     })
                     .catch((error) => {
                         console.log("=======error=====================")

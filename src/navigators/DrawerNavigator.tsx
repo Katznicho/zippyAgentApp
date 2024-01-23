@@ -4,14 +4,12 @@ import { COLORS } from '../theme/theme';
 import CustomIcon from '../components/CustomIcon';
 import PaymentStack from './PaymentStack';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import DeliveryStack from './DeliveryStack';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import DrawerContent from '../components/DrawerContent';
 import SupportStack from './SupportStack';
 import AboutUsStack from './AboutUsStack';
-import DonateStack from './DonateStack';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store/dev';
+import UpdatePasswordStack from './UpdatePasswordStack';
 
 
 const Drawer = createDrawerNavigator();
@@ -57,7 +55,7 @@ const DrawerNavigator = () => {
 
     >
       <Drawer.Screen name="Home"
-        component={TabNavigator}
+        component={user.is_new_user ? UpdatePasswordStack : TabNavigator}
 
         options={{
           drawerIcon: ({ focused, color, size }) => (
@@ -84,19 +82,7 @@ const DrawerNavigator = () => {
         }}
       />
 
-      <Drawer.Screen
-        name="Deliveries"
-        component={DeliveryStack}
-        options={{
-          drawerIcon: ({ focused, color, size }) => (
-            <MaterialCommunityIcons
-              name="truck-delivery"
-              size={size}
-              color={color}
-            />
-          ),
-        }}
-      />
+
       <Drawer.Screen
         name="Support"
         component={SupportStack}
@@ -106,10 +92,7 @@ const DrawerNavigator = () => {
         name="AboutUs"
         component={AboutUsStack}
       />
-      <Drawer.Screen
-        name="Donate"
-        component={DonateStack}
-      />
+      
     </Drawer.Navigator>
   )
 }

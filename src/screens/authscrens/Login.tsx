@@ -10,7 +10,6 @@ import { LOGIN } from '../utils/constants/routes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { updateUserState } from '../../redux/store/slices/UserSlice';
 import { useDispatch } from 'react-redux';
-import { validateEmail } from '../utils/helpers/helpers';
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import PhoneInput from "react-native-phone-number-input";
 
@@ -40,33 +39,20 @@ const Login = () => {
 
 
   const onPressLogin = async () => {
-    if (email == "") {
+    if (phoneNumber == "") {
       setErrors((prevErrors: any) => ({
         ...prevErrors,
-        email: "Email is required"
+        phoneNumber: "Phone number is required"
       }));
       return;
     }
     else {
       setErrors((prevErrors: any) => ({
         ...prevErrors,
-        email: ""
+        phoneNumber: ""
       }));
     }
-    if (!validateEmail(email)) {
 
-      setErrors((prevErrors: any) => ({
-        ...prevErrors,
-        email: 'Invalid email format',
-      }));
-      return;
-
-    } else {
-      setErrors((prevErrors: any) => ({
-        ...prevErrors,
-        email: '',
-      }));
-    }
 
     if (password == "") {
       setErrors((prevErrors: any) => ({
@@ -88,7 +74,7 @@ const Login = () => {
       const headers = new Headers();
       headers.append('Accept', 'application/json');
       const body = new FormData();
-      body.append('email', email.toLowerCase());
+      body.append('phone_number', phoneNumber);
       body.append('password', password);
 
       fetch(`${LOGIN}`, {
@@ -167,7 +153,10 @@ const Login = () => {
           setLoading(false);
         })
         .catch(error => {
-          console.log('error', error);
+          // console.log('error', error);
+          console.log("=======error==================")
+          console.log(error)
+          console.log("========error=================")
 
           setLoading(false);
         });
@@ -175,10 +164,16 @@ const Login = () => {
 
 
     } catch (error) {
+
+      console.log("=======error==================")
+      console.log(error)
+      console.log("========error=================")
+
+
       setLoading(false)
       showMessage({
         message: "Error",
-        description: "Invalid email or password",
+        description: "Invalid phone number or password",
         type: "info",
         autoHide: true,
         duration: 3000,

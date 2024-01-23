@@ -118,7 +118,7 @@ const DrawerContent = (props: any) => {
                     icon={() => <CustomIcon
                         name="home"
                         size={25}
-                        color={COLORS.primaryWhiteHex}
+                        color={selectedItem === 'Home' ? COLORS.primaryBlackHex : COLORS.primaryWhiteHex}
                     />}
                     onPress={() => {
                         setSelectedItem('Home');
@@ -133,96 +133,42 @@ const DrawerContent = (props: any) => {
 
 
                     }, styles.tabStyles]}
-                    labelStyle={styles.labelStyle}
+                    labelStyle={[styles.labelStyle, { color: selectedItem === 'Home' ? COLORS.primaryBlackHex : COLORS.primaryWhiteHex }]}
                     activeBackgroundColor={COLORS.primaryOrangeHex}
                     activeTintColor={COLORS.primaryWhiteHex}
                     inactiveBackgroundColor={COLORS.primaryBlackHex}
                     inactiveTintColor={COLORS.primaryWhiteHex}
                 />
                 <DrawerItem
-                    label="Payments"
+                    label="Properties"
                     icon={() => <AntDesign
                         name="creditcard"
                         size={25}
-                        color={COLORS.primaryWhiteHex}
+                        color={selectedItem === 'Properties' ? COLORS.primaryBlackHex : COLORS.primaryWhiteHex}
 
                     />}
                     onPress={() => {
-                        setSelectedItem('Payments');
+                        setSelectedItem('Properties');
                         // props.navigation.navigate('HomeDrawer')
-                        navigation.navigate('Payments');
+                        // navigation.navigate('Properties');
                     }}
                     style={[{
                         backgroundColor:
-                            selectedItem === 'Payments'
+                            selectedItem === 'Properties'
                                 ? COLORS.primaryOrangeHex
                                 : COLORS.primaryBlackHex,
 
 
                     }, styles.tabStyles]}
-                    labelStyle={styles.labelStyle}
+                    labelStyle={[styles.labelStyle, { color: selectedItem === 'Properties' ? COLORS.primaryBlackHex : COLORS.primaryWhiteHex }]}
                     // active={selectedItem === 'Home'}
                     activeBackgroundColor={COLORS.primaryOrangeHex}
                     activeTintColor={COLORS.primaryWhiteHex}
                     inactiveBackgroundColor={COLORS.primaryBlackHex}
                     inactiveTintColor={COLORS.primaryWhiteHex}
                 />
-                <DrawerItem
-                    label="Deliveries"
-                    icon={() => <MaterialCommunityIcons
-                        name="truck-delivery"
-                        size={25}
-                        color={COLORS.primaryWhiteHex}
-                    />
-                    }
-                    onPress={() => {
-                        setSelectedItem('Deliveries');
-                        // props.navigation.navigate('HomeDrawer')
-                        navigation.navigate('Deliveries');
-                    }}
-                    style={[{
-                        backgroundColor:
-                            selectedItem === 'Deliveries'
-                                ? COLORS.primaryOrangeHex
-                                : COLORS.primaryBlackHex,
 
-                    }, styles.tabStyles]}
-                    labelStyle={styles.labelStyle}
-                    // active={selectedItem === 'Home'}
-                    activeBackgroundColor={COLORS.primaryOrangeHex}
-                    activeTintColor={COLORS.primaryWhiteHex}
-                    inactiveBackgroundColor={COLORS.primaryBlackHex}
-                    inactiveTintColor={COLORS.primaryWhiteHex}
-                />
-                {/* donate */}
-                <DrawerItem
-                    label="Donate"
-                    icon={() => <FontAwesome5
-                        name="donate"
-                        size={25}
-                        color={COLORS.primaryWhiteHex}
-                    />
-                    }
-                    onPress={() => {
-                        setSelectedItem('Donate');
-                        // props.navigation.navigate('HomeDrawer')
-                        navigation.navigate('Donate');
-                    }}
-                    style={[{
-                        backgroundColor:
-                            selectedItem === 'Donate'
-                                ? COLORS.primaryOrangeHex
-                                : COLORS.primaryBlackHex,
 
-                    }, styles.tabStyles]}
-                    labelStyle={styles.labelStyle}
-                    // active={selectedItem === 'Home'}
-                    activeBackgroundColor={COLORS.primaryOrangeHex}
-                    activeTintColor={COLORS.primaryWhiteHex}
-                    inactiveBackgroundColor={COLORS.primaryBlackHex}
-                    inactiveTintColor={COLORS.primaryWhiteHex}
-                />
-                {/* donate */}
                 <View style={[generalStyles.bottomHairline, styles.hairLineStyles]} />
                 {/* drawer section */}
 
@@ -239,7 +185,7 @@ const DrawerContent = (props: any) => {
                         icon={() => <Entypo
                             name="share"
                             size={25}
-                            color={COLORS.primaryWhiteHex}
+                            color={selectedItem === 'Share App' ? COLORS.primaryBlackHex : COLORS.primaryWhiteHex}
                         />
                         }
                         onPress={() => {
@@ -253,7 +199,7 @@ const DrawerContent = (props: any) => {
                                     : COLORS.primaryBlackHex,
 
                         }, styles.tabStyles]}
-                        labelStyle={styles.labelStyle}
+                        labelStyle={[styles.labelStyle, { color: selectedItem === 'Share App' ? COLORS.primaryBlackHex : COLORS.primaryWhiteHex }]}
                         activeBackgroundColor={COLORS.primaryOrangeHex}
                         activeTintColor={COLORS.primaryWhiteHex}
                         inactiveBackgroundColor={COLORS.primaryBlackHex}
@@ -267,7 +213,7 @@ const DrawerContent = (props: any) => {
                         icon={() => <MaterialIcons
                             name="support-agent"
                             size={25}
-                            color={COLORS.primaryWhiteHex}
+                            color={selectedItem === 'Support' ? COLORS.primaryBlackHex : COLORS.primaryWhiteHex}
                         />
                         }
                         onPress={() => {
@@ -281,7 +227,7 @@ const DrawerContent = (props: any) => {
                                     : COLORS.primaryBlackHex,
 
                         }, styles.tabStyles]}
-                        labelStyle={styles.labelStyle}
+                        labelStyle={[styles.labelStyle, { color: selectedItem === 'Support' ? COLORS.primaryBlackHex : COLORS.primaryWhiteHex }]}
                         activeBackgroundColor={COLORS.primaryOrangeHex}
                         activeTintColor={COLORS.primaryWhiteHex}
                         inactiveBackgroundColor={COLORS.primaryBlackHex}
@@ -295,21 +241,21 @@ const DrawerContent = (props: any) => {
                         icon={() => <MaterialCommunityIcons
                             name="web"
                             size={25}
-                            color={COLORS.primaryWhiteHex}
+                            color={selectedItem === 'Website' ? COLORS.primaryBlackHex : COLORS.primaryWhiteHex}
                         />
                         }
                         onPress={() => {
                             setSelectedItem('Website');
-                            Linking.openURL('https://reuseug.risidev.com');
+                            Linking.openURL('https://zippy.risidev.com');
                         }}
                         style={[{
                             backgroundColor:
-                                selectedItem === 'Support'
+                                selectedItem === 'Website'
                                     ? COLORS.primaryOrangeHex
                                     : COLORS.primaryBlackHex,
 
                         }, styles.tabStyles]}
-                        labelStyle={styles.labelStyle}
+                        labelStyle={[styles.labelStyle, { color: selectedItem === 'Website' ? COLORS.primaryBlackHex : COLORS.primaryWhiteHex }]}
                         activeBackgroundColor={COLORS.primaryOrangeHex}
                         activeTintColor={COLORS.primaryWhiteHex}
                         inactiveBackgroundColor={COLORS.primaryBlackHex}
@@ -388,13 +334,14 @@ const HeaderExpandableSection = ({ expanded, setExpanded }: any) => {
     return <View>
         <View style={[generalStyles.flexStyles, { alignItems: "center", justifyContent: "space-between" }, styles.tabStyles]}>
             <View>
-                <Text style={[styles.labelStyle, { fontFamily: FONTFAMILY.poppins_semibold, fontSize: 18 }]}>Settings & Support</Text>
+                <Text style={[styles.labelStyle, { fontFamily: FONTFAMILY.poppins_semibold, fontSize: 18 }]}>More Options</Text>
             </View>
             <TouchableOpacity>
                 <Ionicons name={expanded ? "chevron-up" : "chevron-down"}
                     size={25}
                     color={COLORS.primaryWhiteHex}
                     onPress={() => setExpanded(!expanded)}
+                    style={{ marginRight: 10 }}
                 />
 
             </TouchableOpacity>

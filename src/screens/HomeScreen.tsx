@@ -9,15 +9,14 @@ import { useShowGreeting } from '../hooks/useShowGreetings';
 import { generalStyles } from './utils/generatStyles';
 import CheckUserWallet from '../components/CheckUserWallet';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import MarketPlace from '../components/MarketPlace';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import useGetUserLocation from '../hooks/useGetUserLocation';
+import HomeCards from '../components/HomeCards';
 
 
 const HomeScreen = () => {
 
   const { user } = useSelector((state: RootState) => state.user);
-  const [isVisible, setIsVisible] = useState<boolean>(false);
   let greetings = useShowGreeting()
 
   const tabBarHeight = useBottomTabBarHeight();
@@ -37,21 +36,15 @@ const HomeScreen = () => {
         contentContainerStyle={{ paddingBottom: tabBarHeight }}
       >
 
-
-        {/* App Header */}
-        <HeaderBar title={`${greetings} ${user?.fname} !`} />
-        {/* App Header */}
-
         {/* wallet */}
         <CheckUserWallet />
         {/* wallet */}
 
+        {/* home cards */}
+        <HomeCards />
+        {/* home cards */}
 
 
-
-        {/* market place */}
-        <MarketPlace />
-        {/* market place */}
 
       </ScrollView>
     </KeyboardAwareScrollView>

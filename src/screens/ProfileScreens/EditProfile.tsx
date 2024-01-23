@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, ScrollView, TextInput } from 'react-native'
-import React, { useState } from 'react'
+import React from 'react'
 import { RootState } from '../../redux/store/dev';
 import { useSelector } from 'react-redux';
 import { generalStyles } from '../utils/generatStyles';
@@ -89,7 +89,7 @@ const EditProfile = () => {
                 placeholder={'enter first name'}
                 placeholderTextColor={COLORS.primaryWhiteHex}
                 //   onChange={}
-                value={user?.username}
+                value={""}
                 underlineColorAndroid="transparent"
                 autoCapitalize="none"
             />

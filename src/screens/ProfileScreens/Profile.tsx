@@ -19,10 +19,7 @@ const Profile = () => {
       name: 'Edit Profile',
       screen: 'EditProfile',
     },
-    {
-      name: 'Verification',
-      screen: 'Verification',
-    },
+    
     {
       name: 'Private Policy',
       screen: 'PrivatePolicy',

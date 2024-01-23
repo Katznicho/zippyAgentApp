@@ -9,18 +9,21 @@ import { useSelector } from 'react-redux';
 import ProfileStack from './ProfileStack';
 import MyNotificationStack from './MyNotificationStack';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import ReuseStack from './ReuseStack';
 import HomeStack from './HomeStack';
-import CartScreen from '../screens/CartScreen';
+import CreatePin from '../screens/CreatePin';
+
 
 
 const Tab = createBottomTabNavigator();
+
+
 
 const TabNavigator = () => {
 
   const { isLoggedIn, user } = useSelector(
     (state: RootState) => state.user,
   );
+
 
   return (
     <Tab.Navigator
@@ -32,13 +35,7 @@ const TabNavigator = () => {
         tabBarInactiveTintColor: COLORS.primaryLightGreyHex,
         // tabBarLabelStyle: styles.tabBarLabelStyle,
         tabBarStyle: styles.tabBarStyle,
-        tabBarBackground: () => (
-          <BlurView
-            overlayColor=""
-            blurAmount={15}
-            style={styles.BlurViewStyles}
-          />
-        ),
+
       }}
     >
       <Tab.Screen
@@ -58,20 +55,17 @@ const TabNavigator = () => {
         }}></Tab.Screen>
 
       <Tab.Screen
-        name="Reuse"
-        component={ReuseStack}
+        name="onBoard"
+        component={CreatePin}
         options={{
-          title: 'Reuse',
+          title: 'OnBoard',
           tabBarIcon: ({ focused, color, size }) => (
-            <Image
-              source={require('../assets/images/zippy.png')}
-              style={{
-                width: 25,
-                height: 25,
-                tintColor: focused
-                  ? COLORS.primaryOrangeHex
-                  : COLORS.primaryLightGreyHex,
-              }}
+            <AntDesign
+              name="pluscircleo"
+              size={25}
+              color={
+                focused ? COLORS.primaryOrangeHex : COLORS.primaryLightGreyHex
+              }
             />
           ),
         }}></Tab.Screen>
@@ -90,22 +84,7 @@ const TabNavigator = () => {
           ),
         }}></Tab.Screen>
 
-      {/* history */}
-      <Tab.Screen
-        name="Cart"
-        component={CartScreen}
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <AntDesign
-              name="shoppingcart"
-              size={25}
-              color={
-                focused ? COLORS.primaryOrangeHex : COLORS.primaryLightGreyHex
-              }
-            />
-          ),
-        }}></Tab.Screen>
-      {/* history */}
+
       <Tab.Screen
         name="Profile"
         component={ProfileStack}
