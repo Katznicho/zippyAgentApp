@@ -1,8 +1,7 @@
 import React from 'react';
-import { StyleSheet, Image } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { COLORS } from '../theme/theme';
-import { BlurView } from '@react-native-community/blur';
 import CustomIcon from '../components/CustomIcon';
 import { RootState } from '../redux/store/dev';
 import { useSelector } from 'react-redux';
@@ -10,7 +9,7 @@ import ProfileStack from './ProfileStack';
 import MyNotificationStack from './MyNotificationStack';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import HomeStack from './HomeStack';
-import CreatePin from '../screens/CreatePin';
+import CreateStack from './CreateStack';
 
 
 
@@ -56,7 +55,7 @@ const TabNavigator = () => {
 
       <Tab.Screen
         name="onBoard"
-        component={CreatePin}
+        component={CreateStack}
         options={{
           title: 'OnBoard',
           tabBarIcon: ({ focused, color, size }) => (

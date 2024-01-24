@@ -5,7 +5,6 @@ import { StyleSheet, Text, View, TouchableOpacity, TextInput, Keyboard } from 'r
 import { COLORS } from '../../theme/theme'
 import { useNavigation } from '@react-navigation/native'
 import { ActivityIndicator } from '../../components/ActivityIndicator'
-import { APP_USERS } from '../utils/constants/constants'
 import { showMessage } from 'react-native-flash-message'
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { REGISTER } from '../utils/constants/routes'
@@ -94,7 +93,7 @@ const Register = () => {
       body.append('password', password);
       body.append("phone_number", phoneNumber)
       body.append("community_name", communityName);
-      body.append("role", APP_USERS.RECEIVER);
+
       body.append("confirm_password", confirmPassword);
       fetch(`${REGISTER}`, {
         method: 'POST',

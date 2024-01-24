@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
   ScrollView,
 } from 'react-native';
-import HeaderBar from '../components/HeaderBar';
 import { RootState } from '../redux/store/dev';
 import { useSelector } from 'react-redux';
 import { useShowGreeting } from '../hooks/useShowGreetings';

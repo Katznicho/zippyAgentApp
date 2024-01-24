@@ -22,6 +22,13 @@ export const USERPRODUCTS = `${BASE_URL}/getUserProducts`
 export const USERDELIVERIES = `${BASE_URL}/getUserDelivries`
 export const USERNOTIFICATIONS = `${BASE_URL}/getUserNotifications`
 
+//uploads
+export const PROFILE_UPLOAD = `${BASE_URL}/profileUpload`;
+export const IMAGES_UPLOAD = `${BASE_URL}/uploadIdImages`
+
+//property owner
+export const REGISTER_PROPERTY_OWNER = `${BASE_URL}/registerPropertyOwner`
+
 
 
 

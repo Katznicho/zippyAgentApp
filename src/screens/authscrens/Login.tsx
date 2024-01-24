@@ -193,7 +193,7 @@ const Login = () => {
 
 
         {/* center logo */}
-        <View style={generalStyles.centerContent}>
+        <View style={[generalStyles.centerContent, { marginVertical: 10 }]}>
           <Image
             source={require('../../assets/images/zippy.png')}
             style={{
