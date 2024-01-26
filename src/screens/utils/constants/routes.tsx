@@ -27,7 +27,9 @@ export const PROFILE_UPLOAD = `${BASE_URL}/profileUpload`;
 export const IMAGES_UPLOAD = `${BASE_URL}/uploadIdImages`
 
 //property owner
-export const REGISTER_PROPERTY_OWNER = `${BASE_URL}/registerPropertyOwner`
+export const REGISTER_PROPERTY_OWNER = `${BASE_URL}/registerPropertyOwner`;
+export const REGISTER_PROPERTY = `${BASE_URL}/registerPropertyByAgent`;
+export const GET_ALL_REGISTERED_PROPERTY_OWNERS = `${BASE_URL}/getAllRegisteredPropertyOwners`
 
 
 
@@ -35,7 +37,9 @@ export const REGISTER_PROPERTY_OWNER = `${BASE_URL}/registerPropertyOwner`
 
 
 
-//categories
-export const GET_ALL_CATEGORIES = `${BASE_URL}/getAllProductCategories`
+//general
+export const GET_ALL_CATEGORIES = `${BASE_URL}/getAllCategories`;
+export const GET_ALL_SERVICES = `${BASE_URL}/getAllServices`;
+export const GET_ALL_AMENTITIES = `${BASE_URL}/getAllAmenities`
 
 

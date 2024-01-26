@@ -154,6 +154,7 @@ const AddPropertyOwner = () => {
                 contentContainerStyle={{ paddingBottom: tabBarHeight }}
                 keyboardShouldPersistTaps="always"
             >
+                 
                 <View style={{ marginHorizontal: 10, marginVertical: 10 }}>
                     <Text style={[{ fontSize: 20 }, generalStyles.textStyle]}>
                         Add Property Owner

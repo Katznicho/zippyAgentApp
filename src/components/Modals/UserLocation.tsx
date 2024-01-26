@@ -13,14 +13,16 @@ import Entypo from 'react-native-vector-icons/Entypo';
 type Props = {
     openPicker: boolean;
     setOpenPicker: (openPicker: boolean) => void;
-    communityDetails: any;
-    setCommunityDetails: (communityDetails: any) => void
+    property: any;
+    setProperty: (communityDetails: any) => void,
+    title: string,
+    placeholder: string
 };
 
 navigator.geolocation = require("@react-native-community/geolocation")
 
 
-const UserLocation: React.FC<Props> = ({ openPicker, setOpenPicker, setCommunityDetails, communityDetails }: Props) => {
+const UserLocation: React.FC<Props> = ({ openPicker, setOpenPicker, property, setProperty, title, placeholder }: Props) => {
 
     const refRBSheet = useRef<any>();
 
@@ -74,14 +76,14 @@ const UserLocation: React.FC<Props> = ({ openPicker, setOpenPicker, setCommunity
 
             <View style={styles.viewStyles}>
                 <Text style={[{ fontSize: 20, fontFamily: FONTFAMILY.poppins_bold }, generalStyles.textStyle]}>
-                    WHERE ARE YOU LOCATED?
+                    {title}
                 </Text>
             </View>
 
             {/* location */}
             <GooglePlacesAutocomplete
                 nearbyPlacesAPI="GooglePlacesSearch"
-                placeholder='enter your community location'
+                placeholder={placeholder}
 
                 currentLocation={true}
                 enableHighAccuracyLocation={true}
@@ -163,11 +165,11 @@ const UserLocation: React.FC<Props> = ({ openPicker, setOpenPicker, setCommunity
                     },
                 }}
                 onPress={(data, details = null) => {
-                    setCommunityDetails({
-                        ...communityDetails,
+                    setProperty({
+                        ...property,
                         location: details?.formatted_address,
-                        latitude: details?.geometry.location.lat,
-                        longitude: details?.geometry.location.lng
+                        lat: details?.geometry.location.lat,
+                        long: details?.geometry.location.lng
                     })
                     setOpenPicker(false)
 

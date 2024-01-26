@@ -1,10 +1,10 @@
 import { StyleSheet, ScrollView, Alert } from 'react-native'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useState, useEffect } from 'react'
 import { generalStyles } from '../utils/generatStyles'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { RootState } from '../../redux/store/dev';
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 import { ActivityIndicator } from '../../components/ActivityIndicator';
 import { COLORS } from '../../theme/theme';
@@ -13,6 +13,9 @@ import PropertyImages from './property/PropertyImages';
 import PropertyLocation from './property/PropertyLocation';
 import PropertyDetails from './property/PropertyDetails';
 import { UploadImage } from '../../hooks/UploadImage';
+import { GET_ALL_AMENTITIES, GET_ALL_CATEGORIES, GET_ALL_REGISTERED_PROPERTY_OWNERS, GET_ALL_SERVICES } from '../utils/constants/routes';
+import MoreDetails from './property/MoreDetails';
+import ServicesAndAmentities from './property/ServicesAndAmentities';
 
 
 
@@ -23,31 +26,6 @@ interface State {
     toastMessage?: string;
 }
 
-// formdata.append("name", "Property One");
-// formdata.append("cover_image", "https://plus.unsplash.com/premium_photo-1692574096082-d2b425cf1a5b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHx8");
-// formdata.append("images[]", "https://plus.unsplash.com/premium_photo-1692574096082-d2b425cf1a5b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHx8");
-// formdata.append("images[]", "https://plus.unsplash.com/premium_photo-1692574096082-d2b425cf1a5b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHx8");
-// formdata.append("lat", "0.45");
-// formdata.append("long", "0.23");
-// formdata.append("number_of_beds", "5");
-// formdata.append("number_of_baths", "2");
-// formdata.append("number_of_rooms", "2");
-// formdata.append("room_type", "Single");
-// formdata.append("furnishing_status", "Vanished");
-// formdata.append("description", "These are very nice rooms");
-// formdata.append("status", "Vacant");
-// formdata.append("price", "120000");
-// formdata.append("year_built", "2020");
-// formdata.append("location", "Gayaza");
-// formdata.append("currency", "UGX");
-// formdata.append("property_size", "10 by 10");
-// formdata.append("category_id", "1");
-// formdata.append("owner_id", "8");
-// formdata.append("services[]", "1");
-// formdata.append("servives[]", "2");
-// formdata.append("amenities[]", "1");
-// formdata.append("amenities[]", "2");
-
 
 const AddProperty = () => {
 
@@ -57,8 +35,10 @@ const AddProperty = () => {
     const navigation = useNavigation<any>();
     const tabBarHeight = useBottomTabBarHeight();
     const { user, authToken } = useSelector((state: RootState) => state.user);
-    const [loading, setLoading] = useState<boolean>(false)
+
     const [uploadingImages, setUploadingImages] = useState<boolean>(false);
+
+    const [loading, setLoading] = useState<boolean>(false)
 
     const [errors, setErrors] = useState<any>({})
 
@@ -84,9 +64,104 @@ const AddProperty = () => {
         "owner_id": "",
         "services": [],
         "amenities": [],
-
-
     });
+
+    useEffect(() => {
+        console.log(property)
+    }, [property])
+
+    const isFocused = useIsFocused();
+    const [propertyOwners, setPropertyOwners] = useState<any>([])
+    const [categories, setCategories] = useState<any>([])
+    const [services, setServices] = useState<any>([])
+    const [amenities, setAmenities] = useState<any>([])
+
+    const [roomTypes, setRoomTypes] = useState<any>([
+        {
+            id: 1,
+            name: "Single",
+        },
+        {
+            id: 2,
+            name: "Double",
+        }
+    ]);
+
+    const [currencies, setCurrencies] = useState<any>([
+        {
+            id: 1,
+            name: "USD",
+        }, {
+            id: 2,
+            name: "UGX",
+        }
+    ])
+
+    const [furnishingStatus, setFurnishingStatus] = useState<any>([
+        {
+            id: 1,
+            name: "Furnished",
+        }, {
+            id: 2,
+            name: "Unfurnished",
+        }
+    ])
+
+    const [propertyStatus, setPropertyStatus] = useState<any>([
+        {
+            id: 1,
+            name: "Vacant",
+        }, {
+            id: 2,
+            name: "Occupied",
+        },
+    ])
+
+    useEffect(() => {
+        setLoading(true)
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${authToken}`
+        }
+
+        fetch(GET_ALL_REGISTERED_PROPERTY_OWNERS, {
+            method: 'GET',
+            headers
+        }).then((res) => res.json()).then((data) => {
+            setPropertyOwners(data?.data)
+        })
+
+        fetch(GET_ALL_CATEGORIES, {
+            method: 'GET',
+            headers
+        }).then((res) => res.json()).then((data) => {
+
+            setCategories(data?.data)
+        }).catch((err) => {
+
+        })
+
+        fetch(GET_ALL_SERVICES, {
+            method: 'GET',
+            headers
+        }).then((res) => res.json()).then((data) => {
+            // console.log(data)
+            setServices(data?.data)
+        }).catch((err) => {
+
+        })
+
+        fetch(GET_ALL_AMENTITIES, {
+            method: 'GET',
+            headers
+        }).then((res) => res.json()).then((data) => {
+            // console.log(data)
+            setAmenities(data?.data)
+        })
+
+        setLoading(false)
+
+    }, [isFocused])
 
     const [state, setState] = useState<State>({
         activeIndex: 0,
@@ -230,6 +305,58 @@ const AddProperty = () => {
     const renderCurrentStep = () => {
         switch (state.activeIndex) {
             case 0:
+                return <PropertyDetails
+                    goToNextStep={goToNextStep}
+                    errors={errors}
+                    setErrors={setErrors}
+                    property={property}
+                    setProperty={setProperty}
+                    goBack={goBack}
+                    propertyOwners={propertyOwners}
+                    categories={categories}
+                    services={services}
+                    amenities={amenities}
+                    roomTypes={roomTypes}
+                    currencies={currencies}
+
+
+                />
+
+            case 1:
+                return <MoreDetails
+                    goToNextStep={goToNextStep}
+                    errors={errors}
+                    setErrors={setErrors}
+                    property={property}
+                    setProperty={setProperty}
+                    goBack={goBack}
+                    furnishingStatus={furnishingStatus}
+                    propertyOwners={propertyOwners}
+                    categories={categories}
+                    services={services}
+                    amenities={amenities}
+                    roomTypes={roomTypes}
+                    currencies={currencies}
+                    propertyStatus={propertyStatus}
+                />
+            case 2:
+                return <ServicesAndAmentities
+                    goToNextStep={goToNextStep}
+                    errors={errors}
+                    setErrors={setErrors}
+                    property={property}
+                    setProperty={setProperty}
+                    goBack={goBack}
+                    furnishingStatus={furnishingStatus}
+                    propertyOwners={propertyOwners}
+                    categories={categories}
+                    services={services}
+                    amenities={amenities}
+                    roomTypes={roomTypes}
+                    currencies={currencies}
+                    propertyStatus={propertyStatus}
+                />
+            case 3:
                 return <PropertyImages
                     goToNextStep={goToNextStep}
                     errors={errors}
@@ -239,29 +366,8 @@ const AddProperty = () => {
                     imagePath={imagePath}
                     uploadImagesAutomatically={uploadImagesAutomatically}
                     setImagePath={setImagePath}
-
-
-                />
-            case 1:
-                return <PropertyDetails
-                    goToNextStep={goToNextStep}
-                    errors={errors}
-                    setErrors={setErrors}
-                    property={property}
-                    setProperty={setProperty}
                     goBack={goBack}
 
-
-                />
-
-            case 2:
-                return <PropertyLocation
-                    goToNextStep={goToNextStep}
-                    errors={errors}
-                    setErrors={setErrors}
-                    property={property}
-                    setProperty={setProperty}
-                    goBack={goBack}
                 />
 
             default:
@@ -282,6 +388,10 @@ const AddProperty = () => {
         return stepState;
     };
 
+    if (loading) {
+
+        return <ActivityIndicator />
+    }
 
     return (
         <KeyboardAwareScrollView
@@ -297,7 +407,8 @@ const AddProperty = () => {
                 <Wizard testID={'uilib.wizard'}
                     activeIndex={state.activeIndex} onActiveIndexChanged={onActiveIndexChanged}
                     containerStyle={{
-                        marginHorizontal: 0,
+                        marginRight: 20,
+                        marginLeft: 5,
                         marginVertical: 10,
                         borderRadius: 20,
                         backgroundColor: COLORS.primaryWhiteHex
@@ -318,13 +429,13 @@ const AddProperty = () => {
                 >
                     <Wizard.Step
                         state={getStepState(0)}
-                        label={'Card Info'}
+                        label={'Property Info'}
                         enabled={true}
 
                     />
-                    <Wizard.Step state={getStepState(1)} label={'Images'} />
-                    <Wizard.Step state={getStepState(2)} label={'Details'} />
-                    <Wizard.Step state={getStepState(2)} label={'Location'} />
+                    <Wizard.Step state={getStepState(1)} label={'More Details'} />
+                    <Wizard.Step state={getStepState(2)} label={'Services'} />
+                    <Wizard.Step state={getStepState(2)} label={'Images'} />
                     <Wizard.Step state={getStepState(2)} label={'Summary'} />
                 </Wizard>
 

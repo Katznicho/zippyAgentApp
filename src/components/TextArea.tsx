@@ -27,7 +27,7 @@ export default TextArea;
 const styles = StyleSheet.create({
   textareaContainer: {
     height: 200,
-    width: '88%',
+    // width: '88%',
     padding: 5,
     backgroundColor: COLORS.primaryBlackHex,
     // marginHorizontal: 20,
