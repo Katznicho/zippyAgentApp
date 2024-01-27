@@ -6,27 +6,20 @@ import { useNavigation, useRoute } from '@react-navigation/native'
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import { PUBLIC_STORAGE } from './utils/constants/constants'
 import { COLORS, FONTFAMILY, FONTSIZE, SPACING } from '../theme/theme';
-import call from 'react-native-phone-call';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import GradientBGIcon from '../components/GradientBGIcon'
+import { onMakeCall } from './utils/helpers/helpers'
 
 
 
 const PropertyDetails: React.FC<any> = () => {
+
     const tabBarHeight = useBottomTabBarHeight();
     const { item } = useRoute<any>().params
     const navigation = useNavigation<any>();
 
 
-    const onMakeCall = (phone_number: any) => {
 
-        const args = {
-            number: phone_number, // String value with the number to call
-            prompt: false, // Optional boolean property. Determines if the user should be prompted prior to the call 
-            skipCanOpen: true // Skip the canOpenURL check
-        }
-        call(args).catch(console.error);
-    }
 
     return (
         <KeyboardAwareScrollView

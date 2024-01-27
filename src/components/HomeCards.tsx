@@ -30,7 +30,8 @@ const HomeCards: React.FC<any> = () => {
             <View style={[styles.viewStyles, generalStyles.flexStyles, styles.overAllContainer, { alignItems: 'center', justifyContent: 'space-between' }]}>
                 <TouchableOpacity style={[styles.CardContainer, styles.additionCardContainerStyles]}
                     activeOpacity={1}
-                // onPress={() => setOpenPicker(true)}
+                    // onPress={() => setOpenPicker(true)}
+                    onPress={() => navigation.navigate('AllUsers')}
                 >
                     <View style={[generalStyles.flexStyles, { alignItems: 'center', justifyContent: 'space-between' }]}>
                         <View>

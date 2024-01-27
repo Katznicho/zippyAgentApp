@@ -30,7 +30,8 @@ export const IMAGES_UPLOAD = `${BASE_URL}/uploadIdImages`
 export const REGISTER_PROPERTY_OWNER = `${BASE_URL}/registerPropertyOwner`;
 export const REGISTER_PROPERTY = `${BASE_URL}/registerPropertyByAgent`;
 export const GET_ALL_REGISTERED_PROPERTY_OWNERS = `${BASE_URL}/getAllRegisteredPropertyOwners`;
-export const GET_REGISTERED_PROPETY_BY_PAGE = `${BASE_URL}/getRegisterPropertyByPage`
+export const GET_REGISTERED_PROPETY_BY_PAGE = `${BASE_URL}/getRegisterPropertyByPage`;
+export const GET_REGISTERED_USERS_BY_PAGE = `${BASE_URL}/getRegisterPropertyOwnersByPage`;
 
 
 

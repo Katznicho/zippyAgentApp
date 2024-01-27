@@ -15,6 +15,8 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import { useNavigation } from '@react-navigation/native';
 import AllProperties from '../screens/AllProperties';
 import PropertyDetails from '../screens/PropertyDetails';
+import UserDetails from '../screens/UserDetails';
+import AllUsers from '../screens/AllUsers';
 
 const Stack = createNativeStackNavigator();
 
@@ -121,6 +123,22 @@ const HomeStack = () => {
             {/* all transactions */}
             {/* all propertes */}
 
+            {/* all users */}
+            <Stack.Screen
+                name="AllUsers"
+                component={AllUsers}
+                options={{
+                    animation: 'slide_from_bottom',
+                    title: 'Property Owners',
+                    headerStyle: generalStyles.headerStyle,
+                    headerTitleStyle: generalStyles.titleHeaderStyles,
+                    headerTintColor: COLORS.primaryBlackHex,
+                    headerTitleAlign: 'center',
+                    headerLeft: () => <ArrowBack />
+                }}>
+            </Stack.Screen>
+            {/* all users */}
+
             {/* transaction details */}
             <Stack.Screen
                 name="TransactionDetails"
@@ -148,6 +166,23 @@ const HomeStack = () => {
                 }}>
             </Stack.Screen>
             {/* property details */}
+
+            {/* user details */}
+            <Stack.Screen
+                name="UserDetails"
+                component={UserDetails}
+                options={{
+                    title: 'User Details',
+                    animation: 'slide_from_bottom',
+                    // headerShown: false
+                    headerStyle: generalStyles.headerStyle,
+                    headerTitleStyle: generalStyles.titleHeaderStyles,
+                    headerTintColor: COLORS.primaryBlackHex,
+                    headerTitleAlign: 'center',
+                    headerLeft: () => <ArrowBack />
+                }}>
+            </Stack.Screen>
+            {/* user details */}
 
 
             {/* payments screen  */}

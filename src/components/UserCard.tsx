@@ -2,10 +2,10 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { BORDERRADIUS, COLORS, FONTFAMILY, FONTSIZE, SPACING } from '../theme/theme'
 import { generalStyles } from '../screens/utils/generatStyles';
-import AntDesign from 'react-native-vector-icons/AntDesign';
 import { useNavigation } from '@react-navigation/native';
+import { formattedDate } from '../screens/utils/helpers/helpers';
 
-const PropertyCard: React.FC<any> = ({ item }: any) => {
+const UserCard: React.FC<any> = ({ item }: any) => {
 
     const navigation = useNavigation<any>()
     return (
@@ -20,28 +20,18 @@ const PropertyCard: React.FC<any> = ({ item }: any) => {
                         <Text style={styles.CardTitle}>{item?.name}</Text>
                     </View>
                     <View>
-                        <Text style={styles.CardSubtitle}>in {item?.location}</Text>
+                        <Text style={styles.CardSubtitle}> {item?.email}</Text>
                     </View>
                     {/* location */}
                 </View>
 
                 <View>
                     <View>
-                        <Text style={styles.CardPriceCurrency}>{item.currency} {item?.price}</Text>
+                        <Text style={styles.CardPriceCurrency}> {item?.phone_number}</Text>
+                        <Text style={styles.CardPriceCurrency}> {formattedDate(item?.created_at)}</Text>
 
                     </View>
-                    <View style={[generalStyles.flexStyles, { justifyContent: 'center', alignItems: "center" }]}>
-                        <AntDesign name="delete"
-                            size={25}
-                            color={COLORS.primaryRedHex}
-                            style={styles.spacingStyles}
-                        />
-                        <AntDesign name="edit"
-                            size={25}
-                            color={COLORS.primaryOrangeHex}
-                            style={styles.spacingStyles}
-                        />
-                    </View>
+
 
                 </View>
 
@@ -52,7 +42,7 @@ const PropertyCard: React.FC<any> = ({ item }: any) => {
                 style={[generalStyles.loginContainer,
                 styles.buttonStyles,
                 ]}
-                onPress={() => navigation.navigate('PropertyDetails', { item })}
+                onPress={() => navigation.navigate('UserDetails', { item })}
 
             >
                 <Text style={generalStyles.loginText}>{'View More'}</Text>
@@ -61,7 +51,7 @@ const PropertyCard: React.FC<any> = ({ item }: any) => {
     )
 }
 
-export default PropertyCard
+export default UserCard
 
 const styles = StyleSheet.create({
     cardContainer: {
@@ -101,8 +91,8 @@ const styles = StyleSheet.create({
         marginTop: 5,
         marginHorizontal: 5,
         marginVertical: 5,
-        borderRadius: 20,
-        padding: 10
+        borderRadius: 10,
+        padding: 5
     },
     ImageInfoOuterContainer: {
         paddingVertical: SPACING.space_24,

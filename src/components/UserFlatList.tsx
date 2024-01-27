@@ -1,24 +1,27 @@
 import { FlatList } from 'react-native'
 import React from 'react'
-import { useNavigation } from '@react-navigation/native';
-import PropertyCard from './PropertyCard';
 import { ActivityIndicator } from './ActivityIndicator';
+import UserCard from './UserCard';
+// import UserCard from './PropertyCard';
 
 
 
-const PropertyFlatList: React.FC<any> = ({ propertyData, loadMoreData, isFetching }: any) => {
-    const navigation = useNavigation<any>();
+const UserFlatList: React.FC<any> = ({ UserData, loadMoreData, isFetching }: any) => {
 
-    if (propertyData == undefined || propertyData == null) {
+
+    console.log("===========flat list user data==========")
+    console.log(UserData)
+
+    if (UserData == undefined || UserData == null) {
         return <ActivityIndicator />
     }
     return (
         <FlatList
-            data={propertyData}
+            data={UserData}
             showsVerticalScrollIndicator={false}
             keyExtractor={item => String(item?.id)}
             renderItem={({ item, index }) => (
-                <PropertyCard item={item} index={index} />
+                <UserCard item={item} index={index} />
             )}
             onEndReached={() => {
                 loadMoreData()
@@ -35,5 +38,5 @@ const PropertyFlatList: React.FC<any> = ({ propertyData, loadMoreData, isFetchin
     )
 }
 
-export default PropertyFlatList
+export default UserFlatList
 

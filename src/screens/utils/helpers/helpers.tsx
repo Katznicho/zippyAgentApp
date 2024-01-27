@@ -1,5 +1,6 @@
 import moment from 'moment';
 import { Vibration } from 'react-native';
+import call from 'react-native-phone-call';
 
 export const limitDescription = (description: string, wordLimit: number) => {
     const words = description.split(' ');
@@ -195,5 +196,15 @@ export const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
 };
+
+export const onMakeCall = (phone_number: any) => {
+
+    const args = {
+        number: phone_number, // String value with the number to call
+        prompt: false, // Optional boolean property. Determines if the user should be prompted prior to the call 
+        skipCanOpen: true // Skip the canOpenURL check
+    }
+    return call(args).catch(console.error);
+}
 
 
