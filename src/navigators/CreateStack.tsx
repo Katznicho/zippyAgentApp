@@ -19,7 +19,7 @@ const CreateStack = () => {
                 name="SelectCreateTab"
                 component={SelectCreateTab}
                 options={{
-                    title: 'On BOard',
+                    title: 'On Board',
                     headerStyle: generalStyles.headerStyle,
                     headerTitleStyle: generalStyles.titleHeaderStyles,
                     headerTintColor: COLORS.primaryBlackHex,

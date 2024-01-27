@@ -29,8 +29,9 @@ const PropertyImages = ({
     setCount,
     showModal,
     uploadImagesAutomatically,
+    submitProperty,
     uploadingImages,
-    goToNextStep
+    isSubmitting
 
 
 }: any) => {
@@ -40,8 +41,8 @@ const PropertyImages = ({
     return (
         <View>
 
-            <View>
-                <Text style={[generalStyles.formInputTextStyle, { marginHorizontal: 10 }]}>
+            <View style={[styles.formContainer]}>
+                <Text style={[generalStyles.formInputTextStyle, styles.labelStyles]}>
                     Property Cover Image
                 </Text>
             </View>
@@ -88,8 +89,8 @@ const PropertyImages = ({
 
                 </TouchableOpacity>)
             }
-            <View>
-                <Text style={[generalStyles.formInputTextStyle, { marginHorizontal: 10 }]}>
+            <View style={[styles.formContainer]}>
+                <Text style={[generalStyles.formInputTextStyle, styles.labelStyles]}>
                     Property Images
                 </Text>
                 <Text style={{ color: COLORS.primaryWhiteHex, marginHorizontal: 10, fontFamily: FONTFAMILY.poppins_thin }}>
@@ -172,46 +173,27 @@ const PropertyImages = ({
 
             </ScrollView>
 
-            {/* upload all */}
-            <View style={styles.buttonStyles}>
-
-
+            {/* button section */}
+            <View>
                 <TouchableOpacity
-                    style={[
-                        generalStyles.loginContainer,
-                        {
-                            width: "50%",
-                            backgroundColor: count.some((item: any) => item.imagePath === null) || uploadingImages ? COLORS.primaryLightGreyHex : COLORS.primaryOrangeHex,
-                            marginHorizontal: 10
-                        }
-                    ]
-
-                    }
-
-                    onPress={uploadImagesAutomatically}
-                    disabled={count.some((item: any) => item.imagePath === null) || uploadingImages}
-
-                >
-                    <Text style={generalStyles.loginText}>{'Upload Images'}</Text>
-                </TouchableOpacity>
-
-
-
-                <TouchableOpacity
+                    activeOpacity={1}
                     style={[generalStyles.loginContainer,
+                    styles.buttonStyles,
                     {
-                        width: "40%",
-                        backgroundColor: count.some((item: any) => item.imagePath === null) || uploadingImages ? COLORS.primaryLightGreyHex : COLORS.primaryOrangeHex
+                        backgroundColor: count.some((item: any) => item.imagePath === null) || uploadingImages || isSubmitting ? COLORS.primaryLightGreyHex : COLORS.primaryOrangeHex,
+
                     }
                     ]}
-                    onPress={goToNextStep}
-                    disabled={count.some((item: any) => item.imagePath === null) || uploadingImages}
+                    // onPress={goToNextStep}
+                    onPress={uploadImagesAutomatically}
+                    disabled={count.some((item: any) => item.imagePath === null) || uploadingImages || isSubmitting}
+
                 >
-                    <Text style={generalStyles.loginText}>{'Next'}</Text>
+                    <Text style={generalStyles.loginText}>{'Finish'}</Text>
                 </TouchableOpacity>
 
             </View>
-            {/* upload all */}
+            {/* button section */}
 
 
             {/* modal section */}
@@ -256,13 +238,23 @@ const styles = StyleSheet.create({
     },
 
     buttonStyles: {
-        flexDirection: "row",
-        alignItems: "center",
+        width: "80%",
+        marginTop: 10,
+        marginHorizontal: 10,
         marginVertical: 10,
-        marginHorizontal: 20
+        borderRadius: 20
     },
     buttonSpaceStyles: {
         marginHorizontal: 10
+    },
+    formContainer: {
+        marginVertical: 10,
+        marginHorizontal: 15
+    },
+    labelStyles: {
+        color: COLORS.primaryWhiteHex,
+        fontFamily: FONTFAMILY.poppins_semibold,
+        fontSize: 15
     },
 
 })

@@ -1,4 +1,4 @@
-import { StyleSheet, ScrollView, Alert } from 'react-native'
+import { StyleSheet, ScrollView, Dimensions } from 'react-native'
 import React, { useCallback, useState, useEffect } from 'react'
 import { generalStyles } from '../utils/generatStyles'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -10,12 +10,13 @@ import { ActivityIndicator } from '../../components/ActivityIndicator';
 import { COLORS } from '../../theme/theme';
 import { Wizard, WizardStepStates, } from 'react-native-ui-lib';
 import PropertyImages from './property/PropertyImages';
-import PropertyLocation from './property/PropertyLocation';
 import PropertyDetails from './property/PropertyDetails';
-import { UploadImage } from '../../hooks/UploadImage';
-import { GET_ALL_AMENTITIES, GET_ALL_CATEGORIES, GET_ALL_REGISTERED_PROPERTY_OWNERS, GET_ALL_SERVICES } from '../utils/constants/routes';
+import { GET_ALL_AMENTITIES, GET_ALL_CATEGORIES, GET_ALL_REGISTERED_PROPERTY_OWNERS, GET_ALL_SERVICES, IMAGES_UPLOAD, REGISTER_PROPERTY } from '../utils/constants/routes';
 import MoreDetails from './property/MoreDetails';
 import ServicesAndAmentities from './property/ServicesAndAmentities';
+import RNFetchBlob from 'rn-fetch-blob';
+import { showMessage } from 'react-native-flash-message';
+import ProgressBar from 'react-native-progress/Bar';
 
 
 
@@ -25,6 +26,7 @@ interface State {
     allTypesIndex: number;
     toastMessage?: string;
 }
+const screenWidth = Dimensions.get('window').width
 
 
 const AddProperty = () => {
@@ -34,11 +36,15 @@ const AddProperty = () => {
 
     const navigation = useNavigation<any>();
     const tabBarHeight = useBottomTabBarHeight();
-    const { user, authToken } = useSelector((state: RootState) => state.user);
+    const { authToken } = useSelector((state: RootState) => state.user);
+
+    const [progress, setProgress] = useState<number>(0)
 
     const [uploadingImages, setUploadingImages] = useState<boolean>(false);
+    const [showModal, setShowModal] = useState<boolean>(false);
 
     const [loading, setLoading] = useState<boolean>(false)
+    const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
 
     const [errors, setErrors] = useState<any>({})
 
@@ -110,11 +116,19 @@ const AddProperty = () => {
     const [propertyStatus, setPropertyStatus] = useState<any>([
         {
             id: 1,
-            name: "Vacant",
+            name: "Available",
         }, {
             id: 2,
             name: "Occupied",
         },
+        {
+            id: 3,
+            name: "Under Construction",
+        },
+        {
+            id: 4,
+            name: "Under Renovation",
+        }
     ])
 
     useEffect(() => {
@@ -183,7 +197,7 @@ const AddProperty = () => {
 
     const goToNextStep = () => {
         const { activeIndex: prevActiveIndex, completedStepIndex: prevCompletedStepIndex } = state;
-        const reset = prevActiveIndex === 2;
+        const reset = prevActiveIndex === 3;
 
         if (reset) {
         } else {
@@ -212,84 +226,267 @@ const AddProperty = () => {
             id: 1,
             showModal: false,
             imagePath: null,
+            rnImagePath: null
 
         },
         {
             id: 2,
             showModal: false,
-            imagePath: null
+            imagePath: null,
+            rnImagePath: null
         },
         {
             id: 3,
             showModal: false,
-            imagePath: null
+            imagePath: null,
+            rnImagePath: null
         },
         {
             id: 4,
             showModal: false,
-            imagePath: null
+            imagePath: null,
+            rnImagePath: null
         },
     ])
 
 
     const uploadImagesAutomatically = useCallback(async () => {
         try {
+            setIsSubmitting(true)
             setUploadingImages(true);
-            //first upload the cover image
-            if (imagePath) {
-                const { image, error } = await UploadImage(
-                    user?.UID,
-                    imagePath.imagePath,
-                    "PROPERTY_STORAGE"
-                );
-                if (error) {
-                    Alert.alert(`Error uploading image for cover image. Please try again.`);
-                }
-                if (image) {
+            const coverImageFilePath = imagePath?.imagePath?.replace(/^file:\/\//, '');
 
-                    setProperty((prev: { cover_image: any; }) => {
-                        return { ...prev, cover_image: image };
+            const formData = new FormData();
+
+            formData.append('cover_image', {
+                name: 'cover_image',
+                filename: 'cover_image.png',
+                type: 'image/png',
+                data: RNFetchBlob.wrap(coverImageFilePath),
+            });
+            const imageOne = count[0].imagePath?.imagePath?.replace(/^file:\/\//, '');
+            const imageTwo = count[1].imagePath?.imagePath?.replace(/^file:\/\//, '');
+            const imageThree = count[2].imagePath?.imagePath?.replace(/^file:\/\//, '');
+            const imageFour = count[3].imagePath?.imagePath?.replace(/^file:\/\//, '');
+
+            RNFetchBlob.fetch(
+                'POST',
+                IMAGES_UPLOAD,
+                {
+                    'Content-Type': 'multipart/form-data',
+                    Accept: 'application/json',
+                },
+                [
+                    {
+                        name: 'cover_image',
+                        filename: 'cover_image.png',
+                        type: 'image/png',
+                        // Change BASE64 encoded data to a file path with prefix `RNFetchBlob-file://`.
+                        // Or simply wrap the file path with RNFetchBlob.wrap().
+                        data: RNFetchBlob.wrap(coverImageFilePath)
+                    },
+                    {
+                        name: 'images[]',
+                        filename: 'images_one.png',
+                        type: 'image/png',
+                        data: RNFetchBlob.wrap(imageOne)
+                    },
+                    {
+                        name: 'images[]',
+                        filename: 'images_two.png',
+                        type: 'image/png',
+                        data: RNFetchBlob.wrap(imageTwo)
+                    },
+                    {
+                        name: 'images[]',
+                        filename: 'images_three.png',
+                        type: 'image/png',
+                        data: RNFetchBlob.wrap(imageThree)
+                    },
+                    {
+                        name: 'images[]',
+                        filename: 'images_four.png',
+                        type: 'image/png',
+                        data: RNFetchBlob.wrap(imageFour)
+                    },
+
+                ]
+            )
+                .uploadProgress((written, total) => {
+                    // console.log(`Upload progress: ${Math.floor((written / total) * 100)}%`);
+                    setProgress(written / total)
+                })
+                .then(response => response.json())
+                .then((res) => {
+
+
+                    const { cover_image, one, two, three, four } = res.data;
+
+                    console.log(cover_image, one, two, three, four)
+
+                    // Update the property state with the received URLs
+                    setProperty((prevProperty: any) => ({
+                        ...prevProperty,
+                        cover_image,
+                        images: [one, two, three, four], // Assuming the order of images in the array matches the order in the count array
+                    }));
+                    // Call the submit function after successful image upload
+                    return submitProperty();
+
+
+                })
+                .catch((err) => {
+                    console.error(err);
+                    setUploadingImages(false);
+                    setIsSubmitting(false)
+                    return showMessage({
+                        message: "Property Creation Failed",
+                        description: "Something went wrong",
+                        type: "danger",
+                        autoHide: true,
+                        duration: 3000,
                     })
-                }
-            }
-            //firs upload cover image
-            const updatedCount = [...count];
-            for (let index = 0; index < updatedCount.length; index++) {
-                const item = updatedCount[index];
-                if (item.imagePath) {
-                    const { image, error } = await UploadImage(
-                        user?.UID,
-                        item.imagePath?.imagePath,
-                        "PROPERTY_STORAGE"
-                    );
-                    if (error) {
-                        Alert.alert(`Error uploading image for item ${item.id}. Please try again.`);
-                    }
-                    if (image) {
+                });
 
-                        // setProductDetails((prev: { images: any; }) => {
-                        //     const updatedImages = [...prev.images];
-                        //     updatedImages[index] = image; // Update image at the specific index
-                        //     return { ...prev, images: updatedImages };
-                        // });
-
-                        setProperty((prev: { images: any; }) => {
-                            return { ...prev, images: [...prev.images, image] };
-
-                        })
-
-
-
-                    }
-                }
-            }
-            setCount(updatedCount); // Update the state with the uploaded images
-
-            setUploadingImages(false);
         } catch (error) {
+            console.log("error")
+            console.log(error)
             setUploadingImages(false);
         }
     }, [count, setCount]);
+
+    const submitProperty = useCallback(() => {
+        const headers = new Headers();
+        headers.append('Accept', 'application/json');
+        headers.append('Authorization', `Bearer ${authToken}`);
+
+
+        const body = new FormData();
+        body.append('name', property?.name);
+        body.append('description', property?.description);
+        body.append('cover_image', property?.cover_image);
+        body.append('location', property?.location);
+        body.append("lat", property?.lat);
+        body.append("long", property?.long);
+        body.append('price', property?.price);
+        body.append('room_type', property?.room_type);
+        body.append("owner_id", property?.owner_id);
+        body.append("property_size", property?.property_size);
+        body.append("category_id", property?.category_id);
+        body.append("number_of_beds", property?.number_of_beds);
+        body.append("number_of_baths", property?.number_of_baths);
+        body.append("number_of_rooms", property?.number_of_rooms);
+        body.append("furnishing_status", property?.furnishing_status);
+        body.append("year_built", property?.year_built);
+        body.append("status", property?.status);
+        body.append("currency", property?.currency);
+        body.append("images[]", property?.images[0]);
+        body.append("images[]", property?.images[1])
+        body.append("images[]", property?.images[2])
+        body.append("images[]", property?.images[3])
+        body.append("is_available", property?.status == "Available" ? true : false)
+
+        //services loop through and also append them as an array
+        property?.services?.forEach((service: any) => {
+            body.append("services[]", service)
+        })
+
+        //amenities loop through and also append them as an array
+        property?.amenities?.forEach((amenity: any) => {
+            body.append("amenities[]", amenity)
+        })
+
+
+        try {
+            fetch(REGISTER_PROPERTY, {
+                method: 'POST',
+                headers,
+                body: body
+
+            }).then(response => response.json())
+                .then(result => {
+                    console.log(result)
+                    setLoading(false)
+                    setIsSubmitting(false)
+                    if (result?.response === 'success') {
+                        showMessage({
+                            message: "Success",
+                            description: "Property created successfully",
+                            type: "success",
+                            autoHide: true,
+                            duration: 3000,
+                        })
+                        setProperty({
+                            "name": "",
+                            "cover_image": "",
+                            "images": [],
+                            "lat": "",
+                            "long": "",
+                            "number_of_beds": "",
+                            "number_of_baths": "",
+                            "number_of_rooms": "",
+                            "room_type": "",
+                            "furnishing_status": "",
+                            "description": "",
+
+                            "status": "",
+                            "price": "",
+                            "year_built": "",
+                            "location": "",
+                            "currency": "",
+                            "property_size": "",
+                            "category_id": "",
+                            "owner_id": "",
+                            "services": [],
+                            "amenities": [],
+                        })
+                        setImagePath(null)
+                        setCount([
+                            {
+                                id: 1,
+                                showModal: false,
+                                imagePath: null,
+                                rnImagePath: null
+
+                            },
+                            {
+                                id: 2,
+                                showModal: false,
+                                imagePath: null,
+                                rnImagePath: null
+                            },
+                            {
+                                id: 3,
+                                showModal: false,
+                                imagePath: null,
+                                rnImagePath: null
+                            },
+                            {
+                                id: 4,
+                                showModal: false,
+                                imagePath: null,
+                                rnImagePath: null
+                            },
+                        ])
+                        return navigation.navigate('HomeTab')
+                    }
+                })
+        } catch (error) {
+            setLoading(false);
+            setIsSubmitting(false)
+            return showMessage({
+                message: "Property Creation Failed",
+                description: "Something went wrong",
+                type: "danger",
+                autoHide: true,
+                duration: 3000,
+            })
+
+        }
+
+
+
+    }, [property]);
 
     const goBack = () => {
         const { activeIndex: prevActiveIndex } = state;
@@ -367,6 +564,13 @@ const AddProperty = () => {
                     uploadImagesAutomatically={uploadImagesAutomatically}
                     setImagePath={setImagePath}
                     goBack={goBack}
+                    count={count}
+                    setCount={setCount}
+                    setShowModal={setShowModal}
+                    showModal={showModal}
+                    submitProperty={submitProperty}
+                    isSubmitting={isSubmitting}
+                    uploadingImages={uploadingImages}
 
                 />
 
@@ -388,27 +592,29 @@ const AddProperty = () => {
         return stepState;
     };
 
-    if (loading) {
 
-        return <ActivityIndicator />
-    }
 
-    return (
+    return loading ? (<KeyboardAwareScrollView
+        style={[{ flex: 1, width: '100%' }, generalStyles.ScreenContainer]}
+        keyboardShouldPersistTaps="always"
+    >
+        <ActivityIndicator />
+    </KeyboardAwareScrollView>) : (
         <KeyboardAwareScrollView
             style={[{ flex: 1, width: '100%' }, generalStyles.ScreenContainer]}
             keyboardShouldPersistTaps="always"
         >
             <ScrollView
                 showsVerticalScrollIndicator={false}
-                contentContainerStyle={{ paddingBottom: tabBarHeight }}
+                contentContainerStyle={{ paddingBottom: tabBarHeight, marginHorizontal: 5 }}
                 keyboardShouldPersistTaps="always"
             >
                 {/* Wizard for your main steps */}
                 <Wizard testID={'uilib.wizard'}
                     activeIndex={state.activeIndex} onActiveIndexChanged={onActiveIndexChanged}
                     containerStyle={{
-                        marginRight: 20,
-                        marginLeft: 5,
+                        // marginRight: 20,
+                        // marginLeft: 5,
                         marginVertical: 10,
                         borderRadius: 20,
                         backgroundColor: COLORS.primaryWhiteHex
@@ -426,6 +632,7 @@ const AddProperty = () => {
 
                     }
 
+
                 >
                     <Wizard.Step
                         state={getStepState(0)}
@@ -436,12 +643,28 @@ const AddProperty = () => {
                     <Wizard.Step state={getStepState(1)} label={'More Details'} />
                     <Wizard.Step state={getStepState(2)} label={'Services'} />
                     <Wizard.Step state={getStepState(2)} label={'Images'} />
-                    <Wizard.Step state={getStepState(2)} label={'Summary'} />
+
                 </Wizard>
+                {/* progress bar */}
+                {
+                    isSubmitting && (<ProgressBar
+                        progress={progress}
+                        width={screenWidth - 30}
+                        style={styles.progress}
+                        color="#34D399"
+                        borderWidth={0}
+                        unfilledColor="grey"
+
+                    />)
+                }
+
+                {/* progress bar */}
 
                 {/* Render the current step */}
                 {renderCurrentStep()}
-                {loading && <ActivityIndicator />}
+                {/* Render the current step */}
+
+                {isSubmitting && <ActivityIndicator />}
             </ScrollView>
         </KeyboardAwareScrollView>
     )
@@ -449,4 +672,6 @@ const AddProperty = () => {
 
 export default AddProperty
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    progress: { marginTop: 10, alignSelf: 'center' },
+})

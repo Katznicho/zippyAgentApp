@@ -6,9 +6,19 @@ import { useSelector } from 'react-redux';
 import { COLORS, FONTFAMILY } from '../../../theme/theme';
 import { generalStyles } from '../../utils/generatStyles';
 import { Checkbox } from 'react-native-ui-lib'
-const ServicesAndAmentities = ({ property, setProperty, propertyOwners, currencies, amenities, services, categories, roomTypes, goToNextStep, errors, setErrors, goBack }: any) => {
+const ServicesAndAmentities = ({ property, setProperty, amenities, services, goToNextStep, errors, setErrors, goBack }: any) => {
     const tabBarHeight = useBottomTabBarHeight();
     const { authToken } = useSelector((state: RootState) => state.user);
+
+
+    const isDisabled = () => {
+        if (property?.services?.length == 0 || property?.amenities?.length == 0) {
+            return true
+        }
+        else {
+            return false
+        }
+    }
 
     return (
         <View style={{ flex: 1, paddingBottom: tabBarHeight }}>
@@ -84,37 +94,38 @@ const ServicesAndAmentities = ({ property, setProperty, propertyOwners, currenci
                                         color={COLORS.primaryOrangeHex}
                                         containerStyle={styles.viewStyles}
                                         onValueChange={(isChecked: boolean) => {
-                                            // Check if the service ID is already in the array
-                                            const isServiceInArray = property.amenities?.includes(item.id);
+                                            // Check if the amenity ID is already in the array
+                                            const isAmenityInArray = property.amenities?.includes(item.id);
 
                                             // Create a new array based on the checkbox state
-                                            let updatedAmentities: any[];
+                                            let updatedAmenities: any[];
 
-                                            if (isChecked && !isServiceInArray) {
-                                                // Add the service ID to the array if the checkbox is checked and the ID is not present
-                                                updatedAmentities = [...(property.amenities || []), item.id];
-                                            } else if (!isChecked && isServiceInArray) {
-                                                // Remove the service ID from the array if the checkbox is unchecked and the ID is present
-                                                updatedAmentities = (property.amenities || []).filter((id: string) => id !== item.id);
+                                            if (isChecked && !isAmenityInArray) {
+                                                // Add the amenity ID to the array if the checkbox is checked and the ID is not present
+                                                updatedAmenities = [...(property.amenities || []), item.id];
+                                            } else if (!isChecked && isAmenityInArray) {
+                                                // Remove the amenity ID from the array if the checkbox is unchecked and the ID is present
+                                                updatedAmenities = (property.amenities || []).filter((id: string) => id !== item.id);
                                             } else {
                                                 // No change needed if the checkbox state and array state are consistent
-                                                updatedAmentities = property.amenities;
+                                                updatedAmenities = property.amenities;
                                             }
 
                                             // Update the state
                                             setProperty((prev: any) => {
-                                                return { ...prev, services: updatedAmentities };
+                                                return { ...prev, amenities: updatedAmenities };
                                             });
                                         }}
                                     />
                                 );
                             })
 
+
                         }
                     </View>
 
                     <View>
-                        {errors.services && <Text style={generalStyles.errorText}>{errors.services}</Text>}
+                        {errors.amenities && <Text style={generalStyles.errorText}>{errors.amenities}</Text>}
                     </View>
 
                 </View>
@@ -127,7 +138,6 @@ const ServicesAndAmentities = ({ property, setProperty, propertyOwners, currenci
                         styles.buttonStyles
                         ]}
                         onPress={goBack}
-                    // disabled={count.some((item: any) => item.imagePath === null) || uploadingImages}
                     >
                         <Text style={generalStyles.loginText}>{'Back'}</Text>
                     </TouchableOpacity>
@@ -135,11 +145,10 @@ const ServicesAndAmentities = ({ property, setProperty, propertyOwners, currenci
                         activeOpacity={1}
                         style={[generalStyles.loginContainer,
                         styles.buttonStyles,
-                            // { backgroundColor: isDisabled() ? COLORS.primaryLightGreyHex : COLORS.primaryOrangeHex }
+                        { backgroundColor: isDisabled() ? COLORS.primaryLightGreyHex : COLORS.primaryOrangeHex }
                         ]}
                         onPress={goToNextStep}
-                    // disabled={isDisabled()}
-                    // disabled={count.some((item: any) => item.imagePath === null) || uploadingImages}
+                        disabled={isDisabled()}
                     >
                         <Text style={generalStyles.loginText}>{'Next'}</Text>
                     </TouchableOpacity>

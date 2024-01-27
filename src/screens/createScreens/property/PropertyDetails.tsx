@@ -1,12 +1,13 @@
 import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native'
-import React, { useState } from 'react'
+import React from 'react'
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { generalStyles } from '../../utils/generatStyles';
 import { COLORS, FONTFAMILY } from '../../../theme/theme';
 import { RootState } from '../../../redux/store/dev';
 import { useSelector } from 'react-redux';
 import { Picker } from 'react-native-ui-lib';
-import Entypo from 'react-native-vector-icons/Entypo'
+import Entypo from 'react-native-vector-icons/Entypo';
+
 
 
 
@@ -14,6 +15,16 @@ const PropertyDetails = ({ property, setProperty, propertyOwners, currencies, ca
 
     const tabBarHeight = useBottomTabBarHeight();
     const { authToken } = useSelector((state: RootState) => state.user);
+
+    const isDisabled = () => {
+        if (property?.owner_id == "" || property?.category_id == "" || property?.currency == "" || property?.room_type == "" || property?.name == "" || property?.number_of_rooms == "" || property?.number_of_beds == "" ||
+            property?.number_of_baths == "" || property?.price == "") {
+            return true
+        }
+        else {
+            return false
+        }
+    }
 
 
     return (
@@ -228,7 +239,7 @@ const PropertyDetails = ({ property, setProperty, propertyOwners, currencies, ca
                                     return { ...prev, number_of_beds: text }
                                 })
                                 }
-                                value={property?.number_of_rooms}
+                                value={property?.number_of_beds}
                                 underlineColorAndroid="transparent"
                                 autoCapitalize="none"
 
@@ -258,7 +269,7 @@ const PropertyDetails = ({ property, setProperty, propertyOwners, currencies, ca
                                     return { ...prev, number_of_baths: text }
                                 })
                                 }
-                                value={property?.number_of_rooms}
+                                value={property?.number_of_baths}
                                 underlineColorAndroid="transparent"
                                 autoCapitalize="none"
 
@@ -330,7 +341,7 @@ const PropertyDetails = ({ property, setProperty, propertyOwners, currencies, ca
                             keyboardType="number-pad"
                             placeholder={'enter property price'}
                             onChangeText={text => setProperty((prev: any) => {
-                                return { ...prev, price: text.replace(/\B(?=(\d{3})+(?!\d))/g, ',') }
+                                return { ...prev, price: text }
                             })
                             }
                             value={property?.price}
@@ -353,11 +364,10 @@ const PropertyDetails = ({ property, setProperty, propertyOwners, currencies, ca
                         activeOpacity={1}
                         style={[generalStyles.loginContainer,
                         styles.buttonStyles,
-                            // { backgroundColor: isDisabled() ? COLORS.primaryLightGreyHex : COLORS.primaryOrangeHex }
+                        { backgroundColor: isDisabled() ? COLORS.primaryLightGreyHex : COLORS.primaryOrangeHex }
                         ]}
                         onPress={goToNextStep}
-                    // disabled={isDisabled()}
-                    // disabled={count.some((item: any) => item.imagePath === null) || uploadingImages}
+                        disabled={isDisabled()}
                     >
                         <Text style={generalStyles.loginText}>{'Next'}</Text>
                     </TouchableOpacity>

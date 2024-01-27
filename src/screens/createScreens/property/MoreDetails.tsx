@@ -19,7 +19,14 @@ const MoreDetails = ({ property, setProperty, propertyStatus, furnishingStatus, 
     const [openPicker, setOpenPicker] = useState<boolean>(false)
 
 
-
+    const isDisabled = () => {
+        if (property?.status == "" || property?.furnishing_status == "" || property?.description == "" || property?.location == "" || property?.year_built == "" || property?.property_size == "") {
+            return true
+        }
+        else {
+            return false
+        }
+    }
 
     return (
         <View style={{ flex: 1, paddingBottom: tabBarHeight }}>
@@ -211,6 +218,38 @@ const MoreDetails = ({ property, setProperty, propertyStatus, furnishingStatus, 
                 {/* furnishing status */}
 
 
+                {/* property size */}
+                <View style={styles.formContainer}>
+                    <View>
+                        <Text style={[generalStyles.formInputTextStyle, styles.labelStyles]}>
+                            Property SIze*</Text>
+                    </View>
+                    <View>
+                        <TextInput
+                            style={[generalStyles.formInput, styles.borderStyles]}
+                            placeholderTextColor={COLORS.primaryWhiteHex}
+                            // placeholderStyle={{ borderColor: 'red' }}
+                            keyboardType="default"
+                            placeholder={'enter property size'}
+                            onChangeText={text => setProperty((prev: any) => {
+                                return { ...prev, property_size: text }
+                            })
+                            }
+                            value={property?.property_size}
+                            underlineColorAndroid="transparent"
+                            autoCapitalize="none"
+
+                        />
+                    </View>
+
+                    <View>
+                        {errors.property_size && <Text style={generalStyles.errorText}>{errors.property_size}</Text>}
+                    </View>
+
+                </View>
+                {/* property size */}
+
+
 
 
                 {/* button section */}
@@ -229,11 +268,10 @@ const MoreDetails = ({ property, setProperty, propertyStatus, furnishingStatus, 
                         activeOpacity={1}
                         style={[generalStyles.loginContainer,
                         styles.buttonStyles,
-                            // { backgroundColor: isDisabled() ? COLORS.primaryLightGreyHex : COLORS.primaryOrangeHex }
+                        { backgroundColor: isDisabled() ? COLORS.primaryLightGreyHex : COLORS.primaryOrangeHex }
                         ]}
                         onPress={goToNextStep}
-                    // disabled={isDisabled()}
-                    // disabled={count.some((item: any) => item.imagePath === null) || uploadingImages}
+                        disabled={isDisabled()}
                     >
                         <Text style={generalStyles.loginText}>{'Next'}</Text>
                     </TouchableOpacity>

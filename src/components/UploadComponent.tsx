@@ -37,7 +37,7 @@ const UploadComponent = ({
     }).then(image => {
       //   console.log(image);
       setImage({
-        rnImagePatch: RNFetchBlob.wrap(image.path),
+        rnImagePath: RNFetchBlob.wrap(image.path),
         imagePath: image.path,
       });
     });

@@ -21,6 +21,7 @@ const HomeCards: React.FC = () => {
 
 
 
+
     return (
         <View>
             <View style={[styles.viewStyles, generalStyles.flexStyles, styles.overAllContainer, { alignItems: 'center', justifyContent: 'space-between' }]}>
