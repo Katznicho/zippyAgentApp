@@ -1,5 +1,5 @@
 import { StyleSheet, ScrollView, Dimensions } from 'react-native'
-import React, { useCallback, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { generalStyles } from '../utils/generatStyles'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
@@ -72,9 +72,7 @@ const AddProperty = () => {
         "amenities": [],
     });
 
-    useEffect(() => {
-        console.log(property)
-    }, [property])
+
 
     const isFocused = useIsFocused();
     const [propertyOwners, setPropertyOwners] = useState<any>([])
@@ -250,7 +248,7 @@ const AddProperty = () => {
     ])
 
 
-    const uploadImagesAutomatically = useCallback(async () => {
+    const uploadImagesAutomatically = async () => {
         try {
             setIsSubmitting(true)
             setUploadingImages(true);
@@ -317,7 +315,7 @@ const AddProperty = () => {
                     setProgress(written / total)
                 })
                 .then(response => response.json())
-                .then((res) => {
+                .then(async (res) => {
 
 
                     const { cover_image, one, two, three, four } = res.data;
@@ -328,34 +326,36 @@ const AddProperty = () => {
                     setProperty((prevProperty: any) => ({
                         ...prevProperty,
                         cover_image,
-                        images: [one, two, three, four], // Assuming the order of images in the array matches the order in the count array
+                        images: [one, two, three, four],
                     }));
                     // Call the submit function after successful image upload
-                    return submitProperty();
+                    await submitProperty(cover_image, one, two, three, four);
+                    return true;
 
 
                 })
                 .catch((err) => {
-                    console.error(err);
                     setUploadingImages(false);
-                    setIsSubmitting(false)
-                    return showMessage({
-                        message: "Property Creation Failed",
-                        description: "Something went wrong",
-                        type: "danger",
-                        autoHide: true,
-                        duration: 3000,
-                    })
+                    // setIsSubmitting(false)
+                    return false;
                 });
 
         } catch (error) {
-            console.log("error")
-            console.log(error)
             setUploadingImages(false);
+            return false;
         }
-    }, [count, setCount]);
 
-    const submitProperty = useCallback(() => {
+    }
+
+
+
+    const submitProperty = async (cover_image: string, one: string, two: string, three: string, four: string) => {
+        // const submitImages = await uploadImagesAutomatically();
+        // console.log("=============submitted images===========================")
+        // console.log(submitImages)
+
+
+        // if (submitImages) {
         const headers = new Headers();
         headers.append('Accept', 'application/json');
         headers.append('Authorization', `Bearer ${authToken}`);
@@ -364,7 +364,7 @@ const AddProperty = () => {
         const body = new FormData();
         body.append('name', property?.name);
         body.append('description', property?.description);
-        body.append('cover_image', property?.cover_image);
+        body.append('cover_image', property?.cover_image || cover_image);
         body.append('location', property?.location);
         body.append("lat", property?.lat);
         body.append("long", property?.long);
@@ -380,10 +380,10 @@ const AddProperty = () => {
         body.append("year_built", property?.year_built);
         body.append("status", property?.status);
         body.append("currency", property?.currency);
-        body.append("images[]", property?.images[0]);
-        body.append("images[]", property?.images[1])
-        body.append("images[]", property?.images[2])
-        body.append("images[]", property?.images[3])
+        body.append("images[]", property?.images[0] || one);
+        body.append("images[]", property?.images[1] || two);
+        body.append("images[]", property?.images[2] || three);
+        body.append("images[]", property?.images[3] || four);
         body.append("is_available", property?.status == "Available" ? true : false)
 
         //services loop through and also append them as an array
@@ -470,6 +470,17 @@ const AddProperty = () => {
                         ])
                         return navigation.navigate('HomeTab')
                     }
+                    else {
+                        setLoading(false);
+                        setIsSubmitting(false)
+                        return showMessage({
+                            message: "Property Creation Failed",
+                            description: "Please try again",
+                            type: "danger",
+                            autoHide: true,
+                            duration: 3000,
+                        })
+                    }
                 })
         } catch (error) {
             setLoading(false);
@@ -483,10 +494,23 @@ const AddProperty = () => {
             })
 
         }
+        // }
 
+        // else {
+        //     setIsSubmitting(false);
+        //     setUploadingImages(false);
+        //     return showMessage({
+        //         message: "Property Creation Failed",
+        //         description: "Something went wrong",
+        //         type: "danger",
+        //         autoHide: true,
+        //         duration: 3000,
+        //     })
 
+        // }
 
-    }, [property]);
+    }
+
 
     const goBack = () => {
         const { activeIndex: prevActiveIndex } = state;

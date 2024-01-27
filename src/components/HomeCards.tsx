@@ -3,8 +3,9 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { generalStyles } from '../screens/utils/generatStyles';
 import { COLORS, FONTFAMILY, FONTSIZE, SPACING } from '../theme/theme';
 import { usePostQuery } from '../hooks/usePostQuery';
+import { useNavigation } from '@react-navigation/native';
 
-const HomeCards: React.FC = () => {
+const HomeCards: React.FC<any> = () => {
 
     const { data, error, isLoading } = usePostQuery<any>({
         endpoint: '/getAgentTotals',
@@ -18,6 +19,8 @@ const HomeCards: React.FC = () => {
             refetchOnMount: true,
         },
     })
+
+    const navigation = useNavigation<any>()
 
 
 
@@ -42,6 +45,7 @@ const HomeCards: React.FC = () => {
 
                 <TouchableOpacity
                     activeOpacity={1}
+                    onPress={() => navigation.navigate('AllProperties')}
                     style={[styles.CardContainer]}
                 >
                     <View style={[generalStyles.flexStyles, { alignItems: 'center', justifyContent: 'space-between' }]}>

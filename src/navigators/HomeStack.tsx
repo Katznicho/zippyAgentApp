@@ -8,12 +8,13 @@ import AllTransactions from '../screens/AllTransactions';
 import TransactionDetails from '../screens/TransactionDetails';
 import PaymentScreen from '../screens/PaymentScreen';
 import ArrowBack from '../components/ArrowBack';
-import CommunityDetails from '../screens/CommunityDetails';
 import { RootState } from '../redux/store/dev';
 import { useSelector } from 'react-redux';
 import ChangePassword from '../screens/ChangePassword';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { useNavigation } from '@react-navigation/native';
+import AllProperties from '../screens/AllProperties';
+import PropertyDetails from '../screens/createScreens/property/PropertyDetails';
 
 const Stack = createNativeStackNavigator();
 
@@ -48,23 +49,6 @@ const HomeStack = () => {
 
             </Stack.Screen>
 
-            {/* community details */}
-            <Stack.Screen
-                name="CommunityDetails"
-                component={CommunityDetails}
-                // options={{ animation: 'slide_from_bottom' }}
-                options={{
-                    animation: 'slide_from_bottom',
-                    title: 'Add Details',
-                    headerStyle: generalStyles.headerStyle,
-                    headerTitleStyle: generalStyles.titleHeaderStyles,
-                    headerTintColor: COLORS.primaryBlackHex,
-                    headerTitleAlign: 'center',
-                    headerLeft: () => <ArrowBack />
-
-                }}
-            ></Stack.Screen>
-            {/* community details */}
 
             <Stack.Screen
                 name="CreateWallet"
@@ -118,6 +102,25 @@ const HomeStack = () => {
                 }}>
             </Stack.Screen>
             {/* all transactions */}
+
+            {/* all properties */}
+            {/* all transactions */}
+            <Stack.Screen
+                name="AllProperties"
+                component={AllProperties}
+                options={{
+                    animation: 'slide_from_bottom',
+                    title: 'Properties',
+                    headerStyle: generalStyles.headerStyle,
+                    headerTitleStyle: generalStyles.titleHeaderStyles,
+                    headerTintColor: COLORS.primaryBlackHex,
+                    headerTitleAlign: 'center',
+                    headerLeft: () => <ArrowBack />
+                }}>
+            </Stack.Screen>
+            {/* all transactions */}
+            {/* all propertes */}
+
             {/* transaction details */}
             <Stack.Screen
                 name="TransactionDetails"
@@ -133,6 +136,22 @@ const HomeStack = () => {
                 }}>
             </Stack.Screen>
             {/* transaction details */}
+
+            {/* property details */}
+            <Stack.Screen
+                name="PropertyDetails"
+                component={PropertyDetails}
+                options={{
+                    animation: 'slide_from_bottom',
+                    title: 'Property Details',
+                    headerStyle: generalStyles.headerStyle,
+                    headerTitleStyle: generalStyles.titleHeaderStyles,
+                    headerTintColor: COLORS.primaryBlackHex,
+                    headerTitleAlign: 'center',
+                    headerLeft: () => <ArrowBack />
+                }}>
+            </Stack.Screen>
+            {/* property details */}
 
 
             {/* payments screen  */}

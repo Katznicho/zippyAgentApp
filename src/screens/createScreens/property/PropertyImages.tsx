@@ -28,10 +28,10 @@ const PropertyImages = ({
     setShowModal,
     setCount,
     showModal,
-    uploadImagesAutomatically,
     submitProperty,
     uploadingImages,
-    isSubmitting
+    isSubmitting,
+    uploadImagesAutomatically
 
 
 }: any) => {
@@ -94,7 +94,7 @@ const PropertyImages = ({
                     Property Images
                 </Text>
                 <Text style={{ color: COLORS.primaryWhiteHex, marginHorizontal: 10, fontFamily: FONTFAMILY.poppins_thin }}>
-                    Add at least 4 images to proceed. Please upload images in high quality.Click Upload button after you have added images  then click next.
+                    Add at least 4 images to proceed. Please upload images in high quality. then click finish.
 
                 </Text>
             </View>
@@ -184,7 +184,6 @@ const PropertyImages = ({
 
                     }
                     ]}
-                    // onPress={goToNextStep}
                     onPress={uploadImagesAutomatically}
                     disabled={count.some((item: any) => item.imagePath === null) || uploadingImages || isSubmitting}
 

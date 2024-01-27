@@ -6,6 +6,7 @@ const fetcher = async (limit: number = 20, pageNumber: number = 1, queryUrl: str
         const headers = new Headers();
         headers.append('Accept', 'application/json');
         const token = await AsyncStorage.getItem('token');
+        console.log(token)
         headers.append('Authorization', `Bearer ${token}`);
 
         // Build the URL based on the presence of the status parameter
@@ -14,9 +15,9 @@ const fetcher = async (limit: number = 20, pageNumber: number = 1, queryUrl: str
             url += `&status=${status}`;
         }
 
-        console.log("===========url=======================")
-        console.log(url)
-        console.log("===========url=======================")
+        // console.log("===========url=======================")
+        // console.log(url)
+        // console.log("===========url=======================")
 
         const response = await fetch(url, {
             method: 'GET',
@@ -24,7 +25,10 @@ const fetcher = async (limit: number = 20, pageNumber: number = 1, queryUrl: str
         });
 
         const data = await response.json();
-        console.log(data?.data)
+
+
+
+
         return {
             data: data?.data?.data,
             nextPage: data?.data?.pagination?.current_page + 1,
@@ -61,11 +65,11 @@ export default function useFetchInfinite(queryKey: string, url: string, status: 
         queryFn: ({ pageParam = 1 }) => fetcher(20, pageParam, url, status),
         getNextPageParam: (lastPage, allPages) => lastPage.nextPage,
         getPreviousPageParam: (firstPage, allPages) => firstPage.currentPage - 1,
-        // staleTime: Infinity,
-        // cacheTime: Infinity,
+        staleTime: Infinity,
+        cacheTime: Infinity,
         refetchOnWindowFocus: true,
         refetchOnReconnect: true,
-        refetchInterval: 20000,
+        // refetchInterval: 20000,
     });
 
     return {
