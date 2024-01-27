@@ -65,11 +65,6 @@ export default PropertyCard
 
 const styles = StyleSheet.create({
     cardContainer: {
-        // padding: 10,
-        // backgroundColor: COLORS.primaryBlueHex,
-        // margin: 10,
-        // borderRadius: SPACING.space_5,
-        // flex: 0.7,
         backgroundColor: COLORS.primaryBlackHex,
         borderRadius: 10,
         padding: 10,

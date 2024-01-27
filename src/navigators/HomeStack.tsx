@@ -14,7 +14,7 @@ import ChangePassword from '../screens/ChangePassword';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { useNavigation } from '@react-navigation/native';
 import AllProperties from '../screens/AllProperties';
-import PropertyDetails from '../screens/createScreens/property/PropertyDetails';
+import PropertyDetails from '../screens/PropertyDetails';
 
 const Stack = createNativeStackNavigator();
 
@@ -132,7 +132,8 @@ const HomeStack = () => {
                     headerTitleStyle: generalStyles.titleHeaderStyles,
                     headerTintColor: COLORS.primaryBlackHex,
                     headerTitleAlign: 'center',
-                    headerLeft: () => <ArrowBack />
+                    headerLeft: () => <ArrowBack />,
+
                 }}>
             </Stack.Screen>
             {/* transaction details */}
@@ -143,12 +144,7 @@ const HomeStack = () => {
                 component={PropertyDetails}
                 options={{
                     animation: 'slide_from_bottom',
-                    title: 'Property Details',
-                    headerStyle: generalStyles.headerStyle,
-                    headerTitleStyle: generalStyles.titleHeaderStyles,
-                    headerTintColor: COLORS.primaryBlackHex,
-                    headerTitleAlign: 'center',
-                    headerLeft: () => <ArrowBack />
+                    headerShown: false
                 }}>
             </Stack.Screen>
             {/* property details */}
