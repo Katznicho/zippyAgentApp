@@ -1,7 +1,7 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {COLORS, SPACING} from '../theme/theme';
+import { COLORS, SPACING } from '../theme/theme';
 import CustomIcon from './CustomIcon';
 
 interface GradientBGIconProps {
@@ -10,13 +10,13 @@ interface GradientBGIconProps {
   size: number;
 }
 
-const GradientBGIcon: React.FC<GradientBGIconProps> = ({name, color, size}) => {
+const GradientBGIcon: React.FC<GradientBGIconProps> = ({ name, color, size }) => {
   return (
     <View style={styles.Container}>
       <LinearGradient
-        start={{x: 0, y: 0}}
-        end={{x: 1, y: 1}}
-        colors={[COLORS.primaryGreyHex, COLORS.primaryBlackHex]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        colors={[COLORS.primaryBlackHex, COLORS.primaryBlackHex]}
         style={styles.LinearGradientBG}>
         <CustomIcon name={name} color={color} size={size} />
       </LinearGradient>
@@ -26,13 +26,14 @@ const GradientBGIcon: React.FC<GradientBGIconProps> = ({name, color, size}) => {
 
 const styles = StyleSheet.create({
   Container: {
-    borderWidth: 2,
-    borderColor: COLORS.secondaryDarkGreyHex,
-    borderRadius: SPACING.space_12,
+    borderWidth: 0.5,
+    borderColor: COLORS.primaryBlackHex,
+    borderRadius: SPACING.space_20,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: COLORS.secondaryDarkGreyHex,
+    backgroundColor: COLORS.primaryBlackHex,
     overflow: 'hidden',
+    // borderRadius: 20
   },
   LinearGradientBG: {
     height: SPACING.space_36,

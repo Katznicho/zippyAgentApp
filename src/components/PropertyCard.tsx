@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import React from 'react'
-import { COLORS, FONTFAMILY, FONTSIZE, SPACING } from '../theme/theme'
+import { BORDERRADIUS, COLORS, FONTFAMILY, FONTSIZE, SPACING } from '../theme/theme'
 import { generalStyles } from '../screens/utils/generatStyles';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { useNavigation } from '@react-navigation/native';
@@ -103,6 +103,13 @@ const styles = StyleSheet.create({
         marginVertical: 5,
         borderRadius: 10,
         padding: 2
+    },
+    ImageInfoOuterContainer: {
+        paddingVertical: SPACING.space_24,
+        paddingHorizontal: SPACING.space_30,
+        backgroundColor: COLORS.primaryBlackRGBA,
+        borderTopLeftRadius: BORDERRADIUS.radius_20 * 2,
+        borderTopRightRadius: BORDERRADIUS.radius_20 * 2,
     },
 
 })

@@ -2,17 +2,20 @@ import { StyleSheet, Text, View, ScrollView, ImageBackground, TouchableOpacity }
 import React from 'react'
 import { KeyboardAwareScrollView } from 'react-native-ui-lib'
 import { generalStyles } from './utils/generatStyles'
-import { useRoute } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import { PUBLIC_STORAGE } from './utils/constants/constants'
-import { COLORS, FONTFAMILY, FONTSIZE } from '../theme/theme';
-import call from 'react-native-phone-call'
+import { COLORS, FONTFAMILY, FONTSIZE, SPACING } from '../theme/theme';
+import call from 'react-native-phone-call';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import GradientBGIcon from '../components/GradientBGIcon'
 
 
 
 const PropertyDetails: React.FC<any> = () => {
     const tabBarHeight = useBottomTabBarHeight();
     const { item } = useRoute<any>().params
+    const navigation = useNavigation<any>();
 
 
     const onMakeCall = (phone_number: any) => {
@@ -38,8 +41,31 @@ const PropertyDetails: React.FC<any> = () => {
                 {/* show background image */}
                 <ImageBackground
                     source={{ uri: `${PUBLIC_STORAGE}/properties/${item?.cover_image}` }}
-                    style={{ width: '100%', height: 200 }}
+                    style={styles.ItemBackgroundImage}
                 >
+                    {/* back handler */}
+                    <View style={styles.ImageHeaderBarContainerWithBack}>
+                        <TouchableOpacity
+                            activeOpacity={1}
+                            onPress={() => {
+                                navigation.goBack()
+                            }}>
+                            <GradientBGIcon
+                                name="left"
+                                color={COLORS.primaryOrangeHex}
+                                size={FONTSIZE.size_16}
+                            />
+                        </TouchableOpacity>
+
+
+                    </View>
+
+                    {/* back handler */}
+
+                    {/* more details */}
+
+
+                    {/* more details */}
                 </ImageBackground>
                 {/* show background */}
 
@@ -94,6 +120,34 @@ const PropertyDetails: React.FC<any> = () => {
                         </View>
 
                     </View>
+
+                    {/* actions and total bookings */}
+
+                    <View style={[generalStyles.flexStyles, { justifyContent: 'space-between', alignItems: "center" }]} >
+                        <View>
+                            <Text style={styles.CardTitle} >Total Bookings</Text>
+                            <Text style={styles.CardSubtitle}>0</Text>
+                        </View>
+                        <View>
+                            <Text style={styles.CardTitle} >Actions</Text>
+                            {/* actions area */}
+                            <View style={[generalStyles.flexStyles, { justifyContent: 'center', alignItems: "center" }]}>
+                                <AntDesign name="delete"
+                                    size={25}
+                                    color={COLORS.primaryRedHex}
+                                    style={styles.spacingStyles}
+                                />
+                                <AntDesign name="edit"
+                                    size={25}
+                                    color={COLORS.primaryOrangeHex}
+                                    style={styles.spacingStyles}
+                                />
+                            </View>
+                            {/* actions area */}
+                        </View>
+
+                    </View>
+                    {/* actions and total bookings */}
 
                     <View >
                         <View>
@@ -150,6 +204,17 @@ const PropertyDetails: React.FC<any> = () => {
                         <View>
                             <Text style={styles.CardTitle} >Availability</Text>
                             <Text style={styles.CardSubtitle}>{item?.is_available ? "Yes" : "No"}</Text>
+                        </View>
+
+                    </View>
+                    <View style={[generalStyles.flexStyles, { justifyContent: 'space-between', alignItems: "center" }]} >
+                        <View>
+                            <Text style={styles.CardTitle} >Total Likes</Text>
+                            <Text style={styles.CardSubtitle}>{0}</Text>
+                        </View>
+                        <View>
+                            <Text style={styles.CardTitle} >Comments</Text>
+                            <Text style={styles.CardSubtitle}>{0}</Text>
                         </View>
 
                     </View>
@@ -246,6 +311,22 @@ const styles = StyleSheet.create({
         width: "80%",
         // marginHorizontal: 40,
         marginVertical: 10
-    }
+    },
+    spacingStyles: {
+        marginHorizontal: 5,
+        // marginVertical: 5
+    },
+    ImageHeaderBarContainerWithBack: {
+        padding: SPACING.space_30,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+    },
+    ItemBackgroundImage: {
+        width: '100%',
+        aspectRatio: 25 / 15,
+        justifyContent: 'space-between',
+    },
+
 
 })
