@@ -6,13 +6,25 @@ import { useRoute } from '@react-navigation/native'
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import { PUBLIC_STORAGE } from './utils/constants/constants'
 import { COLORS, FONTFAMILY, FONTSIZE } from '../theme/theme';
-import EvilIcons from 'react-native-vector-icons/EvilIcons'
+import call from 'react-native-phone-call'
+
 
 
 const PropertyDetails: React.FC<any> = () => {
     const tabBarHeight = useBottomTabBarHeight();
     const { item } = useRoute<any>().params
-    console.log(`${PUBLIC_STORAGE}/properties/${item?.cover_image}`)
+
+
+    const onMakeCall = (phone_number: any) => {
+
+        const args = {
+            number: phone_number, // String value with the number to call
+            prompt: false, // Optional boolean property. Determines if the user should be prompted prior to the call 
+            skipCanOpen: true // Skip the canOpenURL check
+        }
+        call(args).catch(console.error);
+    }
+
     return (
         <KeyboardAwareScrollView
             style={[{ flex: 1, width: '100%' }, generalStyles.ScreenContainer]}
@@ -45,6 +57,9 @@ const PropertyDetails: React.FC<any> = () => {
                         <Text style={generalStyles.loginText}>{'View More Images'}</Text>
                     </TouchableOpacity>
 
+
+                    <View style={[generalStyles.bottomHairline, styles.hairLineStyles]} />
+
                     <View style={[generalStyles.flexStyles, { justifyContent: 'space-between', alignItems: "center" }]}>
                         <View>
                             <Text style={styles.CardTitle} >Name</Text>
@@ -70,7 +85,7 @@ const PropertyDetails: React.FC<any> = () => {
 
                     <View>
                         <View>
-                            <Text style={styles.CardTitle} >Price</Text>
+                            <Text style={styles.CardTitle} >Price(Monthly)</Text>
                             <Text style={styles.CardSubtitle}>{item.currency} {item?.price}</Text>
                         </View>
                         <View>
@@ -138,8 +153,57 @@ const PropertyDetails: React.FC<any> = () => {
                         </View>
 
                     </View>
+                    <View style={[generalStyles.bottomHairline, styles.hairLineStyles]} />
+                    <View style={[generalStyles.flexStyles, { justifyContent: 'space-between', alignItems: "center" }]} >
+                        <View>
+                            <Text style={styles.CardTitle} >Services</Text>
+                            {/* <Text style={styles.CardSubtitle}>{item?.is_approved ? 'Yes' : "No"}</Text> */}
+                            {
+                                item?.services?.map((service: any, index: number) => {
+                                    return (
+                                        <Text style={styles.CardSubtitle} key={index}>{service?.name}</Text>
+                                    )
+                                })
+                            }
+                        </View>
+                        <View>
+                            <Text style={styles.CardTitle} >Amentities</Text>
+                            {
+                                item?.amenities?.map((amentity: any, index: number) => {
+                                    return (
+                                        <Text style={styles.CardSubtitle} key={index}>{amentity?.name}</Text>
+                                    )
+                                })
+                            }
+                        </View>
+
+                    </View>
+                    <View style={[generalStyles.bottomHairline, styles.hairLineStyles]} />
+
+                    {/* owner details */}
+
+                    <View style={[generalStyles.flexStyles, { justifyContent: 'space-between', alignItems: "center" }]} >
+                        <View>
+                            <Text style={styles.CardTitle} >Owner</Text>
+                            <Text style={styles.CardSubtitle}>{item?.owner?.name}</Text>
+                        </View>
+                        <View>
+                            <Text style={styles.CardTitle} >Phone Number</Text>
+                            <Text style={styles.CardSubtitle}>{item?.owner?.phone_number}</Text>
+                        </View>
+
+                    </View>
+                    <TouchableOpacity
+                        activeOpacity={1}
+                        style={[generalStyles.loginContainer, { marginTop: 0, padding: 10 }]}
+                        onPress={() => onMakeCall(item?.owner?.phone_number)}>
+                        <Text style={generalStyles.loginText}>{'Call Owner'}</Text>
+                    </TouchableOpacity>
+                    {/* owner details */}
+
 
                 </View>
+
 
                 {/* view more images */}
             </ScrollView>
@@ -159,7 +223,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 1,
         shadowRadius: 4,
         elevation: 5,
-        margin: 10,
+        margin: 5,
         // marginHorizontal: 5
     },
     CardTitle: {
@@ -178,4 +242,10 @@ const styles = StyleSheet.create({
         color: COLORS.primaryOrangeHex,
         fontSize: FONTSIZE.size_12,
     },
+    hairLineStyles: {
+        width: "80%",
+        // marginHorizontal: 40,
+        marginVertical: 10
+    }
+
 })
