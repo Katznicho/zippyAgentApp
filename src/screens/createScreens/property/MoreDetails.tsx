@@ -20,7 +20,7 @@ const MoreDetails = ({ property, setProperty, propertyStatus, furnishingStatus, 
 
 
     const isDisabled = () => {
-        if (property?.status == "" || property?.furnishing_status == "" || property?.description == "" || property?.location == "" || property?.year_built == "" || property?.property_size == "") {
+        if (property?.status_id == "" || property?.description == "" || property?.location == "") {
             return true
         }
         else {
@@ -43,12 +43,12 @@ const MoreDetails = ({ property, setProperty, propertyStatus, furnishingStatus, 
                             <Picker
                                 placeholder=" select property status"
                                 placeholderTextColor={COLORS.primaryLightGreyHex}
-                                value={property?.status}
+                                value={property?.status_id}
                                 style={[generalStyles.formInput, styles.borderStyles, styles.inlineTextInputStyles]}
                                 enableModalBlur={false}
                                 onChange={item => {
                                     return setProperty((prev: any) => {
-                                        return { ...prev, status: item }
+                                        return { ...prev, status_id: item }
                                     })
                                 }}
                                 trailingAccessory={<View style={styles.iconStyles}>
@@ -63,8 +63,8 @@ const MoreDetails = ({ property, setProperty, propertyStatus, furnishingStatus, 
                             // onSearchChange={value => console.warn('value', value)}
                             >
                                 {propertyStatus.map((item: any) => (
-                                    <Picker.Item key={item.name}
-                                        value={item.name}
+                                    <Picker.Item key={item.id}
+                                        value={item.id}
                                         label={item.name}
                                     />
                                 ))}
@@ -78,7 +78,7 @@ const MoreDetails = ({ property, setProperty, propertyStatus, furnishingStatus, 
                 <View style={styles.formContainer}>
                     <View>
                         <Text style={[generalStyles.formInputTextStyle, styles.labelStyles]}>
-                            Year Built*</Text>
+                            Year Built</Text>
                     </View>
                     <View>
                         <TextInput
@@ -181,7 +181,7 @@ const MoreDetails = ({ property, setProperty, propertyStatus, furnishingStatus, 
                         <View style={styles.formContainer}>
                             <View>
                                 <Text style={[generalStyles.formInputTextStyle, styles.labelStyles]}>
-                                    Select Property Furnishing Status*</Text>
+                                    Select Property Furnishing Status</Text>
                             </View>
                             <Picker
                                 placeholder=" select property furnishing status"
@@ -222,7 +222,7 @@ const MoreDetails = ({ property, setProperty, propertyStatus, furnishingStatus, 
                 <View style={styles.formContainer}>
                     <View>
                         <Text style={[generalStyles.formInputTextStyle, styles.labelStyles]}>
-                            Property SIze*</Text>
+                            Property SIze</Text>
                     </View>
                     <View>
                         <TextInput

@@ -21,7 +21,7 @@ const HeadProfileCard = () => {
     const { user, isLoggedIn, authToken } = useSelector((state: RootState) => state.user);
     const [showModal, setShowModal] = useState<boolean>(false);
     const [imagePath, setImagePath] = useState<any>(null);
-
+    const [progress, setProgress] = useState<number>(0);
 
     const [loading, setLoading] = useState<boolean>(false);
 
@@ -113,7 +113,6 @@ const HeadProfileCard = () => {
 
     const getImageUrl = (displayPicture: string | null) => {
 
-        console.log("displayPicture", displayPicture)
 
         if (displayPicture) {
             return `${PUBLIC_STORAGE}profile/${displayPicture}`
@@ -123,7 +122,7 @@ const HeadProfileCard = () => {
 
     }
 
-    console.log(getImageUrl(user?.displayPicture))
+
 
     return (
         <View style={[generalStyles.flexStyles]}>

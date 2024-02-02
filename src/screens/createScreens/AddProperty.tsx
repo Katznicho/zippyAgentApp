@@ -11,7 +11,7 @@ import { COLORS } from '../../theme/theme';
 import { Wizard, WizardStepStates, } from 'react-native-ui-lib';
 import PropertyImages from './property/PropertyImages';
 import PropertyDetails from './property/PropertyDetails';
-import { GET_ALL_AMENTITIES, GET_ALL_CATEGORIES, GET_ALL_REGISTERED_PROPERTY_OWNERS, GET_ALL_SERVICES, IMAGES_UPLOAD, REGISTER_PROPERTY } from '../utils/constants/routes';
+import { GET_ALL_AMENTITIES, GET_ALL_CATEGORIES, GET_ALL_CURRENCIES, GET_ALL_PAYMENT_PERIODS, GET_ALL_PROPERTY_STATUSES, GET_ALL_REGISTERED_PROPERTY_OWNERS, GET_ALL_SERVICES, IMAGES_UPLOAD, REGISTER_PROPERTY } from '../utils/constants/routes';
 import MoreDetails from './property/MoreDetails';
 import ServicesAndAmentities from './property/ServicesAndAmentities';
 import RNFetchBlob from 'rn-fetch-blob';
@@ -60,16 +60,17 @@ const AddProperty = () => {
         "room_type": "",
         "furnishing_status": "",
         "description": "",
-        "status": "",
+        "status_id": "",
         "price": "",
         "year_built": "",
         "location": "",
-        "currency": "",
+        "currency_id": "",
         "property_size": "",
         "category_id": "",
         "owner_id": "",
         "services": [],
         "amenities": [],
+        "payment_period_id": "",
     });
 
 
@@ -79,27 +80,9 @@ const AddProperty = () => {
     const [categories, setCategories] = useState<any>([])
     const [services, setServices] = useState<any>([])
     const [amenities, setAmenities] = useState<any>([])
-
-    const [roomTypes, setRoomTypes] = useState<any>([
-        {
-            id: 1,
-            name: "Single",
-        },
-        {
-            id: 2,
-            name: "Double",
-        }
-    ]);
-
-    const [currencies, setCurrencies] = useState<any>([
-        {
-            id: 1,
-            name: "USD",
-        }, {
-            id: 2,
-            name: "UGX",
-        }
-    ])
+    const [currencies, setCurrencies] = useState<any>([])
+    const [propertyStatus, setPropertyStatus] = useState<any>([])
+    const [paymentPeriods, setPaymentPeriods] = useState<any>([])
 
     const [furnishingStatus, setFurnishingStatus] = useState<any>([
         {
@@ -111,23 +94,7 @@ const AddProperty = () => {
         }
     ])
 
-    const [propertyStatus, setPropertyStatus] = useState<any>([
-        {
-            id: 1,
-            name: "Available",
-        }, {
-            id: 2,
-            name: "Occupied",
-        },
-        {
-            id: 3,
-            name: "Under Construction",
-        },
-        {
-            id: 4,
-            name: "Under Renovation",
-        }
-    ])
+
 
     useEffect(() => {
         setLoading(true)
@@ -169,6 +136,36 @@ const AddProperty = () => {
         }).then((res) => res.json()).then((data) => {
             // console.log(data)
             setAmenities(data?.data)
+        })
+
+        fetch(GET_ALL_PROPERTY_STATUSES, {
+            method: 'GET',
+            headers
+        }).then((res) => res.json()).then((data) => {
+            console.log("=======status data=====")
+            console.log(data)
+
+            setPropertyStatus(data?.data)
+        }).catch((err) => {
+
+        })
+
+        fetch(GET_ALL_CURRENCIES, {
+            method: 'GET',
+            headers
+        }).then((res) => res.json()).then((data) => {
+
+
+            setCurrencies(data?.data)
+        })
+
+        fetch(GET_ALL_PAYMENT_PERIODS, {
+            method: 'GET',
+            headers
+        }).then((res) => res.json()).then((data) => {
+
+
+            setPaymentPeriods(data?.data)
         })
 
         setLoading(false)
@@ -350,9 +347,7 @@ const AddProperty = () => {
 
 
     const submitProperty = async (cover_image: string, one: string, two: string, three: string, four: string) => {
-        // const submitImages = await uploadImagesAutomatically();
-        // console.log("=============submitted images===========================")
-        // console.log(submitImages)
+
 
 
         // if (submitImages) {
@@ -378,13 +373,14 @@ const AddProperty = () => {
         body.append("number_of_rooms", property?.number_of_rooms);
         body.append("furnishing_status", property?.furnishing_status);
         body.append("year_built", property?.year_built);
-        body.append("status", property?.status);
-        body.append("currency", property?.currency);
+        body.append("status_id", property?.status_id);
+        body.append("currency_id", property?.currency_id);
+        body.append("payment_period_id", property?.payment_period_id);
         body.append("images[]", property?.images[0] || one);
         body.append("images[]", property?.images[1] || two);
         body.append("images[]", property?.images[2] || three);
         body.append("images[]", property?.images[3] || four);
-        body.append("is_available", property?.status == "Available" ? true : false)
+        body.append("is_available", property?.status_id == 1 ? true : false);
 
         //services loop through and also append them as an array
         property?.services?.forEach((service: any) => {
@@ -537,7 +533,7 @@ const AddProperty = () => {
                     categories={categories}
                     services={services}
                     amenities={amenities}
-                    roomTypes={roomTypes}
+                    paymentPeriods={paymentPeriods}
                     currencies={currencies}
 
 
@@ -556,7 +552,7 @@ const AddProperty = () => {
                     categories={categories}
                     services={services}
                     amenities={amenities}
-                    roomTypes={roomTypes}
+                    paymentPeriods={paymentPeriods}
                     currencies={currencies}
                     propertyStatus={propertyStatus}
                 />
@@ -573,7 +569,7 @@ const AddProperty = () => {
                     categories={categories}
                     services={services}
                     amenities={amenities}
-                    roomTypes={roomTypes}
+                    paymentPeriods={paymentPeriods}
                     currencies={currencies}
                     propertyStatus={propertyStatus}
                 />

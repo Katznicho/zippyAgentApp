@@ -11,13 +11,13 @@ import Entypo from 'react-native-vector-icons/Entypo';
 
 
 
-const PropertyDetails = ({ property, setProperty, propertyOwners, currencies, categories, roomTypes, goToNextStep, errors, setErrors, goBack }: any) => {
+const PropertyDetails = ({ property, setProperty, propertyOwners, currencies, categories, paymentPeriods, goToNextStep, errors }: any) => {
 
     const tabBarHeight = useBottomTabBarHeight();
     const { authToken } = useSelector((state: RootState) => state.user);
 
     const isDisabled = () => {
-        if (property?.owner_id == "" || property?.category_id == "" || property?.currency == "" || property?.name == "" || property?.number_of_beds == "" ||
+        if (property?.owner_id == "" || property?.category_id == "" || property?.currency_id == ""|| property?.payment_period_id == "" || property?.name == "" || property?.number_of_beds == "" ||
             property?.number_of_baths == "" || property?.price == "") {
             return true
         }
@@ -227,12 +227,12 @@ const PropertyDetails = ({ property, setProperty, propertyOwners, currencies, ca
                             <Picker
                                 placeholder=" select property currency"
                                 placeholderTextColor={COLORS.primaryLightGreyHex}
-                                value={property?.currency}
+                                value={property?.currency_id}
                                 style={[generalStyles.formInput, styles.borderStyles, styles.inlineTextInputStyles]}
                                 enableModalBlur={false}
                                 onChange={item => {
                                     return setProperty((prev: any) => {
-                                        return { ...prev, currency: item }
+                                        return { ...prev, currency_id: item }
                                     })
                                 }}
                                 trailingAccessory={<View style={styles.iconStyles}>
@@ -242,13 +242,13 @@ const PropertyDetails = ({ property, setProperty, propertyOwners, currencies, ca
                                 topBarProps={{ title: 'Property Currency' }}
 
                                 showSearch
-                                searchPlaceholder={'Search a property currency'}
+                                searchPlaceholder={'Search  property currencies'}
                                 searchStyle={{ color: COLORS.primaryBlackHex, placeholderTextColor: COLORS.primaryLightGreyHex }}
                             // onSearchChange={value => console.warn('value', value)}
                             >
                                 {currencies.map((item: any) => (
-                                    <Picker.Item key={item.name}
-                                        value={item.name}
+                                    <Picker.Item key={item.id}
+                                        value={item.id}
                                         label={item.name}
                                     />
                                 ))}
@@ -258,11 +258,54 @@ const PropertyDetails = ({ property, setProperty, propertyOwners, currencies, ca
                 }
                 {/* currency area */}
 
+
+                {/* payment period */}
+                {
+                    paymentPeriods.length > 0 && (
+                        <View style={styles.formContainer}>
+                            <View>
+                                <Text style={[generalStyles.formInputTextStyle, styles.labelStyles]}>
+                                    Select Payment Period*</Text>
+                            </View>
+                            <Picker
+                                placeholder=" select  payment period"
+                                placeholderTextColor={COLORS.primaryLightGreyHex}
+                                value={property?.payment_period_id}
+                                style={[generalStyles.formInput, styles.borderStyles, styles.inlineTextInputStyles]}
+                                enableModalBlur={false}
+                                onChange={item => {
+                                    return setProperty((prev: any) => {
+                                        return { ...prev, payment_period_id: item }
+                                    })
+                                }}
+                                trailingAccessory={<View style={styles.iconStyles}>
+                                    <Entypo name="chevron-down" size={20} color={COLORS.primaryWhiteHex} />
+                                </View>}
+                                color={COLORS.primaryWhiteHex}
+                                topBarProps={{ title: 'Property Payment Period' }}
+
+                                showSearch
+                                searchPlaceholder={'Search  payment periods'}
+                                searchStyle={{ color: COLORS.primaryBlackHex, placeholderTextColor: COLORS.primaryLightGreyHex }}
+                            // onSearchChange={value => console.warn('value', value)}
+                            >
+                                {paymentPeriods.map((item: any) => (
+                                    <Picker.Item key={item.id}
+                                        value={item.id}
+                                        label={item.name}
+                                    />
+                                ))}
+                            </Picker>
+                        </View>
+                    )
+                }
+                {/* payment period */}
+
                 {/* property price */}
                 <View style={styles.formContainer}>
                     <View>
                         <Text style={[generalStyles.formInputTextStyle, styles.labelStyles]}>
-                            Property Price(Monthly)*</Text>
+                            Property Price*</Text>
                     </View>
                     <View>
                         <TextInput
