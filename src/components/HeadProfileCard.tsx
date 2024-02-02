@@ -10,7 +10,6 @@ import { generalStyles } from '../screens/utils/generatStyles';
 import { COLORS } from '../theme/theme';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { PROFILE_UPLOAD } from '../screens/utils/constants/routes';
-import ProgressBar from 'react-native-progress/Bar';
 import RNFetchBlob from 'rn-fetch-blob';
 import { ActivityIndicator } from './ActivityIndicator';
 
@@ -22,7 +21,7 @@ const HeadProfileCard = () => {
     const { user, isLoggedIn, authToken } = useSelector((state: RootState) => state.user);
     const [showModal, setShowModal] = useState<boolean>(false);
     const [imagePath, setImagePath] = useState<any>(null);
-    const [progress, setProgress] = useState<number>(0);
+
 
     const [loading, setLoading] = useState<boolean>(false);
 
@@ -69,9 +68,6 @@ const HeadProfileCard = () => {
                 .then(response => response.json())
                 .then(async (res) => {
                     setImagePath(null)
-                    console.log("==============results========")
-                    console.log(res)
-                    console.log("==============results========")
 
                     setLoading(false)
                     //dispatch(updateProfilePicture(res.data));
@@ -114,6 +110,20 @@ const HeadProfileCard = () => {
     useEffect(() => {
 
     }, [imagePath]);
+
+    const getImageUrl = (displayPicture: string | null) => {
+
+        console.log("displayPicture", displayPicture)
+
+        if (displayPicture) {
+            return `${PUBLIC_STORAGE}profile/${displayPicture}`
+        } else {
+            return DEFAULT_USER_PROFILE
+        }
+
+    }
+
+    console.log(getImageUrl(user?.displayPicture))
 
     return (
         <View style={[generalStyles.flexStyles]}>
@@ -160,23 +170,12 @@ const HeadProfileCard = () => {
                 ) : (
                     <Image
                         style={{ width: 80, height: 80, borderRadius: 40 }}
-                        source={{ uri: `${PUBLIC_STORAGE}/profile/${user?.displayPicture || DEFAULT_USER_PROFILE}` }}
+                        source={{ uri: getImageUrl(user?.displayPicture) }}
                     />
                 )}
             </TouchableOpacity>
 
-            {/* progress bar */}
-            {
-                loading && (<ProgressBar
-                    progress={progress}
-                    width={screenWidth - 30}
-                    style={generalStyles.progress}
-                    color="#34D399"
-                    borderWidth={0}
-                    unfilledColor="grey"
 
-                />)
-            }
 
             {/* progress bar */}
 

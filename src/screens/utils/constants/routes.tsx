@@ -44,6 +44,9 @@ export const VERIFY_PROPERTY_OWNER = `${BASE_URL}/verifyPropertyOwnerPhoneNumber
 //general
 export const GET_ALL_CATEGORIES = `${BASE_URL}/getAllCategories`;
 export const GET_ALL_SERVICES = `${BASE_URL}/getAllServices`;
-export const GET_ALL_AMENTITIES = `${BASE_URL}/getAllAmenities`
+export const GET_ALL_AMENTITIES = `${BASE_URL}/getAllAmenities`;
+export const  GET_ALL_PROPERT_STATUSES = `${BASE_URL}/getAllPropertyStatuses`
+export const GET_ALL_CURRENCIES = `${BASE_URL}/getAllCurrencies`
+export const GET_ALL_PAYMENT_PERIODS = `${BASE_URL}/getAllPaymentPeriods`
 
 
