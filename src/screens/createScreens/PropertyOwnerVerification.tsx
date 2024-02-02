@@ -24,12 +24,15 @@ import { causeVibration, getErrorMessage } from '../utils/helpers/helpers';
 import { ActivityIndicator } from '../../components/ActivityIndicator';
 import { showMessage } from 'react-native-flash-message';
 import { VERIFY_PROPERTY_OWNER } from '../utils/constants/routes';
+import { RootState } from '../../redux/store/dev';
+import { useSelector } from 'react-redux';
 
 const PropertyOwnerVerification = () => {
 
     const [otpCode, setOtpCode] = useState<any>('');
     const [loading, setLoading] = useState<boolean>(false);
     const [showResendLink, setShowResendLink] = useState<boolean>(false);
+    const { authToken } = useSelector((state: RootState) => state.user);
 
     const { params } = useRoute<any>();
     const { email, phone_number } = params;
@@ -74,6 +77,7 @@ const PropertyOwnerVerification = () => {
 
         const headers = new Headers();
         headers.append('Accept', 'application/json');
+        headers.append("Authorization", `Bearer ${authToken}`);
 
 
         const body = new FormData();
@@ -88,7 +92,6 @@ const PropertyOwnerVerification = () => {
         })
             .then(response => response.json())
             .then(async result => {
-                console.log(result);
 
                 if (result?.errors) {
                     setErrors(result.errors);
@@ -107,8 +110,8 @@ const PropertyOwnerVerification = () => {
                 if (result.response === 'success') {
                     //dispatch(loginUser());
                     showMessage({
-                        message: "Phone number  has verified",
-                        description: "Your phone   number has been verified",
+                        message: "The property owner's Phone number  has verified",
+                        description: "The property owner's phone   number has been verified",
                         icon: "success",
                         type: "success",
                         autoHide: true,

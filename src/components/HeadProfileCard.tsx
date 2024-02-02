@@ -50,6 +50,7 @@ const HeadProfileCard = () => {
                 {
                     'Content-Type': 'multipart/form-data',
                     Accept: 'application/json',
+                    Authorization: `Bearer ${authToken}`,
                 },
                 [
                     {
