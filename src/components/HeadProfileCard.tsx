@@ -6,7 +6,7 @@ import { AppDispatch, RootState } from '../redux/store/dev';
 import UploadComponent from './UploadComponent';
 import { updateProfilePicture } from '../redux/store/slices/UserSlice';
 import { UploadImage } from '../hooks/UploadImage';
-import { DEFAULT_USER_PROFILE, PROFILE_STORAGE } from '../screens/utils/constants/constants';
+import { DEFAULT_USER_PROFILE } from '../screens/utils/constants/constants';
 import { generalStyles } from '../screens/utils/generatStyles';
 import { COLORS } from '../theme/theme';
 import AntDesign from 'react-native-vector-icons/AntDesign';

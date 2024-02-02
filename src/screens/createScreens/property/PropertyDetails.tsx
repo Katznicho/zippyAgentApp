@@ -17,7 +17,7 @@ const PropertyDetails = ({ property, setProperty, propertyOwners, currencies, ca
     const { authToken } = useSelector((state: RootState) => state.user);
 
     const isDisabled = () => {
-        if (property?.owner_id == "" || property?.category_id == "" || property?.currency == "" || property?.room_type == "" || property?.name == "" || property?.number_of_rooms == "" || property?.number_of_beds == "" ||
+        if (property?.owner_id == "" || property?.category_id == "" || property?.currency == "" || property?.name == "" || property?.number_of_beds == "" ||
             property?.number_of_baths == "" || property?.price == "") {
             return true
         }
@@ -150,76 +150,7 @@ const PropertyDetails = ({ property, setProperty, propertyOwners, currencies, ca
                 {/* property category */}
 
                 {/* room details area*/}
-                <View style={[generalStyles.flexStyles, { alignItems: 'center', justifyContent: 'center' }]}>
 
-                    {
-                        roomTypes.length > 0 && (<View style={[styles.formContainer, { marginLeft: 5 }]}>
-                            <View>
-                                <Text style={[generalStyles.formInputTextStyle, styles.labelStyles]}>
-                                    Room  Type *</Text>
-                            </View>
-                            <Picker
-                                placeholder="select room type   "
-                                placeholderTextColor={COLORS.primaryLightGreyHex}
-                                value={property?.room_type}
-                                style={[generalStyles.formInput, styles.borderStyles, styles.inlineTextInputStyles, styles.fixedWidth]}
-                                enableModalBlur={false}
-                                onChange={item => {
-                                    return setProperty((prev: any) => {
-                                        return { ...prev, room_type: item }
-                                    })
-                                }}
-                                trailingAccessory={<View style={[styles.iconStyles, { right: 0, top: 15 }]}>
-                                    <Entypo name="chevron-down" size={20} color={COLORS.primaryWhiteHex} />
-                                </View>}
-                                color={COLORS.primaryWhiteHex}
-                                topBarProps={{ title: 'Room Types' }}
-
-                                showSearch
-                                searchPlaceholder={'Search a property room types'}
-                                searchStyle={{ color: COLORS.primaryBlackHex, placeholderTextColor: COLORS.primaryLightGreyHex }}
-                            // onSearchChange={value => console.warn('value', value)}
-                            >
-                                {roomTypes.map((item: any) => (
-                                    <Picker.Item key={item.name}
-                                        value={item.name}
-                                        label={item.name}
-                                    />
-                                ))}
-                            </Picker>
-                        </View>)
-
-                    }
-                    <View style={styles.formContainer}>
-                        <View>
-                            <Text style={[generalStyles.formInputTextStyle, styles.labelStyles]}>
-                                Total Rooms*</Text>
-                        </View>
-                        <View>
-                            <TextInput
-                                style={[generalStyles.formInput, styles.borderStyles, styles.fixedWidth]}
-                                placeholderTextColor={COLORS.primaryWhiteHex}
-                                // placeholderStyle={{ borderColor: 'red' }}
-                                keyboardType="number-pad"
-                                placeholder={'enter total rooms'}
-                                onChangeText={text => setProperty((prev: any) => {
-                                    return { ...prev, number_of_rooms: text }
-                                })
-                                }
-                                value={property?.number_of_rooms}
-                                underlineColorAndroid="transparent"
-                                autoCapitalize="none"
-
-                            />
-                        </View>
-
-                        <View>
-                            {errors.year_started && <Text style={generalStyles.errorText}>{errors.year_started}</Text>}
-                        </View>
-
-                    </View>
-
-                </View>
 
                 <View style={[generalStyles.flexStyles, { alignItems: 'center', justifyContent: 'center' }]}>
 

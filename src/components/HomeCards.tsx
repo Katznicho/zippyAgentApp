@@ -27,13 +27,13 @@ const HomeCards: React.FC<any> = () => {
 
     return (
         <View>
-            <View style={[styles.viewStyles, generalStyles.flexStyles, styles.overAllContainer, { alignItems: 'center', justifyContent: 'space-between' }]}>
-                <TouchableOpacity style={[styles.CardContainer, styles.additionCardContainerStyles]}
+            <View style={[styles.viewStyles, generalStyles.flexStyles, { alignItems: 'center', justifyContent: 'space-between' }]}>
+                <TouchableOpacity style={[styles.CardContainer]}
                     activeOpacity={1}
                     // onPress={() => setOpenPicker(true)}
                     onPress={() => navigation.navigate('AllUsers')}
                 >
-                    <View style={[generalStyles.flexStyles, { alignItems: 'center', justifyContent: 'space-between' }]}>
+                    <View style={[{ alignItems: 'center', justifyContent: 'space-between' }]}>
                         <View>
                             <Text style={[styles.CardTitle]}>{data?.data?.total_referrals ?? 0}</Text>
                         </View>
@@ -49,7 +49,7 @@ const HomeCards: React.FC<any> = () => {
                     onPress={() => navigation.navigate('AllProperties')}
                     style={[styles.CardContainer]}
                 >
-                    <View style={[generalStyles.flexStyles, { alignItems: 'center', justifyContent: 'space-between' }]}>
+                    <View style={[{ alignItems: 'center', justifyContent: 'space-between' }]}>
                         <View>
                             <Text style={[styles.CardTitle]}>{data?.data?.total_properties ?? 0}</Text>
                         </View>
@@ -70,12 +70,12 @@ export default HomeCards
 const styles = StyleSheet.create({
     CardTitle: {
         fontFamily: FONTFAMILY.poppins_medium,
-        color: COLORS.primaryWhiteHex,
+        color: COLORS.primaryBlackHex,
         fontSize: FONTSIZE.size_16,
     },
     CardSubtitle: {
         fontFamily: FONTFAMILY.poppins_light,
-        color: COLORS.primaryWhiteHex,
+        color: COLORS.primaryBlackHex,
         fontSize: FONTSIZE.size_14,
         marginHorizontal: SPACING.space_10
     },
@@ -93,15 +93,11 @@ const styles = StyleSheet.create({
         paddingHorizontal: SPACING.space_28,
         paddingVertical: SPACING.space_15,
         // borderRadius: SPACING.space_8,
-        width: 150
-    },
-    overAllContainer: {
-        backgroundColor: COLORS.primaryBlackHex,
+        width: 150,
+        backgroundColor: COLORS.primaryOrangeHex,
         borderRadius: SPACING.space_8,
         padding: SPACING.space_10,
-        elevation: 10
-    },
-    additionCardContainerStyles: {
-        borderRightWidth: 0.5, borderRightColor: COLORS.primaryLightGreyHex
+        elevation: 10,
+        height: 100
     }
 })

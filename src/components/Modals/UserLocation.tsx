@@ -10,6 +10,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 
 
 
+
 type Props = {
     openPicker: boolean;
     setOpenPicker: (openPicker: boolean) => void;
