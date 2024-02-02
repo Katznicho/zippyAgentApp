@@ -33,6 +33,7 @@ export const REGISTER_PROPERTY = `${BASE_URL}/registerPropertyByAgent`;
 export const GET_ALL_REGISTERED_PROPERTY_OWNERS = `${BASE_URL}/getAllRegisteredPropertyOwners`;
 export const GET_REGISTERED_PROPETY_BY_PAGE = `${BASE_URL}/getRegisterPropertyByPage`;
 export const GET_REGISTERED_USERS_BY_PAGE = `${BASE_URL}/getRegisterPropertyOwnersByPage`;
+export const VERIFY_PROPERTY_OWNER = `${BASE_URL}/verifyPropertyOwnerPhoneNumber`
 
 
 

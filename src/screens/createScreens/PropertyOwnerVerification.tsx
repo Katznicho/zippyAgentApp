@@ -7,7 +7,7 @@ import {
     TextInput,
     StyleSheet,
 } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
 import Animated, {
@@ -17,26 +17,22 @@ import Animated, {
     withSequence,
     withTiming,
 } from 'react-native-reanimated';
-
-import { VERIFY_EMAIL } from '../utils/constants/routes';
-import { causeVibration, getErrorMessage } from '../utils/helpers/helpers';
-import { showMessage } from 'react-native-flash-message';
-import { COLORS } from '../../theme/theme';
 import { generalStyles } from '../utils/generatStyles';
+import { COLORS } from '../../theme/theme';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { causeVibration, getErrorMessage } from '../utils/helpers/helpers';
 import { ActivityIndicator } from '../../components/ActivityIndicator';
+import { showMessage } from 'react-native-flash-message';
+import { VERIFY_PROPERTY_OWNER } from '../utils/constants/routes';
 
-
-const VerificationScreen = () => {
+const PropertyOwnerVerification = () => {
 
     const [otpCode, setOtpCode] = useState<any>('');
     const [loading, setLoading] = useState<boolean>(false);
     const [showResendLink, setShowResendLink] = useState<boolean>(false);
 
-    const [timer, setTimer] = useState(120); // Initial timer value in seconds
-
     const { params } = useRoute<any>();
-    const { email } = params;
+    const { email, phone_number } = params;
     const [errors, setErrors] = useState<any>({});
 
     const rotation = useSharedValue(0);
@@ -65,30 +61,8 @@ const VerificationScreen = () => {
 
     const navigation = useNavigation<any>();
 
-    useEffect(() => {
-        // Start the timer when the component mounts
-        const interval = setInterval(() => {
-            setTimer(prevTimer => {
-                if (prevTimer === 0) {
-                    clearInterval(interval);
-                    // Perform action when timer reaches zero (e.g., enable the link)
-                    setShowResendLink(true);
-                    return prevTimer;
-                }
-                setShowResendLink(false);
-                return prevTimer - 1;
-            });
-        }, 1000);
 
-        // Clear the timer when the component unmounts
-        return () => clearInterval(interval);
-    }, []);
-
-
-
-    //
-    //Verify email address
-    function verifyEmail() {
+    function verifyPhoneNumber() {
         if (otpCode == "") {
             setErrors((prevErrors: any) => ({
                 ...prevErrors,
@@ -104,9 +78,10 @@ const VerificationScreen = () => {
 
         const body = new FormData();
         body.append('email', email.toLowerCase());
+        body.append('phone_number', phone_number);
         body.append('otp', otpCode);
 
-        fetch(`${VERIFY_EMAIL}`, {
+        fetch(`${VERIFY_PROPERTY_OWNER}`, {
             method: 'POST',
             headers,
             body,
@@ -123,10 +98,7 @@ const VerificationScreen = () => {
                 }
 
                 if (result.response === 'failure') {
-                    // setErrors({
-                    //   // email: [result?.message],
-                    //   password: [result?.message],
-                    // });
+
                     causeVibration();
                     triggerErrorAnimation();
                     return setLoading(false);
@@ -135,15 +107,15 @@ const VerificationScreen = () => {
                 if (result.response === 'success') {
                     //dispatch(loginUser());
                     showMessage({
-                        message: "Email Verified",
-                        description: "Your email has been verified",
+                        message: "Phone number  has verified",
+                        description: "Your phone   number has been verified",
                         icon: "success",
                         type: "success",
                         autoHide: true,
                         duration: 3000
 
                     })
-                    navigation.navigate("Login");
+                    return navigation.navigate("HomeTab");
                 }
 
                 setLoading(false);
@@ -155,8 +127,7 @@ const VerificationScreen = () => {
             });
     }
 
-    //
-    //
+
     return (
         <KeyboardAwareScrollView
             style={[{ flex: 1, width: '100%' }, generalStyles.ScreenContainer]}
@@ -174,7 +145,7 @@ const VerificationScreen = () => {
 
                 <View style={styles.contentRow}>
                     <Text style={[generalStyles.textStyle]}>
-                        Check your email. We have sent you a code
+                        Check the property owner's email  or phone number for the verification code
                     </Text>
                 </View>
 
@@ -235,7 +206,7 @@ const VerificationScreen = () => {
                         </TouchableOpacity>
                     )}
 
-                    {!showResendLink && (
+                    {/* {!showResendLink && (
                         <TouchableOpacity
                             activeOpacity={1}
                             style={[generalStyles.centerContent]}
@@ -244,12 +215,12 @@ const VerificationScreen = () => {
                                 Resend Otp in {timer} seconds
                             </Text>
                         </TouchableOpacity>
-                    )}
+                    )} */}
 
                     <TouchableOpacity
                         activeOpacity={1}
                         style={generalStyles.loginContainer}
-                        onPress={() => verifyEmail()}>
+                        onPress={() => verifyPhoneNumber()}>
                         <Text style={generalStyles.loginText}>{'Verify'}</Text>
                     </TouchableOpacity>
 
@@ -259,10 +230,10 @@ const VerificationScreen = () => {
                 </View>
             </ScrollView>
         </KeyboardAwareScrollView>
-    );
-};
+    )
+}
 
-export default VerificationScreen;
+export default PropertyOwnerVerification
 
 const styles = StyleSheet.create({
 

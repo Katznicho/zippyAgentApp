@@ -5,6 +5,7 @@ import { generalStyles } from '../screens/utils/generatStyles';
 import SelectCreateTab from '../screens/createScreens/SelectCreateTab';
 import AddProperty from '../screens/createScreens/AddProperty';
 import AddPropertyOwner from '../screens/createScreens/AddPropertyOwner';
+import PropertyOwnerVerification from '../screens/createScreens/PropertyOwnerVerification';
 
 
 
@@ -39,6 +40,18 @@ const CreateStack = () => {
                     headerTintColor: COLORS.primaryBlackHex,
                     headerTitleAlign: 'center',
 
+                }}
+            />
+
+            <Stack.Screen
+                name="VerifyPropertyOwner"
+                component={PropertyOwnerVerification}
+                options={{
+                    title: 'Verify Property Owner',
+                    headerStyle: generalStyles.headerStyle,
+                    headerTitleStyle: generalStyles.titleHeaderStyles,
+                    headerTintColor: COLORS.primaryBlackHex,
+                    headerTitleAlign: 'center',
                 }}
             />
 
