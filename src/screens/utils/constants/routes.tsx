@@ -26,6 +26,7 @@ export const USERNOTIFICATIONS = `${BASE_URL}/getUserNotifications`
 export const PROFILE_UPLOAD = `${BASE_URL}/profileUpload`;
 export const IMAGES_UPLOAD = `${BASE_URL}/uploadIdImages`
 
+
 //property owner
 export const REGISTER_PROPERTY_OWNER = `${BASE_URL}/registerPropertyOwner`;
 export const REGISTER_PROPERTY = `${BASE_URL}/registerPropertyByAgent`;

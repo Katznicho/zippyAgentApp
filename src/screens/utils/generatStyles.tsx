@@ -137,6 +137,9 @@ export const generalStyles = StyleSheet.create({
   },
   scrollViewContentPadding: {
     paddingBottom: 100
-  }
+  },
+  progress: { marginTop: 10, alignSelf: 'center' },
+
+
 
 });

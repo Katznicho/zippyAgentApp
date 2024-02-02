@@ -1,16 +1,20 @@
-import { View, TouchableOpacity, Alert, Image } from 'react-native';
+import { View, TouchableOpacity, Image, Dimensions } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { showMessage } from 'react-native-flash-message';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../redux/store/dev';
 import UploadComponent from './UploadComponent';
 import { updateProfilePicture } from '../redux/store/slices/UserSlice';
-import { UploadImage } from '../hooks/UploadImage';
-import { DEFAULT_USER_PROFILE } from '../screens/utils/constants/constants';
+import { DEFAULT_USER_PROFILE, PUBLIC_STORAGE } from '../screens/utils/constants/constants';
 import { generalStyles } from '../screens/utils/generatStyles';
 import { COLORS } from '../theme/theme';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import { UPDATEUSERAVATAR } from '../screens/utils/constants/routes';
+import { PROFILE_UPLOAD } from '../screens/utils/constants/routes';
+import ProgressBar from 'react-native-progress/Bar';
+import RNFetchBlob from 'rn-fetch-blob';
+import { ActivityIndicator } from './ActivityIndicator';
+
+const screenWidth = Dimensions.get('window').width
 
 const HeadProfileCard = () => {
 
@@ -18,6 +22,9 @@ const HeadProfileCard = () => {
     const { user, isLoggedIn, authToken } = useSelector((state: RootState) => state.user);
     const [showModal, setShowModal] = useState<boolean>(false);
     const [imagePath, setImagePath] = useState<any>(null);
+    const [progress, setProgress] = useState<number>(0);
+
+    const [loading, setLoading] = useState<boolean>(false);
 
 
 
@@ -25,62 +32,73 @@ const HeadProfileCard = () => {
 
     const handleUpload = async () => {
         try {
-            const { error, image } = await UploadImage(
-                user?.UID,
-                imagePath.imagePath,
-                PROFILE_STORAGE,
-                true
-            );
-            if (error) {
-                Alert.alert('Something went wrong please try aagin');
-            }
-            if (image) {
+            setLoading(true)
+            const coverImageFilePath = imagePath?.imagePath?.replace(/^file:\/\//, '');
 
-                const headers = new Headers();
-                headers.append('Accept', 'application/json');
-                headers.append('Authorization', `Bearer ${authToken}`);
-                const body = new FormData();
-                body.append('avatar', image);
-                fetch(`${UPDATEUSERAVATAR}`, {
-                    method: 'POST',
-                    headers,
-                    body
-                }).then(response => response.json())
-                    .then(async result => {
-                        console.log('result image update', result)
-                        console.log(result)
-                        if (result.response === 'failure') {
-                            showMessage({
-                                message: 'Something went wrong please try again',
-                                type: 'danger',
-                                icon: 'danger',
-                                duration: 3000,
-                                floating: true,
-                            });
-                        }
-                        else {
-                            dispatch(updateProfilePicture(image));
-                            showMessage({
-                                message: 'Profile picture updated successfully',
-                                type: 'success',
-                                icon: 'success',
-                                duration: 3000,
-                                floating: true,
-                            });
-                        }
+            const formData = new FormData();
 
-                        setImagePath(null);
-                    }).catch(error => {
-                        showMessage({
-                            message: 'Something went wrong please try again',
-                            type: 'danger',
-                            icon: 'danger',
-                            duration: 3000,
-                            floating: true,
-                        });
+            formData.append('profile_pic', {
+                name: 'profile_pic',
+                filename: 'profile_pic.png',
+                type: 'image/png',
+                data: RNFetchBlob.wrap(coverImageFilePath),
+            });
+
+            RNFetchBlob.fetch(
+                'POST',
+                PROFILE_UPLOAD,
+                {
+                    'Content-Type': 'multipart/form-data',
+                    Accept: 'application/json',
+                },
+                [
+                    {
+                        name: 'profile_pic',
+                        filename: 'profile_pic.png',
+                        type: 'image/png',
+                        // Change BASE64 encoded data to a file path with prefix `RNFetchBlob-file://`.
+                        // Or simply wrap the file path with RNFetchBlob.wrap().
+                        data: RNFetchBlob.wrap(coverImageFilePath)
+                    },
+
+                ]
+            ).uploadProgress((written, total) => {
+                setProgress(written / total)
+            })
+                .then(response => response.json())
+                .then(async (res) => {
+                    setImagePath(null)
+                    console.log("==============results========")
+                    console.log(res)
+                    console.log("==============results========")
+
+                    setLoading(false)
+                    //dispatch(updateProfilePicture(res.data));
+                    const { profile_pic } = res.data;
+                    dispatch(updateProfilePicture(profile_pic));
+                    return showMessage({
+                        message: 'Profile picture updated successfully',
+                        type: 'success',
+                        icon: 'success',
+                        duration: 3000,
+                        floating: true,
                     })
-            }
+                }).
+                catch((error) => {
+                    setLoading(false)
+                    showMessage({
+                        message: error.response.data.message,
+                        description: error.response.data.error,
+                        type: 'danger',
+                        icon: 'danger',
+                        duration: 3000,
+                        floating: true,
+                    });
+                });
+
+
         } catch (error: any) {
+            setLoading(false)
             showMessage({
                 message: error.response.data.message,
                 description: error.response.data.error,
@@ -141,16 +159,29 @@ const HeadProfileCard = () => {
                 ) : (
                     <Image
                         style={{ width: 80, height: 80, borderRadius: 40 }}
-                        source={{
-                            uri: `${user?.displayPicture || DEFAULT_USER_PROFILE
-                                }
-            `,
-                        }}
+                        source={{ uri: `${PUBLIC_STORAGE}/profile/${user?.displayPicture || DEFAULT_USER_PROFILE}` }}
                     />
                 )}
             </TouchableOpacity>
 
+            {/* progress bar */}
+            {
+                loading && (<ProgressBar
+                    progress={progress}
+                    width={screenWidth - 30}
+                    style={generalStyles.progress}
+                    color="#34D399"
+                    borderWidth={0}
+                    unfilledColor="grey"
 
+                />)
+            }
+
+            {/* progress bar */}
+
+            {/* loader */}
+            {loading && <ActivityIndicator />}
+            {/* loader */}
 
             {/* modal section */}
             {showModal && (

@@ -674,7 +674,7 @@ const AddProperty = () => {
                     isSubmitting && (<ProgressBar
                         progress={progress}
                         width={screenWidth - 30}
-                        style={styles.progress}
+                        style={generalStyles.progress}
                         color="#34D399"
                         borderWidth={0}
                         unfilledColor="grey"
@@ -696,6 +696,3 @@ const AddProperty = () => {
 
 export default AddProperty
 
-const styles = StyleSheet.create({
-    progress: { marginTop: 10, alignSelf: 'center' },
-})
