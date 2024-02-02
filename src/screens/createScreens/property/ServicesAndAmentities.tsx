@@ -6,13 +6,14 @@ import { useSelector } from 'react-redux';
 import { COLORS, FONTFAMILY } from '../../../theme/theme';
 import { generalStyles } from '../../utils/generatStyles';
 import { Checkbox } from 'react-native-ui-lib'
+import TextArea from '../../../components/TextArea';
 const ServicesAndAmentities = ({ property, setProperty, amenities, services, goToNextStep, errors, setErrors, goBack }: any) => {
     const tabBarHeight = useBottomTabBarHeight();
     const { authToken } = useSelector((state: RootState) => state.user);
 
 
     const isDisabled = () => {
-        if (property?.services?.length == 0 || property?.amenities?.length == 0) {
+        if (property?.services?.length == 0 || property?.amenities?.length == 0 || property?.public_facilities == "") {
             return true
         }
         else {
@@ -130,7 +131,46 @@ const ServicesAndAmentities = ({ property, setProperty, amenities, services, goT
 
                 </View>
                 {/* amentities */}
+
+                {/* property description */}
+                <View style={styles.formContainer}>
+                    <View>
+                        <Text style={[generalStyles.formInputTextStyle, styles.labelStyles]}>Public Facilities*</Text>
+                    </View>
+                    <View>
+                        <TextArea
+                            placeholder="please enter public facilities near the property for example near mulago, opposite wandegeya market etc"
+                            text={property?.public_facilities}
+                            setText={(text: any) => {
+                                return setProperty((prev: any) => {
+                                    return { ...prev, public_facilities: text }
+                                })
+                            }
+                            }
+                        />
+
+
+                    </View>
+
+                    <View>
+                        {errors.description && <Text style={generalStyles.errorText}>{errors.description}</Text>}
+                    </View>
+
+                </View>
+                {/* property description */}
                 {/* button section */}
+
+                <TouchableOpacity
+                    activeOpacity={1}
+                    style={[generalStyles.loginContainer,
+                    styles.buttonStyles,
+                    { backgroundColor: isDisabled() ? COLORS.primaryLightGreyHex : COLORS.primaryOrangeHex }
+                    ]}
+                    onPress={goToNextStep}
+                    disabled={isDisabled()}
+                >
+                    <Text style={generalStyles.loginText}>{'Next'}</Text>
+                </TouchableOpacity>
                 <View>
                     <TouchableOpacity
                         activeOpacity={1}
@@ -141,17 +181,10 @@ const ServicesAndAmentities = ({ property, setProperty, amenities, services, goT
                     >
                         <Text style={generalStyles.loginText}>{'Back'}</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity
-                        activeOpacity={1}
-                        style={[generalStyles.loginContainer,
-                        styles.buttonStyles,
-                        { backgroundColor: isDisabled() ? COLORS.primaryLightGreyHex : COLORS.primaryOrangeHex }
-                        ]}
-                        onPress={goToNextStep}
-                        disabled={isDisabled()}
-                    >
-                        <Text style={generalStyles.loginText}>{'Next'}</Text>
-                    </TouchableOpacity>
+
+
+
+
 
                 </View>
                 {/* button section */}

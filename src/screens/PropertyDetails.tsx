@@ -19,6 +19,8 @@ const PropertyDetails: React.FC<any> = () => {
     const navigation = useNavigation<any>();
 
 
+    // console.log(item.public_facilities)
+
 
 
     return (
@@ -71,7 +73,7 @@ const PropertyDetails: React.FC<any> = () => {
                             // backgroundColor: COLORS.primaryBlackHex,
                             // color: COLORS.primaryOrangeHex
                         }]}
-                    // onPress={() => onPressLogin()}
+                        onPress={() => navigation.navigate('PropertyImages', { item })}
                     >
                         <Text style={generalStyles.loginText}>{'View More Images'}</Text>
                     </TouchableOpacity>
@@ -237,6 +239,25 @@ const PropertyDetails: React.FC<any> = () => {
 
                     </View>
                     <View style={[generalStyles.bottomHairline, styles.hairLineStyles]} />
+
+                    {/* public facilties */}
+                    <View >
+                        <View>
+                            <Text style={styles.CardTitle} >Public facilties</Text>
+                            {/* <Text style={styles.CardSubtitle}>{item?.is_approved ? 'Yes' : "No"}</Text> */}
+                            {
+                                item?.public_facilities?.map((facility: any, index: number) => {
+                                    return (
+                                        <Text style={styles.CardSubtitle} key={index}>{facility}</Text>
+                                    )
+                                })
+                            }
+                        </View>
+
+
+                    </View>
+                    <View style={[generalStyles.bottomHairline, styles.hairLineStyles]} />
+                    {/* public facilties */}
 
                     {/* owner details */}
 

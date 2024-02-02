@@ -257,16 +257,6 @@ const MoreDetails = ({ property, setProperty, propertyStatus, furnishingStatus, 
                     <TouchableOpacity
                         activeOpacity={1}
                         style={[generalStyles.loginContainer,
-                        styles.buttonStyles
-                        ]}
-                        onPress={goBack}
-                    // disabled={count.some((item: any) => item.imagePath === null) || uploadingImages}
-                    >
-                        <Text style={generalStyles.loginText}>{'Back'}</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        activeOpacity={1}
-                        style={[generalStyles.loginContainer,
                         styles.buttonStyles,
                         { backgroundColor: isDisabled() ? COLORS.primaryLightGreyHex : COLORS.primaryOrangeHex }
                         ]}
@@ -275,6 +265,19 @@ const MoreDetails = ({ property, setProperty, propertyStatus, furnishingStatus, 
                     >
                         <Text style={generalStyles.loginText}>{'Next'}</Text>
                     </TouchableOpacity>
+                    
+                    <TouchableOpacity
+                        activeOpacity={1}
+                        style={[generalStyles.loginContainer,
+                        styles.buttonStyles
+                        ]}
+                        onPress={goBack}
+                    // disabled={count.some((item: any) => item.imagePath === null) || uploadingImages}
+                    >
+                        <Text style={generalStyles.loginText}>{'Back'}</Text>
+                    </TouchableOpacity>
+
+
 
                 </View>
                 {/* button section */}

@@ -17,6 +17,7 @@ import AllProperties from '../screens/AllProperties';
 import PropertyDetails from '../screens/PropertyDetails';
 import UserDetails from '../screens/UserDetails';
 import AllUsers from '../screens/AllUsers';
+import PropertyImages from '../screens/PropertyImages';
 
 const Stack = createNativeStackNavigator();
 
@@ -166,6 +167,18 @@ const HomeStack = () => {
                 }}>
             </Stack.Screen>
             {/* property details */}
+
+
+            {/* property images */}
+            <Stack.Screen
+                name="PropertyImages"
+                component={PropertyImages}
+                options={{
+                    animation: 'slide_from_bottom',
+                    headerShown: false
+                }}>
+            </Stack.Screen>
+            {/* property images */}
 
             {/* user details */}
             <Stack.Screen

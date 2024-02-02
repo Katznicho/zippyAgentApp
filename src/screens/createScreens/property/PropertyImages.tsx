@@ -28,7 +28,7 @@ const PropertyImages = ({
     setShowModal,
     setCount,
     showModal,
-    submitProperty,
+    goBack,
     uploadingImages,
     isSubmitting,
     uploadImagesAutomatically
@@ -189,6 +189,17 @@ const PropertyImages = ({
 
                 >
                     <Text style={generalStyles.loginText}>{'Finish'}</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    activeOpacity={1}
+                    style={[generalStyles.loginContainer,
+                    styles.buttonStyles
+                    ]}
+                    onPress={goBack}
+                // disabled={count.some((item: any) => item.imagePath === null) || uploadingImages}
+                >
+                    <Text style={generalStyles.loginText}>{'Back'}</Text>
                 </TouchableOpacity>
 
             </View>

@@ -71,6 +71,7 @@ const AddProperty = () => {
         "services": [],
         "amenities": [],
         "payment_period_id": "",
+        "public_facilities": ""
     });
 
 
@@ -142,8 +143,7 @@ const AddProperty = () => {
             method: 'GET',
             headers
         }).then((res) => res.json()).then((data) => {
-            console.log("=======status data=====")
-            console.log(data)
+
 
             setPropertyStatus(data?.data)
         }).catch((err) => {
@@ -380,7 +380,15 @@ const AddProperty = () => {
         body.append("images[]", property?.images[1] || two);
         body.append("images[]", property?.images[2] || three);
         body.append("images[]", property?.images[3] || four);
-        body.append("is_available", property?.status_id == 1 ? true : false);
+        body.append("is_available", property?.status_id == 1 ? 1 : 0);
+
+        let formattedFacilities = property?.public_facilities.split(",").map((facility: string) => {
+            return facility.trim()
+        })
+
+        formattedFacilities?.forEach((facility: string) => {
+            body.append("public_facilities[]", facility)
+        })
 
         //services loop through and also append them as an array
         property?.services?.forEach((service: any) => {
