@@ -19,9 +19,6 @@ const PropertyDetails: React.FC<any> = () => {
     const navigation = useNavigation<any>();
 
 
-    // console.log(item.public_facilities)
-
-
 
     return (
         <KeyboardAwareScrollView
@@ -98,16 +95,16 @@ const PropertyDetails: React.FC<any> = () => {
                             <Text style={styles.CardSubtitle}>{item?.location}</Text>
                         </View>
                         <View>
-                            <Text style={styles.CardTitle} >Room Type</Text>
-                            <Text style={styles.CardSubtitle}>{item?.room_type}</Text>
+                            <Text style={styles.CardTitle} >Payment Period</Text>
+                            <Text style={styles.CardSubtitle}>{item?.payment_period?.name}</Text>
                         </View>
 
                     </View>
 
                     <View>
                         <View>
-                            <Text style={styles.CardTitle} >Price(Monthly)</Text>
-                            <Text style={styles.CardSubtitle}>{item.currency} {item?.price}</Text>
+                            <Text style={styles.CardTitle} >Price</Text>
+                            <Text style={styles.CardSubtitle}>{item?.currency?.name} {item?.price}</Text>
                         </View>
                         <View>
                             <Text style={styles.CardTitle} >Total Rooms</Text>
@@ -158,7 +155,7 @@ const PropertyDetails: React.FC<any> = () => {
                     <View style={[generalStyles.flexStyles, { justifyContent: 'space-between', alignItems: "center" }]}>
                         <View>
                             <Text style={styles.CardTitle} >Status</Text>
-                            <Text style={styles.CardSubtitle}>{item?.status}</Text>
+                            <Text style={styles.CardSubtitle}>{item?.status?.name}</Text>
                         </View>
                         <View>
                             <Text style={styles.CardTitle} >Zippy ID</Text>

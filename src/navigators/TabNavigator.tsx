@@ -68,7 +68,7 @@ const TabNavigator = () => {
             />
           ),
         }}></Tab.Screen>
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Notification"
         component={MyNotificationStack}
         options={{
@@ -81,7 +81,7 @@ const TabNavigator = () => {
               }
             />
           ),
-        }}></Tab.Screen>
+        }}></Tab.Screen> */}
 
 
       <Tab.Screen

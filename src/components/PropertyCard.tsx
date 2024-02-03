@@ -7,6 +7,8 @@ import { useNavigation } from '@react-navigation/native';
 
 const PropertyCard: React.FC<any> = ({ item }: any) => {
 
+
+
     const navigation = useNavigation<any>()
     return (
         <TouchableOpacity
@@ -27,7 +29,7 @@ const PropertyCard: React.FC<any> = ({ item }: any) => {
 
                 <View>
                     <View>
-                        <Text style={styles.CardPriceCurrency}>{item.currency} {item?.price}</Text>
+                        <Text style={styles.CardPriceCurrency}>{item?.currency?.name} {item?.price}</Text>
 
                     </View>
                     <View style={[generalStyles.flexStyles, { justifyContent: 'center', alignItems: "center" }]}>

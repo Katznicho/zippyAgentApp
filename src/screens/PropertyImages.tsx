@@ -57,7 +57,7 @@ const PropertyImages = () => {
 
                 {
                     item?.images?.map((image: any, index: number) => {
-                        console.log(image)
+
                         return (
                             <View style={{ marginVertical: 10 }} key={image}>
                                 <Image
