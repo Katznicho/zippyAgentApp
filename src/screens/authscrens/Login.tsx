@@ -222,8 +222,9 @@ const Login = () => {
             onChangeFormattedText={(text) => {
               setPhoneNumber(text);
             }}
-            placeholder={'enter phone number'}
-            containerStyle={[generalStyles.formInput, { backgroundColor: COLORS.primaryLightWhiteGrey, }]}
+            placeholder={'Enter Phone Number'}
+            // containerStyle={[generalStyles.formInput, { backgroundColor: COLORS.primaryLightWhiteGrey, }]}
+            containerStyle={[generalStyles.formInput, generalStyles.borderStyles, { backgroundColor: COLORS.primaryBlackHex, }]}
             textContainerStyle={{ paddingVertical: 0, backgroundColor: COLORS.primaryLightWhiteGrey }}
             textInputProps={{
               placeholderTextColor: COLORS.primaryWhiteHex
@@ -237,17 +238,21 @@ const Login = () => {
         {/* phone number */}
 
 
-        <View style={generalStyles.formContainer}>
+                {/* password */}
+
+                <View style={[generalStyles.formContainer]}>
           <View>
             <Text style={generalStyles.formInputTextStyle}>
-              Password</Text>
-          </View >
-          <View style={[generalStyles.flexStyles, styles.viewStyles]}>
+              Password </Text>
+          </View>
+
+          <View style={[generalStyles.flexStyles, generalStyles.borderStyles, { alignItems: "center" }]}>
             <TextInput
-              style={[generalStyles.formInput, { flex: 1 }]}
+              // style={[generalStyles.formInput]}
+              style={[generalStyles.formInput, { flex: 1, borderWidth:0, }]}
               placeholderTextColor={COLORS.primaryWhiteHex}
               secureTextEntry={!showPassword}
-              placeholder={'enter password'}
+              placeholder={'Enter Password'}
               onChangeText={text => setPassword(text)}
               value={password}
               underlineColorAndroid="transparent"
@@ -269,6 +274,8 @@ const Login = () => {
 
         </View>
 
+        {/* password */}
+
 
 
         <View style={generalStyles.forgotPasswordContainer}>
@@ -288,6 +295,21 @@ const Login = () => {
           onPress={() => onPressLogin()}>
           <Text style={generalStyles.loginText}>{'Login'}</Text>
         </TouchableOpacity>
+
+                {/* already have an account login */}
+                <View style={[generalStyles.centerContent, { marginTop: 20 }]}>
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={() => navigation.navigate("Register")}
+            style={[generalStyles.centerContent, { flexDirection: 'row' }]}
+          >
+            <Text style={generalStyles.CardTitle}>Dont have an account? </Text>
+            <Text style={generalStyles.forgotText}>
+              {'Register'}
+            </Text>
+          </TouchableOpacity>
+        </View>
+        {/* already have an account login */}
 
 
         {loading && <ActivityIndicator />}

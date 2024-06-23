@@ -112,7 +112,7 @@ export const generalStyles = StyleSheet.create({
     color: COLORS.primaryWhiteHex,
     fontSize: 15,
     borderBottomColor: COLORS.primaryWhiteHex,
-    borderBottomWidth: 1,
+    borderBottomWidth: 0,
     // paddingBottom: 2,
     paddingHorizontal: 0,
     paddingVertical: 0,
@@ -139,6 +139,20 @@ export const generalStyles = StyleSheet.create({
     paddingBottom: 100
   },
   progress: { marginTop: 10, alignSelf: 'center' },
+  borderStyles: {
+    borderWidth: 0.5,
+    borderBottomWidth: 0.5,
+    height: 45,
+    borderColor: COLORS.primaryLightGreyHex,
+    borderRadius: 10,
+    paddingLeft: 10,
+    paddingRight: 10
+},
+errorText: {
+  color: COLORS.primaryRedHex,
+  fontSize: 14,
+  fontFamily: FONTFAMILY.Lovato_Regular,
+},
 
 
 
