@@ -1,19 +1,19 @@
 // export const BASE_URL = "https://zippy.risidev.com/api/v1";
 export const BASE_URL:string = "https://dashboard.zippyug.com/api/v1";
 
-export const LOGIN = `${BASE_URL}/agent/auth/login`;
-export const REGISTER = `${BASE_URL}/agent/auth/register`;
-export const LOGOUT = `${BASE_URL}/agent/auth/logout`;
-export const FORGOT_PASSWORD = `${BASE_URL}/agent/auth/requestPasswordReset`;
-export const RESET_PASSWORD = `${BASE_URL}/agent/auth/resetPassword`;
-export const RESEND_OTP = `${BASE_URL}/agent/auth/resendOTP`
-export const VERIFY_EMAIL = `${BASE_URL}/agent/auth/verifyEmail`
-export const SAVE_DEVICE_INFO = `${BASE_URL}/agent/auth/saveDeviceInfo`
-export const SETUP_WALLET_ACCOUNT = `${BASE_URL}/agent/auth/setUpUserWalletAccount`;
-export const UPDATEWALLETBALANCE = `${BASE_URL}/agent/auth/updateShowWalletBalance`
-export const UPDATEUSERAVATAR = `${BASE_URL}/agent/auth/updateUserAvatarUrl`
-export const UPDATE_USER_LOCATION = `${BASE_URL}/agent/auth/updateUserLocation`;
-export const UPDATE_PASSWORD_FIRST_USER = `${BASE_URL}/agent/auth/resetPasswordFirstUser`;
+export const LOGIN = `${BASE_URL}/agent/login`;
+export const REGISTER = `${BASE_URL}/agent/register`;
+export const LOGOUT = `${BASE_URL}/agent/logout`;
+export const FORGOT_PASSWORD = `${BASE_URL}/agent/requestPasswordReset`;
+export const RESET_PASSWORD = `${BASE_URL}/agent/resetPassword`;
+export const RESEND_OTP = `${BASE_URL}/agent/resendOTP`
+export const VERIFY_EMAIL = `${BASE_URL}/agent/verifyEmail`
+export const SAVE_DEVICE_INFO = `${BASE_URL}/agent/saveDeviceInfo`
+export const SETUP_WALLET_ACCOUNT = `${BASE_URL}/agent/setUpUserWalletAccount`;
+export const UPDATEWALLETBALANCE = `${BASE_URL}/agent/updateShowWalletBalance`
+export const UPDATEUSERAVATAR = `${BASE_URL}/agent/updateUserAvatarUrl`
+export const UPDATE_USER_LOCATION = `${BASE_URL}/agent/updateUserLocation`;
+export const UPDATE_PASSWORD_FIRST_USER = `${BASE_URL}/agent/resetPasswordFirstUser`;
 
 //payments
 export const PROCESSORDER = `${BASE_URL}/processOrder`;

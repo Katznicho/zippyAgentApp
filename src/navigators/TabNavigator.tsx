@@ -30,7 +30,7 @@ const TabNavigator = () => {
         tabBarHideOnKeyboard: true,
         headerShown: false,
         tabBarShowLabel: true,
-        tabBarActiveTintColor: COLORS.primaryOrangeHex,
+        tabBarActiveTintColor: COLORS.primaryBlackHex,
         tabBarInactiveTintColor: COLORS.primaryLightGreyHex,
         // tabBarLabelStyle: styles.tabBarLabelStyle,
         tabBarStyle: styles.tabBarStyle,
@@ -47,7 +47,7 @@ const TabNavigator = () => {
               name="home"
               size={25}
               color={
-                focused ? COLORS.primaryOrangeHex : COLORS.primaryLightGreyHex
+                focused ? COLORS.primaryBlackHex : COLORS.primaryLightGreyHex
               }
             />
           ),
@@ -63,7 +63,7 @@ const TabNavigator = () => {
               name="pluscircleo"
               size={25}
               color={
-                focused ? COLORS.primaryOrangeHex : COLORS.primaryLightGreyHex
+                focused ? COLORS.primaryBlackHex : COLORS.primaryLightGreyHex
               }
             />
           ),
@@ -93,7 +93,7 @@ const TabNavigator = () => {
               name="user"
               size={25}
               color={
-                focused ? COLORS.primaryOrangeHex : COLORS.primaryLightGreyHex
+                focused ? COLORS.primaryBlackHex : COLORS.primaryLightGreyHex
               }
             />
           ),
@@ -108,19 +108,11 @@ const styles = StyleSheet.create({
   tabBarStyle: {
     height: 60,
     position: 'absolute',
-    backgroundColor: COLORS.primaryBlackRGBA,
+    backgroundColor: COLORS.primaryOrangeHex,
     borderTopWidth: 0,
     elevation: 0,
-    borderTopColor: 'transparent',
+  },
 
-  },
-  BlurViewStyles: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-  },
 });
 
 export default TabNavigator;

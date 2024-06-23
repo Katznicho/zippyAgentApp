@@ -174,8 +174,9 @@ const AddPropertyOwner = () => {
                     </View>
 
                     <TextInput
-                        style={[generalStyles.formInput, styles.extraMargingRight]}
-                        placeholder={'enter full name'}
+                        // style={[generalStyles.formInput, styles.extraMargingRight]}
+                        style={[generalStyles.formInput, generalStyles.borderStyles, generalStyles.textInputMarginRight, errors.firstName && generalStyles.errorInput]}
+                        placeholder={'Enter Full Name'}
                         keyboardType="default"
                         placeholderTextColor={COLORS.primaryWhiteHex}
                         onChangeText={text => setFullName(text)}
@@ -205,7 +206,8 @@ const AddPropertyOwner = () => {
                             setPhoneNumber(text);
                         }}
                         placeholder={'enter phone number'}
-                        containerStyle={[generalStyles.formInput, { backgroundColor: COLORS.primaryLightWhiteGrey, }]}
+                        // containerStyle={[generalStyles.formInput, { backgroundColor: COLORS.primaryLightWhiteGrey, }]}
+                        containerStyle={[generalStyles.formInput, generalStyles.borderStyles, { backgroundColor: COLORS.primaryBlackHex, }]}
                         textContainerStyle={{ paddingVertical: 0, backgroundColor: COLORS.primaryLightWhiteGrey }}
                         textInputProps={{
                             placeholderTextColor: COLORS.primaryWhiteHex
@@ -228,8 +230,9 @@ const AddPropertyOwner = () => {
                     </View>
 
                     <TextInput
-                        style={[generalStyles.formInput, styles.extraMargingRight]}
-                        placeholder={'enter email'}
+                        // style={[generalStyles.formInput, styles.extraMargingRight]}
+                        style={[generalStyles.formInput, generalStyles.borderStyles, generalStyles.textInputMarginRight, errors.firstName && generalStyles.errorInput]}
+                        placeholder={'Enter Email'}
                         keyboardType="email-address"
                         placeholderTextColor={COLORS.primaryWhiteHex}
                         onChangeText={text => setEmail(text)}

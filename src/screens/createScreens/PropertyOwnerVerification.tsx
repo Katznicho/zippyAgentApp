@@ -92,6 +92,7 @@ const PropertyOwnerVerification = () => {
         })
             .then(response => response.json())
             .then(async result => {
+                console.log(result);
 
                 if (result?.errors) {
                     setErrors(result.errors);
@@ -159,7 +160,8 @@ const PropertyOwnerVerification = () => {
                                 Code </Text>
                         </View>
                         <TextInput
-                            style={generalStyles.formInput}
+                            // style={generalStyles.formInput}
+                            style={[generalStyles.formInput, generalStyles.borderStyles, generalStyles.textInputMarginRight, errors.firstName && generalStyles.errorInput]} 
                             placeholder="Enter Code"
                             placeholderTextColor={COLORS.primaryLightGreyHex}
                             keyboardType="number-pad"

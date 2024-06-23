@@ -13,6 +13,7 @@ import PhoneInput from "react-native-phone-number-input";
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../../redux/store/dev'
 import { Image } from 'react-native'
+import hardSet from 'redux-persist/es/stateReconciler/hardSet'
 
 const Register = () => {
 
@@ -92,8 +93,8 @@ const Register = () => {
     Keyboard.dismiss()
 
     try {
-      const headers = new Headers();
-      headers.append('Accept', 'application/json');
+      // const headers = new Headers();
+      // headers.append('Accept', 'application/json');
 
       const body = new FormData();
       body.append('email', email.toLowerCase());
@@ -102,12 +103,18 @@ const Register = () => {
       body.append("first_name", firstName);
       body.append("last_name", secondName);
       body.append("confirm_password", confirmPassword);
+      body.append("role", "Agent")
 
       const requestOptions = {
         method: "POST",
         body: body,
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "multipart/form-data",
+        }
       };
-      console.log(REGISTER);
+      // console.log(REGISTER);
+
 
       fetch(`${REGISTER}`,requestOptions)
         .then(response => response.json())

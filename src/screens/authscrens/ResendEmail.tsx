@@ -156,7 +156,8 @@ const ResendEmailScreen = () => {
                     </View>
 
                     <TextInput
-                        style={generalStyles.formInput}
+                        // style={generalStyles.formInput}
+                        style={[generalStyles.formInput, generalStyles.borderStyles, generalStyles.textInputMarginRight, errors.firstName && generalStyles.errorInput]}
                         placeholder={'enter email'}
                         keyboardType="email-address"
                         placeholderTextColor={COLORS.primaryWhiteHex}

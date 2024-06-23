@@ -8,7 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 const HomeCards: React.FC<any> = () => {
 
     const { data, error, isLoading } = usePostQuery<any>({
-        endpoint: '/getAgentTotals',
+        endpoint: '/agent/getAgentTotals',
         params: {
             "total": "userTotals"
         },
@@ -19,6 +19,8 @@ const HomeCards: React.FC<any> = () => {
             refetchOnMount: true,
         },
     })
+
+
 
     const navigation = useNavigation<any>()
 

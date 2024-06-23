@@ -36,7 +36,7 @@ const HomeScreen = () => {
       >
 
         {/* wallet */}
-        <CheckUserWallet />
+        {/* <CheckUserWallet /> */}
         {/* wallet */}
 
         {/* home cards */}

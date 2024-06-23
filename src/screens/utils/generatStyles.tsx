@@ -148,10 +148,18 @@ export const generalStyles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10
 },
-errorText: {
-  color: COLORS.primaryRedHex,
-  fontSize: 14,
-  fontFamily: FONTFAMILY.Lovato_Regular,
+// errorText: {
+//   color: COLORS.primaryRedHex,
+//   fontSize: 14,
+//   fontFamily: FONTFAMILY.poppins_regular,
+// },
+errorInput: {
+  borderColor: COLORS.primaryRedHex,
+
+  fontFamily:FONTFAMILY.poppins_regular
+},
+textInputMarginRight: {
+  marginRight: 15
 },
 
 

@@ -109,6 +109,8 @@ const AddProperty = () => {
             headers
         }).then((res) => res.json()).then((data) => {
             setPropertyOwners(data?.data)
+        }).catch((err) => {
+            console.log("Error getting property owners", err)
         })
 
         fetch(GET_ALL_CATEGORIES, {
