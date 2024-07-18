@@ -1,10 +1,7 @@
-import React, { useState } from 'react';
+import React  from 'react';
 import {
   ScrollView,
 } from 'react-native';
-import { RootState } from '../redux/store/dev';
-import { useSelector } from 'react-redux';
-import { useShowGreeting } from '../hooks/useShowGreetings';
 import { generalStyles } from './utils/generatStyles';
 import CheckUserWallet from '../components/CheckUserWallet';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -15,8 +12,8 @@ import HomeCards from '../components/HomeCards';
 
 const HomeScreen = () => {
 
-  const { user } = useSelector((state: RootState) => state.user);
-  let greetings = useShowGreeting()
+
+  
 
   const tabBarHeight = useBottomTabBarHeight();
 
@@ -36,7 +33,7 @@ const HomeScreen = () => {
       >
 
         {/* wallet */}
-        {/* <CheckUserWallet /> */}
+         <CheckUserWallet />  
         {/* wallet */}
 
         {/* home cards */}

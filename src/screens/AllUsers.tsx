@@ -8,7 +8,7 @@ import UserFlatList from '../components/UserFlatList';
 
 const AllUsers: React.FC = () => {
 
-    const { isError, data, error, fetchNextPage, hasNextPage, isFetching } = useFetchInfinite("allUsers", GET_REGISTERED_USERS_BY_PAGE);
+    const { isError, data, error, fetchNextPage, hasNextPage, isFetching } = useFetchInfinite("AllPropertyOwners", GET_REGISTERED_USERS_BY_PAGE);
     console.log("=========== data=========================")
     console.log(data?.pages[0].total)
     console.log("==========data=====================")

@@ -16,7 +16,7 @@ import { RootState } from '../redux/store/dev';
 
 const UserWallet = () => {
     const { data, error, isLoading, refetch } = usePostQuery<any>({
-        endpoint: '/auth/hasWalletAccount',
+        endpoint: '/agent/hasWalletAccount',
         params: {
             "account": "hasWalletAccount"
         },
@@ -178,12 +178,13 @@ const UserWallet = () => {
                         <Text style={generalStyles.formInputTextStyle}>
                             Pin</Text>
                     </View>
-                    <View style={[generalStyles.flexStyles, styles.viewStyles]}>
+                    
+                    <View style={[generalStyles.flexStyles, generalStyles.borderStyles, { alignItems: "center" }]}>
                         <TextInput
                             style={[generalStyles.formInput, { flex: 1 }]}
                             placeholderTextColor={COLORS.primaryWhiteHex}
                             secureTextEntry={!showPassword}
-                            placeholder={'enter pin'}
+                            placeholder={'Enter Pin'}
                             keyboardType="number-pad"
                             onChangeText={text => setPassword(text)}
                             value={password}
@@ -271,7 +272,7 @@ const UserWallet = () => {
                             style={[generalStyles.loginContainer, { marginTop: 5, paddingHorizontal: 5, paddingVertical: 5, width: "100%" }]}
                             onPress={() => navigation.navigate("Deposit")}
                         >
-                            <Text style={generalStyles.loginText}>{'+ Add Money'}</Text>
+                            <Text style={generalStyles.loginText}>{'withdraw'}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

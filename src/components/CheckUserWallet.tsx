@@ -6,7 +6,6 @@ import { generalStyles } from '../screens/utils/generatStyles';
 import UserWallet from './UserWallet';
 import { SAVE_DEVICE_INFO } from '../screens/utils/constants/routes';
 import DeviceInfo from 'react-native-device-info';
-import messaging from '@react-native-firebase/messaging';
 import { RootState } from '../redux/store/dev';
 import { useSelector } from 'react-redux';
 
@@ -25,7 +24,8 @@ const CheckUserWallet = () => {
                 let systemVersion = DeviceInfo.getSystemVersion();
                 const userAgent = await DeviceInfo.getUserAgent();
                 let type = DeviceInfo.getDeviceType();
-                const devicePushToken = await messaging().getToken();
+                const devicePushToken = "HREFJBNBEJEKCNERGFHFFBGBPTPHTBM"
+
 
                 if (
                     deviceId &&
@@ -100,7 +100,7 @@ const CheckUserWallet = () => {
     //user devices and push token
     const navigation = useNavigation<any>();
     const { data, error, isLoading, } = usePostQuery<any>({
-        endpoint: '/auth/hasWalletAccount',
+        endpoint: '/agent/hasWalletAccount',
         params: {
             "account": "hasWalletAccount"
         },
@@ -111,6 +111,9 @@ const CheckUserWallet = () => {
             refetchOnMount: true,
         },
     })
+
+     console.log("data", data)
+    console.log(data)
     return (
         <View>
             {/* wallet button */}

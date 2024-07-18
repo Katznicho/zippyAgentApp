@@ -310,7 +310,7 @@ const AddProperty = () => {
                 ]
             )
                 .uploadProgress((written, total) => {
-                    // console.log(`Upload progress: ${Math.floor((written / total) * 100)}%`);
+                     console.log(`Upload progress: ${Math.floor((written / total) * 100)}%`);
                     setProgress(written / total)
                 })
                 .then(response => response.json())
@@ -327,6 +327,7 @@ const AddProperty = () => {
                         cover_image,
                         images: [one, two, three, four],
                     }));
+                     console.log("now submitting")
                     // Call the submit function after successful image upload
                     await submitProperty(cover_image, one, two, three, four);
                     return true;
@@ -411,6 +412,7 @@ const AddProperty = () => {
 
             }).then(response => response.json())
                 .then(result => {
+                    console.log("results of submitting")
                     console.log(result)
                     setLoading(false)
                     setIsSubmitting(false)

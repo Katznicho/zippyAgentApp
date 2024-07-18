@@ -1,22 +1,32 @@
-import { StyleSheet, Text, View, ScrollView, ImageBackground, TouchableOpacity } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, ScrollView, ImageBackground, TouchableOpacity, Dimensions, Platform } from 'react-native'
+import React, { useState } from 'react'
 import { KeyboardAwareScrollView } from 'react-native-ui-lib'
 import { generalStyles } from './utils/generatStyles'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
-import { PUBLIC_STORAGE } from './utils/constants/constants'
 import { COLORS, FONTFAMILY, FONTSIZE, SPACING } from '../theme/theme';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import GradientBGIcon from '../components/GradientBGIcon'
+
 import { onMakeCall } from './utils/helpers/helpers'
+import ArrowBack from '../components/ArrowBack'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
 
+const { width } = Dimensions.get('window');
 
 const PropertyDetails: React.FC<any> = () => {
 
     const tabBarHeight = useBottomTabBarHeight();
     const { item } = useRoute<any>().params
     const navigation = useNavigation<any>();
+
+    const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
+
+    const onScroll = (event: any) => {
+        const contentOffsetX = event.nativeEvent.contentOffset.x;
+        const index = Math.floor(contentOffsetX / width);
+        setCurrentImageIndex(index);
+    };
 
 
 
@@ -31,34 +41,109 @@ const PropertyDetails: React.FC<any> = () => {
                 keyboardShouldPersistTaps="always"
             >
                 {/* show background image */}
-                <ImageBackground
-                    source={{ uri: `${PUBLIC_STORAGE}/properties/${item?.cover_image}` }}
-                    style={styles.ItemBackgroundImage}
+                <ScrollView
+                    horizontal
+                    pagingEnabled
+                    showsHorizontalScrollIndicator={false}
+                    onScroll={onScroll}
                 >
-                    {/* back handler */}
-                    <View style={styles.ImageHeaderBarContainerWithBack}>
-                        <TouchableOpacity
-                            activeOpacity={1}
-                            onPress={() => {
-                                navigation.goBack()
-                            }}>
-                            <GradientBGIcon
-                                name="left"
-                                color={COLORS.primaryOrangeHex}
-                                size={FONTSIZE.size_16}
-                            />
-                        </TouchableOpacity>
 
 
-                    </View>
+                    {item?.property_images?.map((image: string, index: number) => (
 
-                    {/* back handler */}
+                        <ImageBackground
+                            key={index}
+                            source={{ uri: image }}
+                            style={[styles.dataBackgroundImage, { width: width }]}
+                        >
+                            {/* positioned number */}
+                            <View style={styles.imageIndicatorContainer}>
+                                <Text style={styles.imageIndicatorText}>
+                                    {currentImageIndex + 1}/{item?.property_images?.length}
+                                </Text>
+                            </View>
+                            {/* positioned number */}
 
-                    {/* more details */}
+                            <View style={styles.ImageHeaderBarContainerWithBack}>
+                                <TouchableOpacity
+                                    activeOpacity={1}
+                                    onPress={() => {
+                                        navigation.goBack();
+                                    }}
+                                >
+                                    {/* <ArrowBack /> */}
+                                    <ArrowBack
+                                        size={20}
+                                        color
+                                        styles={{
+                                            backgroundColor: COLORS.primaryBlackHex,
+                                            padding: 5,
+                                            borderRadius: 25,
+                                            width: 30,
+                                            height: 30,
+                                            marginTop: -10,
+                                            marginLeft: 10
+                                        }}
+                                    />
+                                </TouchableOpacity>
+                            </View>
 
 
-                    {/* more details */}
-                </ImageBackground>
+                            {/* positited arrow right */}
+                            <TouchableOpacity
+                                style={[styles.rightArrow]}
+                                activeOpacity={1}
+                                onPress={() => {
+                                    const newIndex = currentImageIndex + 1;
+                                    if (newIndex < item?.property_images?.length) {
+                                        setCurrentImageIndex(newIndex);
+                                    }
+                                }}
+                            >
+                                <MaterialIcons
+                                    name="arrow-forward-ios"
+                                    size={30}
+                                    color={COLORS.primaryBlackHex}
+                                    onPress={() => {
+                                        const newIndex = currentImageIndex + 1;
+                                        if (newIndex < item?.property_images?.length) {
+                                            setCurrentImageIndex(newIndex);
+                                        }
+                                    }}
+                                />
+
+                            </TouchableOpacity>
+                            {/* positioned arrow right */}
+
+                            {/* positioned arrow left */}
+                            <TouchableOpacity
+                                style={[styles.leftArrow]}
+                                activeOpacity={1}
+                                onPress={() => {
+                                    const newIndex = currentImageIndex + 1;
+                                    if (newIndex < item?.property_images?.length) {
+                                        setCurrentImageIndex(newIndex);
+                                    }
+                                }}
+                            >
+                                <MaterialIcons
+                                    name="arrow-back-ios"
+                                    size={30}
+                                    color={COLORS.primaryBlackHex}
+                                    onPress={() => {
+                                        const newIndex = currentImageIndex + 1;
+                                        if (newIndex < item?.property_images?.length) {
+                                            setCurrentImageIndex(newIndex);
+                                        }
+                                    }}
+                                />
+
+                            </TouchableOpacity>
+                            {/* positioned arrow left */}
+                        </ImageBackground>
+                    ))}
+
+                </ScrollView>
                 {/* show background */}
 
                 {/* view more images */}
@@ -327,16 +412,50 @@ const styles = StyleSheet.create({
         marginHorizontal: 5,
         // marginVertical: 5
     },
+    
+    leftArrow: {
+        position: 'absolute',
+        top: 100,
+        left: 10,
+        //backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        //backgroundColor: "red",
+        borderRadius: 20,
+        paddingHorizontal: 10,
+        paddingVertical: 5
+    },
+    rightArrow: {
+        position: 'absolute',
+        top: 100,
+        right: 10,
+        //backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        //backgroundColor: "red",
+        borderRadius: 20,
+        paddingHorizontal: 10,
+        paddingVertical: 5
+    },
+    dataBackgroundImage: {
+        aspectRatio: 25 / 15,
+        justifyContent: 'space-between'
+    },
+    imageIndicatorContainer: {
+        position: 'absolute',
+        bottom: 10,
+        right: 10,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        //backgroundColor: "red",
+        borderRadius: 20,
+        paddingHorizontal: 10,
+        paddingVertical: 5
+    },
+    imageIndicatorText: {
+        color: 'white',
+        fontSize: 14
+    },
     ImageHeaderBarContainerWithBack: {
         padding: SPACING.space_30,
         flexDirection: 'row',
-        alignItems: 'center',
         justifyContent: 'space-between',
-    },
-    ItemBackgroundImage: {
-        width: '100%',
-        aspectRatio: 25 / 15,
-        justifyContent: 'space-between',
+        marginTop: Platform.OS === 'ios' ? 10 : 0
     },
 
 

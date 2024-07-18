@@ -1,4 +1,4 @@
-// export const BASE_URL = "https://zippy.risidev.com/api/v1";
+
 export const BASE_URL:string = "https://dashboard.zippyug.com/api/v1";
 
 export const LOGIN = `${BASE_URL}/agent/login`;
@@ -14,6 +14,8 @@ export const UPDATEWALLETBALANCE = `${BASE_URL}/agent/updateShowWalletBalance`
 export const UPDATEUSERAVATAR = `${BASE_URL}/agent/updateUserAvatarUrl`
 export const UPDATE_USER_LOCATION = `${BASE_URL}/agent/updateUserLocation`;
 export const UPDATE_PASSWORD_FIRST_USER = `${BASE_URL}/agent/resetPasswordFirstUser`;
+
+export const GET_AGENT_TOTALS = `${BASE_URL}/agent/getAgentTotals`;
 
 //payments
 export const PROCESSORDER = `${BASE_URL}/processOrder`;

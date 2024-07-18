@@ -103,7 +103,7 @@ const CreatePin = () => {
             showMessage({
               message: 'Wallet Account Created',
               description:
-                'Your can now deposit onto your wallet account',
+              'Your can now receive money onto your wallet account',
               type: 'success',
               icon: 'success',
               duration: 3000,
@@ -187,12 +187,13 @@ const CreatePin = () => {
             <Text style={generalStyles.formInputTextStyle}>
               Pin</Text>
           </View>
-          <View style={[generalStyles.flexStyles, styles.viewStyles]}>
+          <View style={[generalStyles.flexStyles, generalStyles.borderStyles, { alignItems: "center" }]}>
             <TextInput
-              style={[generalStyles.formInput, { flex: 1 }]}
+              // style={[generalStyles.formInput, { flex: 1 }]}
+              style={[generalStyles.formInput, { flex: 1, borderWidth:0, }]}
               placeholderTextColor={COLORS.primaryWhiteHex}
               secureTextEntry={!showPassword}
-              placeholder={'enter pin'}
+              placeholder={'Enter Pin'}
               keyboardType="number-pad"
               onChangeText={text => setPassword(text)}
               value={password}
@@ -221,9 +222,9 @@ const CreatePin = () => {
             <Text style={generalStyles.formInputTextStyle}>
               Confirm Pin</Text>
           </View>
-          <View style={[generalStyles.flexStyles, styles.viewStyles]}>
+          <View style={[generalStyles.flexStyles, generalStyles.borderStyles, { alignItems: "center" }]}>
             <TextInput
-              style={[generalStyles.formInput, { flex: 1 }]}
+                style={[generalStyles.formInput, { flex: 1, borderWidth:0, }]}
               placeholderTextColor={COLORS.primaryWhiteHex}
               secureTextEntry={!showPassword}
               keyboardType="number-pad"
