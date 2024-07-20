@@ -34,6 +34,7 @@ export const SPACING: Spacing = {
 
 interface Color {
   primaryRedHex: string;
+  primaryDarkRedHex: string;
   primaryOrangeHex: string;
   primaryBlackHex: string;
   primaryDarkGreyHex: string;
@@ -47,10 +48,11 @@ interface Color {
   secondaryBlackRGBA: string;
   primaryLightWhiteGrey: string;
 }
-
+//#D61C29
 export const COLORS: Color = {
   primaryRedHex: '#DC3535',
-  primaryOrangeHex: '#08ABE5',
+  primaryDarkRedHex: '#D61C29',
+  primaryOrangeHex: '#005CFF',
   primaryBlackHex: '#ffffff',
   primaryDarkGreyHex: '#141921',
   secondaryDarkGreyHex: '#21262E',
@@ -80,27 +82,23 @@ export const COLORS: Color = {
 // };
 
 interface FontFamily {
-  poppins_black: string;
-  poppins_bold: string;
-  poppins_extrabold: string;
-  poppins_extralight: string;
-  poppins_light: string;
-  poppins_medium: string;
-  poppins_regular: string;
-  poppins_semibold: string;
-  poppins_thin: string;
+  roboto_black: string;
+  roboto_bold: string;
+  roboto_italic: string;
+  roboto_light: string;
+  roboto_medium: string;
+  roboto_regular: string;
+  roboto_thin: string;
 }
 
 export const FONTFAMILY: FontFamily = {
-  poppins_black: 'Poppins-Black',
-  poppins_bold: 'Poppins-Bold',
-  poppins_extrabold: 'Poppins-ExtraBold',
-  poppins_extralight: 'Poppins-ExtraLight',
-  poppins_light: 'Poppins-Light',
-  poppins_medium: 'Poppins-Medium',
-  poppins_regular: 'Poppins-Regular',
-  poppins_semibold: 'Poppins-SemiBold',
-  poppins_thin: 'Poppins-Thin',
+  roboto_black: 'Roboto-Black',
+  roboto_bold: 'Roboto-Bold',
+  roboto_italic: 'Roboto-italic',
+  roboto_light: 'Roboto-Light',
+  roboto_medium: 'Roboto-Medium',
+  roboto_regular: 'Roboto-Regular',
+  roboto_thin: 'Roboto-Thin',
 };
 
 interface FontSize {

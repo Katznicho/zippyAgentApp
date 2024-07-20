@@ -45,10 +45,9 @@ const PaymentFlatList = ({ paymentData, loadMoreData, isFetching }: any) => {
                         }}
                     >
 
-                        <Text style={styles.date}>{item?.type}</Text>
-                        <Text style={styles.status}>{item?.payment_mode}</Text>
-                        <Text style={styles.status}>{item?.payment_method}</Text>
-                        <Text style={styles.status}>{item?.status}</Text>
+                        <Text style={[styles.date, {color:item.type=="credit"?"green":"red", fontWeight:"bold"}]}>{item?.type}</Text>
+                        <Text style={styles.status}>{item?.description}</Text>
+                        <Text style={[styles.status,{color:item.status=="Completed"?"green":"red"} ]}>{item?.status}</Text>
                     </View>
                     <View
                         style={{
@@ -112,12 +111,12 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: COLORS.primaryWhiteHex,
         marginVertical: 2,
-        fontFamily: FONTFAMILY.poppins_light
+        fontFamily: FONTFAMILY.roboto_medium
     },
     status: {
         fontSize: 12,
         color: 'gray',
         marginVertical: 2,
-        fontFamily: FONTFAMILY.poppins_light
+        fontFamily: FONTFAMILY.roboto_regular
     },
 });

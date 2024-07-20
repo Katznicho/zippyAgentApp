@@ -4,11 +4,12 @@ import useFetchInfinite from '../hooks/useFetchInfinite';
 import PaymentFlatList from '../components/PaymentFlatList';
 import { generalStyles } from './utils/generatStyles';
 import EmptyListAnimation from '../components/EmptyListAnimation';
-import { USERPAYMENTS } from './utils/constants/routes';
+import { AGENTTRANSACTIONS } from './utils/constants/routes';
+// import { USERPAYMENTS } from './utils/constants/routes';
 
 
 const AllTransactions = () => {
-    const { isError, data, error, fetchNextPage, hasNextPage, isFetching } = useFetchInfinite("payments", USERPAYMENTS);
+    const { isError, data, error, fetchNextPage, hasNextPage, isFetching } = useFetchInfinite("payments", AGENTTRANSACTIONS);
     console.log("=========== data=========================")
     console.log(data?.pages[0].total)
     console.log("==========data=====================")

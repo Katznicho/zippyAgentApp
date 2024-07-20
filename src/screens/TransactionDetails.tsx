@@ -11,12 +11,16 @@ import React from 'react';
 import { useRoute } from '@react-navigation/native';
 import { generalStyles } from './utils/generatStyles';
 import { COLORS } from '../theme/theme';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store/dev';
 
 
 const { width } = Dimensions.get('window');
 
 const TransactionDetails = () => {
     const { item } = useRoute<any>().params;
+    
+    const {user} = useSelector((state: RootState) => state.user);
 
 
     return (
@@ -77,33 +81,18 @@ const TransactionDetails = () => {
                             color: COLORS.primaryWhiteHex,
                             padding: 2,
                         }}>
-                        Payment Method
+                        Description
                     </Text>
                     <Text
                         style={{ color: COLORS.primaryWhiteHex, padding: 5 }}>
                         {/* {`${item?.owner?.firstName} ${item?.owner?.lastName}`}
                          */}
-                        {item?.payment_method}
+                        {item?.description}
                     </Text>
                     <View style={[styles.bottom]} />
                 </View>
 
-                <View style={styles.cardViewStyles}>
-                    <Text
-                        style={{
-                            color: COLORS.primaryWhiteHex,
-                            padding: 2,
-                        }}>
-                        Payment Mode
-                    </Text>
-                    <Text
-                        style={{ color: COLORS.primaryWhiteHex, padding: 5 }}>
-                        {/* {`${item?.owner?.firstName} ${item?.owner?.lastName}`}
-                         */}
-                        {item?.payment_mode}
-                    </Text>
-                    <View style={[styles.bottom]} />
-                </View>
+
 
                 {/* paid to */}
                 <View style={styles.cardViewStyles}>
@@ -116,28 +105,12 @@ const TransactionDetails = () => {
                     </Text>
                     <Text
                         style={{ color: COLORS.primaryWhiteHex, padding: 5 }}>
-                        Reuse Team
+                        {`${user?.fname} ${user?.lname}`}
                     </Text>
                     <View style={[styles.bottom]} />
                 </View>
                 {/* paid to */}
 
-                {/* paid on */}
-                <View style={styles.cardViewStyles}>
-                    <Text
-                        style={{
-                            color: COLORS.primaryWhiteHex,
-                            padding: 2,
-                        }}>
-                        Paid On
-                    </Text>
-                    <Text
-                        style={{ color: COLORS.primaryLightGreyHex, padding: 5 }}>
-                        {item.updated_at}
-                    </Text>
-                    <View style={[styles.bottom]} />
-                </View>
-                {/* paid on */}
                 {/* card */}
             </ScrollView>
         </SafeAreaView>

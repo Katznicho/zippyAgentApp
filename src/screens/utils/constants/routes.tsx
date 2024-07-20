@@ -19,14 +19,14 @@ export const GET_AGENT_TOTALS = `${BASE_URL}/agent/getAgentTotals`;
 
 //payments
 export const PROCESSORDER = `${BASE_URL}/processOrder`;
-export const USERPAYMENTS = `${BASE_URL}/getUserPayments`;
-export const USERPRODUCTS = `${BASE_URL}/getUserProducts`
+export const AGENTTRANSACTIONS = `${BASE_URL}/agent/getAgentTransactions`;
+export const AGENTBOOKINGS = `${BASE_URL}/agent/getAgentPropertyBookings`
 
 export const USERDELIVERIES = `${BASE_URL}/getUserDelivries`
 export const USERNOTIFICATIONS = `${BASE_URL}/getUserNotifications`
 
 //uploads
-export const PROFILE_UPLOAD = `${BASE_URL}/profileUpload`;
+export const PROFILE_UPLOAD = `${BASE_URL}/agent/profileUpload`;
 export const IMAGES_UPLOAD = `${BASE_URL}/uploadIdImages`
 
 

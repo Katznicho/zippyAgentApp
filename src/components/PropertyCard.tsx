@@ -1,117 +1,259 @@
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
-import React from 'react'
-import { BORDERRADIUS, COLORS, FONTFAMILY, FONTSIZE, SPACING } from '../theme/theme'
-import { generalStyles } from '../screens/utils/generatStyles';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import { useNavigation } from '@react-navigation/native';
+/* eslint-disable prettier/prettier */
+import {
+    StyleSheet,
+    Text,
+    View,
+    TouchableOpacity,
+    Image,
+    Dimensions,
+    Alert,
+    ImageBackground,
+    ScrollView,
+  } from 'react-native';
+  import React, { useEffect, useState } from 'react';
+  import { generalStyles } from '../screens/utils/generatStyles';
+  import { COLORS, FONTSIZE } from '../theme/theme';
+  import Entypo from 'react-native-vector-icons/Entypo';
+  import FontAwesome from 'react-native-vector-icons/FontAwesome';
+  import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+  import AntDesign from 'react-native-vector-icons/AntDesign';
+  import {
+    formatCurrency,
+    limitDescription,
+  } from '../screens/utils/helpers/helpers';
+  import { useNavigation } from '@react-navigation/native';
+  
+  import { useDispatch, useSelector } from 'react-redux';
+  import { RootState } from '../redux/store/dev';
+ 
+  
+  const { width } = Dimensions.get('window');
+  const PropertyCard = ({ property , nextScreen=true}: any) => {
+    const navigation = useNavigation<any>();
+    //const { position  = useGetUserLocation();
+    const dispatch = useDispatch<any>();
+    const [liked, setLiked] = useState<boolean>(false);
+    const {  authToken } = useSelector( (state: RootState) => state.user);
+  
+    const isFocused = useNavigation().isFocused();
+  
+  
+  
+    
+  
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  
+    const onScroll = (event: any) => {
+      const contentOffsetX = event.nativeEvent.contentOffset.x;
+      const index = Math.floor(contentOffsetX / width);
+      setCurrentImageIndex(index);
+    };
+  
+   
 
-const PropertyCard: React.FC<any> = ({ item }: any) => {
-
-
-
-    const navigation = useNavigation<any>()
+  
     return (
-        <TouchableOpacity
-            activeOpacity={1}
-            style={[styles.cardContainer]}
+      <TouchableOpacity
+        activeOpacity={1}
+        style={[styles.container]}
+        onPress={() =>nextScreen? navigation.navigate('PropertyDetails', { data: property }):null}
+      >
+        {/* scroll area */}
+        <ScrollView
+          horizontal
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          onScroll={onScroll}
         >
-            <View style={[generalStyles.flexStyles, { justifyContent: 'space-between' }]}>
-                <View>
-                    {/* location */}
-                    <View>
-                        <Text style={styles.CardTitle}>{item?.name}</Text>
-                    </View>
-                    <View>
-                        <Text style={styles.CardSubtitle}>in {item?.location}</Text>
-                    </View>
-                    {/* location */}
-                </View>
-
-                <View>
-                    <View>
-                        <Text style={styles.CardPriceCurrency}>{item?.currency?.name} {item?.price}</Text>
-
-                    </View>
-                    <View style={[generalStyles.flexStyles, { justifyContent: 'center', alignItems: "center" }]}>
-                        <AntDesign name="delete"
-                            size={25}
-                            color={COLORS.primaryRedHex}
-                            style={styles.spacingStyles}
-                        />
-                        <AntDesign name="edit"
-                            size={25}
-                            color={COLORS.primaryOrangeHex}
-                            style={styles.spacingStyles}
-                        />
-                    </View>
-
-                </View>
-
-            </View>
-
-            <TouchableOpacity
-                activeOpacity={1}
-                style={[generalStyles.loginContainer,
-                styles.buttonStyles,
-                ]}
-                onPress={() => navigation.navigate('PropertyDetails', { item })}
-
+          {property?.property_images?.map((image: string, index: number) => (
+            <ImageBackground
+              key={index}
+              source={{ uri: image }}
+              style={[styles.dataBackgroundImage, { width: width}]}
             >
-                <Text style={generalStyles.loginText}>{'View More'}</Text>
-            </TouchableOpacity>
-        </TouchableOpacity>
-    )
-}
+              {/* positioned number */}
+              <View style={styles.imageIndicatorContainer}>
+                <Text style={styles.imageIndicatorText}>
+                  {currentImageIndex + 1}/{property?.property_images?.length}
+                </Text>
+              </View>
+              {/* positioned number */}
+  
 
-export default PropertyCard
-
-const styles = StyleSheet.create({
-    cardContainer: {
-        backgroundColor: COLORS.primaryBlackHex,
-        borderRadius: 10,
-        padding: 10,
-        shadowColor: 'rgba(0, 0, 0, 0.1)',
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 1,
-        shadowRadius: 4,
-        elevation: 5,
-        margin: 10,
-        // marginHorizontal: 5
+            </ImageBackground>
+          ))}
+        </ScrollView>
+        {/* scoll area */}
+  
+        <View style={{ marginHorizontal: 10 }}>
+          <View>
+            <Text style={[generalStyles.CardTitle]}>{property?.name}</Text>
+          </View>
+  
+          <View
+            style={[
+              generalStyles.flexStyles,
+              {
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                marginHorizontal: 5,
+              },
+            ]}
+          >
+            <Text style={[generalStyles.CardSubtitle]}>
+              {property?.category?.name}
+            </Text>
+            <View style={[generalStyles.flexStyles, { alignItems: 'center' }]}>
+              {Array(4)
+                .fill(0)
+                .map((_, index) => (
+                  <AntDesign key={index} name="star" size={12} color={'gold'} />
+                ))}
+            </View>
+          </View>
+  
+          <View style={[{ marginLeft: 3, marginVertical: 2 }]}>
+            <Text style={[generalStyles.CardSubtitle]}>
+              {limitDescription(property?.description, 10)}
+            </Text>
+          </View>
+  
+          <View style={[generalStyles.flexStyles, { alignItems: 'center' }]}>
+            <Entypo
+              name="location-pin"
+              size={20}
+              color={COLORS.primaryOrangeHex}
+            />
+            <Text
+              style={[generalStyles.CardTitle, { fontSize: FONTSIZE.size_10 }]}
+            >
+              {property?.location}
+            </Text>
+          </View>
+  
+          <View style={[generalStyles.flexStyles, { alignItems: 'center' }]}>
+            <View style={[generalStyles.flexStyles, { alignItems: 'center' }]}>
+              <MaterialIcons
+                name="meeting-room"
+                size={18}
+                color={COLORS.primaryOrangeHex}
+                style={{ marginHorizontal: 3 }}
+              />
+  
+              <Text
+                style={[
+                  generalStyles.CardTitle,
+                  { fontSize: FONTSIZE.size_10, marginTop: 5 },
+                ]}
+              >
+                {property?.number_of_beds} bedrooms
+              </Text>
+            </View>
+            <View
+              style={[
+                generalStyles.flexStyles,
+                { alignItems: 'center', justifyContent: 'center' },
+              ]}
+            >
+              <FontAwesome
+                name="bathtub"
+                size={18}
+                color={COLORS.primaryOrangeHex}
+                style={{ marginHorizontal: 5 }}
+              />
+  
+              <Text
+                style={[
+                  generalStyles.CardTitle,
+                  { fontSize: FONTSIZE.size_10, marginTop: 5 },
+                ]}
+              >
+                {property?.number_of_baths} bathrooms
+              </Text>
+            </View>
+          </View>
+  
+          <View
+            style={[
+              generalStyles.flexStyles,
+              { alignItems: 'center', marginVertical: 5, marginHorizontal: 3 },
+            ]}
+          >
+            <Text style={[generalStyles.CardTitle]}>
+              {' '}
+              {property?.currency?.name} {formatCurrency(property?.price)}
+            </Text>
+            <Text style={[generalStyles.CardSubtitle]}>
+              {property?.payment_period?.name}
+            </Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+  
+  export default PropertyCard;
+  
+  const styles = StyleSheet.create({
+    imageStyles: {
+      width: '100%',
+      height: 100,
+      borderTopLeftRadius: 10,
+      borderTopRightRadius: 10,
+      // borderRadius: 10
     },
-    CardTitle: {
-        fontFamily: FONTFAMILY.poppins_medium,
-        color: COLORS.primaryWhiteHex,
-        fontSize: FONTSIZE.size_14,
+    container: {
+      width: '94%',
+      height: 270,
+      elevation: 10,
+      marginHorizontal: 10,
+      marginVertical: 10,
+      backgroundColor: COLORS.primaryBlackHex,
+      borderRadius: 10,
+      shadowColor: 'rgba(0, 0, 0, 0.1)',
+      shadowOffset: { width: 0, height: 1 },
+      shadowOpacity: 1,
+      shadowRadius: 4,
+      // alignContent: 'center',
+      // alignItems: 'center',
     },
-    CardSubtitle: {
-        fontFamily: FONTFAMILY.poppins_light,
-        color: COLORS.primaryWhiteHex,
-        fontSize: FONTSIZE.size_10,
-        // marginHorizontal: SPACING.space_10
+    viewStyles: {
+      marginHorizontal: 5,
+      // marginVertical: 2
     },
-    CardPriceCurrency: {
-        fontFamily: FONTFAMILY.poppins_semibold,
-        color: COLORS.primaryOrangeHex,
-        fontSize: FONTSIZE.size_12,
+    imageIndicatorContainer: {
+      position: 'absolute',
+      bottom: 30,
+      right: 30,
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      //backgroundColor: "red",
+      borderRadius: 20,
+      paddingHorizontal: 10,
+      paddingVertical: 5,
     },
-    spacingStyles: {
-        marginHorizontal: 5,
-        marginVertical: 5
+    imageIndicatorText: {
+      color: 'white',
+      fontSize: 14,
     },
-    buttonStyles: {
-        width: "80%",
-        marginTop: 5,
-        marginHorizontal: 5,
-        marginVertical: 5,
-        borderRadius: 20,
-        padding: 10
+    heartIconContainer: {
+      position: 'absolute',
+      top: 10,
+      right: 30,
+      // backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      backgroundColor: COLORS.primaryBlackHex,
+      //backgroundColor: "red",
+      borderRadius: 20,
+      paddingHorizontal: 5,
+      paddingVertical: 5,
     },
-    ImageInfoOuterContainer: {
-        paddingVertical: SPACING.space_24,
-        paddingHorizontal: SPACING.space_30,
-        backgroundColor: COLORS.primaryBlackRGBA,
-        borderTopLeftRadius: BORDERRADIUS.radius_20 * 2,
-        borderTopRightRadius: BORDERRADIUS.radius_20 * 2,
+    heartIcon: {
+      width: 30,
+      height: 30,
     },
-
-})
+    dataBackgroundImage: {
+       aspectRatio: 25 / 15,
+      justifyContent: 'space-between',
+      //height:500
+    },
+  });
+  

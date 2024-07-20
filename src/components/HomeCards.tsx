@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import { generalStyles } from '../screens/utils/generatStyles';
 import { COLORS, FONTFAMILY, FONTSIZE, SPACING } from '../theme/theme';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
@@ -29,6 +29,11 @@ const HomeCards: React.FC<any> = () => {
 
       const response = await fetch(`${GET_AGENT_TOTALS}`, requestOptions);
       const result = await response.json();
+
+      console.log("agent totals")
+      console.log(result)
+      console.log("agent total")
+
       setData(result);
     } catch (error) {
       setError(error as Error);
@@ -47,10 +52,15 @@ const HomeCards: React.FC<any> = () => {
     };
   }, [isFocused]);
 
+
+
   const navigation = useNavigation<any>();
 
   return (
-    <View>
+    <ScrollView style={[generalStyles.ScreenContainer]}
+     showsHorizontalScrollIndicator={false}
+      showsVerticalScrollIndicator={false}
+    >
       <View style={[styles.viewStyles, generalStyles.flexStyles, { alignItems: 'center', justifyContent: 'space-between' }]}>
         <TouchableOpacity
           style={[styles.CardContainer]}
@@ -72,13 +82,45 @@ const HomeCards: React.FC<any> = () => {
         >
           <View style={[{ alignItems: 'center', justifyContent: 'space-between' }]}>
             <View>
-              <Text style={[styles.CardTitle]}>{data?.data?.total_properties ?? 0}</Text>
+              <Text style={[styles.CardTitle]}>{data?.data?.total_bookings ?? 0}</Text>
             </View>
             <Text style={[styles.CardSubtitle]}>Properties</Text>
           </View>
         </TouchableOpacity>
       </View>
-    </View>
+
+      {/* here */}
+      <View style={[styles.viewStyles, generalStyles.flexStyles, { alignItems: 'center', justifyContent: 'space-between' }]}>
+        <TouchableOpacity
+          style={[styles.CardContainer]}
+          activeOpacity={1}
+          onPress={() => navigation.navigate('AllBookings')}
+        >
+          <View style={[{ alignItems: 'center', justifyContent: 'space-between' }]}>
+            <View>
+              <Text style={[styles.CardTitle]}>{data?.data?.total_bookings ?? 0}</Text>
+            </View>
+            <Text style={[styles.CardSubtitle]}>Bookings</Text>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          activeOpacity={1}
+          onPress={() => navigation.navigate('AllTransactions')}
+          style={[styles.CardContainer]}
+        >
+          <View style={[{ alignItems: 'center', justifyContent: 'space-between' }]}>
+            <View>
+              <Text style={[styles.CardTitle]}>{data?.data?.total_transactions ?? 0}</Text>
+            </View>
+            <Text style={[styles.CardSubtitle]}>Transactions</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+      {/* here */}
+
+
+    </ScrollView>
   );
 };
 
@@ -86,18 +128,18 @@ export default HomeCards;
 
 const styles = StyleSheet.create({
   CardTitle: {
-    fontFamily: FONTFAMILY.poppins_medium,
+    fontFamily: FONTFAMILY.roboto_regular,
     color: COLORS.primaryBlackHex,
     fontSize: FONTSIZE.size_16,
   },
   CardSubtitle: {
-    fontFamily: FONTFAMILY.poppins_light,
+    fontFamily: FONTFAMILY.roboto_regular,
     color: COLORS.primaryBlackHex,
     fontSize: FONTSIZE.size_14,
     marginHorizontal: SPACING.space_10,
   },
   CardPriceCurrency: {
-    fontFamily: FONTFAMILY.poppins_semibold,
+    fontFamily: FONTFAMILY.roboto_regular,
     color: COLORS.primaryOrangeHex,
     fontSize: FONTSIZE.size_18,
   },

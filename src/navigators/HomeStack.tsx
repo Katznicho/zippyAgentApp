@@ -6,7 +6,6 @@ import { generalStyles } from '../screens/utils/generatStyles';
 import { COLORS } from '../theme/theme';
 import AllTransactions from '../screens/AllTransactions';
 import TransactionDetails from '../screens/TransactionDetails';
-import PaymentScreen from '../screens/PaymentScreen';
 import ArrowBack from '../components/ArrowBack';
 import { RootState } from '../redux/store/dev';
 import { useSelector } from 'react-redux';
@@ -18,6 +17,8 @@ import PropertyDetails from '../screens/PropertyDetails';
 import UserDetails from '../screens/UserDetails';
 import AllUsers from '../screens/AllUsers';
 import PropertyImages from '../screens/PropertyImages';
+import AllBooking from '../screens/AllBookings';
+import BookingDetails from '../screens/BookingDetails';
 
 const Stack = createNativeStackNavigator();
 
@@ -124,6 +125,28 @@ const HomeStack = () => {
             {/* all transactions */}
             {/* all propertes */}
 
+            {/* all bookings */}
+            <Stack.Screen
+                name="AllBookings"
+                component={AllBooking}
+                options={{
+                    animation: 'slide_from_bottom',
+                    headerShown:false
+                }}>
+            </Stack.Screen>
+            {/* all bookings */}
+
+            {/* booking details */}
+            <Stack.Screen
+                name="BookingDetails"
+                component={BookingDetails}
+                options={{
+                    animation: 'slide_from_bottom',
+                    headerShown:false
+                }}>
+            </Stack.Screen>
+            {/* booking details */}
+
             {/* all users */}
             <Stack.Screen
                 name="AllUsers"
@@ -197,26 +220,6 @@ const HomeStack = () => {
             </Stack.Screen>
             {/* user details */}
 
-
-            {/* payments screen  */}
-            <Stack.Screen
-                name="Payment"
-                component={PaymentScreen}
-
-                options={{
-                    animation: 'slide_from_bottom',
-                    title: 'Payment',
-                    headerStyle: generalStyles.headerStyle,
-                    headerTitleStyle: generalStyles.titleHeaderStyles,
-                    headerTintColor: COLORS.primaryBlackHex,
-                    headerTitleAlign: 'center',
-                    headerLeft: () => (
-                        <ArrowBack />
-                    ),
-                }}
-            >
-            </Stack.Screen>
-            {/* payments screen */}
         </Stack.Navigator>
     )
 }

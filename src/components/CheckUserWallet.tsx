@@ -112,8 +112,6 @@ const CheckUserWallet = () => {
         },
     })
 
-     console.log("data", data)
-    console.log(data)
     return (
         <View>
             {/* wallet button */}

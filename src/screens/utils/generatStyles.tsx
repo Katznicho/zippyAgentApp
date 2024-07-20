@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 import { BORDERRADIUS, COLORS, FONTFAMILY, FONTSIZE, SPACING } from "../../theme/theme";
 
 export const generalStyles = StyleSheet.create({
@@ -11,7 +11,7 @@ export const generalStyles = StyleSheet.create({
   },
   ScreenTitle: {
     fontSize: FONTSIZE.size_28,
-    fontFamily: FONTFAMILY.poppins_semibold,
+    fontFamily: FONTFAMILY.roboto_bold,
     color: COLORS.primaryWhiteHex,
     paddingLeft: SPACING.space_30,
   },
@@ -49,7 +49,7 @@ export const generalStyles = StyleSheet.create({
   },
   authTitle: {
     fontSize: 20,
-    fontFamily: FONTFAMILY.poppins_regular,
+    fontFamily: FONTFAMILY.roboto_regular,
     color: COLORS.primaryOrangeHex,
     marginTop: 25,
     marginBottom: 8,
@@ -58,7 +58,7 @@ export const generalStyles = StyleSheet.create({
     marginLeft: 30,
   },
   textStyle: {
-    fontFamily: FONTFAMILY.poppins_light,
+    fontFamily: FONTFAMILY.roboto_light,
     color: COLORS.primaryWhiteHex,
     fontSize: 15,
   },
@@ -98,38 +98,36 @@ export const generalStyles = StyleSheet.create({
   },
   forgotText: {
     color: COLORS.primaryOrangeHex,
-    fontFamily: FONTFAMILY.poppins_light,
+    fontFamily: FONTFAMILY.roboto_light,
   },
   loginText: {
     color: COLORS.primaryBlackHex,
-    fontFamily: FONTFAMILY.poppins_light,
+    fontFamily: FONTFAMILY.roboto_light,
     // fontFamily: FONTFAMILY.poppins_medium,
-
-
   },
-
-  formInput: {
-    color: COLORS.primaryWhiteHex,
-    fontSize: 15,
-    borderBottomColor: COLORS.primaryWhiteHex,
-    borderBottomWidth: 0,
-    // paddingBottom: 2,
-    paddingHorizontal: 0,
+  viewStyles: {
+    marginHorizontal: 20,
+    marginVertical: 10
+  },
+  phoneInputContainer: {
+    width: '100%',
+    height: 50,
+    backgroundColor: '#f5f5f5',
+    borderRadius: 8,
+  },
+  phoneTextInputContainer: {
     paddingVertical: 0,
-    marginTop: 5,
-    // marginHorizontal: 20
+    backgroundColor: '#f5f5f5',
   },
-  formContainer: {
-    marginVertical: 10,
-    marginHorizontal: 25
-  },
+
+
   titleHeaderStyles: {
     fontSize: 25,
-    fontFamily: FONTFAMILY.poppins_extrabold,
+    fontFamily: FONTFAMILY.roboto_bold,
   },
   formInputTextStyle: {
     fontSize: 20,
-    fontFamily: FONTFAMILY.poppins_semibold,
+    fontFamily: FONTFAMILY.roboto_bold,
     color: COLORS.primaryWhiteHex
   },
   headerStyle: {
@@ -139,6 +137,38 @@ export const generalStyles = StyleSheet.create({
     paddingBottom: 100
   },
   progress: { marginTop: 10, alignSelf: 'center' },
+  CardTitle: {
+    fontFamily: FONTFAMILY.roboto_medium,
+    color: COLORS.primaryWhiteHex,
+    fontSize: FONTSIZE.size_14,
+  },
+  CardSubtitle: {
+    fontFamily: FONTFAMILY.roboto_light,
+    color: COLORS.primaryWhiteHex,
+    fontSize: FONTSIZE.size_10,
+    // marginHorizontal: SPACING.space_10
+  },
+  CardPriceCurrency: {
+    fontFamily: FONTFAMILY.roboto_bold,
+    color: COLORS.primaryOrangeHex,
+    fontSize: FONTSIZE.size_12,
+  },
+  container: {
+    backgroundColor: COLORS.primaryBlackHex,
+    borderRadius: 10,
+    padding: 10,
+    shadowColor: 'rgba(0, 0, 0, 0.1)',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 1,
+    shadowRadius: 4,
+    elevation: 5,
+    margin: 5,
+    // flexDirection: 'row',
+    // justifyContent: 'space-between',
+    alignContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 5
+  },
   borderStyles: {
     borderWidth: 0.5,
     borderBottomWidth: 0.5,
@@ -147,21 +177,24 @@ export const generalStyles = StyleSheet.create({
     borderRadius: 10,
     paddingLeft: 10,
     paddingRight: 10
-},
-// errorText: {
-//   color: COLORS.primaryRedHex,
-//   fontSize: 14,
-//   fontFamily: FONTFAMILY.poppins_regular,
-// },
-errorInput: {
-  borderColor: COLORS.primaryRedHex,
-
-  fontFamily:FONTFAMILY.poppins_regular
-},
-textInputMarginRight: {
-  marginRight: 15
-},
-
-
+  },
+  formInput: {
+    color: COLORS.primaryWhiteHex,
+    fontSize: 15,
+    fontFamily: FONTFAMILY.roboto_regular,
+    paddingHorizontal: 0,
+    paddingVertical: Platform.OS === 'android' ? 0 : 10,
+    marginTop: 5,
+    width: "100%",
+    // marginHorizontal:10
+  },
+  formContainer: {
+    marginVertical: Platform.OS === 'android' ? 5 : 10,
+    marginHorizontal: 10
+  },
+  errorInput: {
+    borderColor: COLORS.primaryRedHex,
+    fontFamily: FONTFAMILY.roboto_regular
+  },
 
 });

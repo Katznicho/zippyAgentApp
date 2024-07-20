@@ -3,9 +3,9 @@ import { Vibration } from 'react-native';
 import call from 'react-native-phone-call';
 
 export const limitDescription = (description: string, wordLimit: number) => {
-    const words = description.split(' ');
-    if (words.length > wordLimit) {
-        return words.slice(0, wordLimit).join(' ') + '...';
+    const words = description?.split(' ');
+    if (words?.length > wordLimit) {
+        return words.slice(0, wordLimit)?.join(' ') + '...';
     } else {
         return description;
     }
@@ -205,6 +205,21 @@ export const onMakeCall = (phone_number: any) => {
         skipCanOpen: true // Skip the canOpenURL check
     }
     return call(args).catch(console.error);
+}
+
+export const calculateDistance = (lat1: any, lon1: any, lat2: any, lon2: any) => {
+    const p = 0.017453292519943295;    // Math.PI / 180
+    const c = Math.cos;
+    const a = 0.5 - c((lat2 - lat1) * p) / 2 + c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p)) / 2;
+    const distance = 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
+
+    // Round off to the nearest whole number
+    return Math.round(distance);
+};
+
+export const formatCurrency = (value: any) => {
+    return parseInt(value)?.toLocaleString()
+
 }
 
 
