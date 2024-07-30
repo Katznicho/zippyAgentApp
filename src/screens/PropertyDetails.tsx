@@ -6,8 +6,7 @@ import { useNavigation, useRoute } from '@react-navigation/native'
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import { COLORS, FONTFAMILY, FONTSIZE, SPACING } from '../theme/theme';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-
-import { onMakeCall } from './utils/helpers/helpers'
+import { formatCurrency, onMakeCall } from './utils/helpers/helpers'
 import ArrowBack from '../components/ArrowBack'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
@@ -39,6 +38,7 @@ const PropertyDetails: React.FC<any> = () => {
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{ paddingBottom: tabBarHeight }}
                 keyboardShouldPersistTaps="always"
+                showsHorizontalScrollIndicator={false}
             >
                 {/* show background image */}
                 <ScrollView
@@ -189,12 +189,12 @@ const PropertyDetails: React.FC<any> = () => {
                     <View>
                         <View>
                             <Text style={styles.CardTitle} >Price</Text>
-                            <Text style={styles.CardSubtitle}>{item?.currency?.name} {item?.price}</Text>
+                            <Text style={styles.CardSubtitle}>{item?.currency?.name} {formatCurrency(parseInt(item?.price))}</Text>
                         </View>
-                        <View>
-                            <Text style={styles.CardTitle} >Total Rooms</Text>
-                            <Text style={styles.CardSubtitle}>{item?.number_of_rooms}</Text>
-                        </View>
+                         <View>
+                            <Text style={styles.CardTitle} > Room Type</Text>
+                            <Text style={styles.CardSubtitle}>{item?.room_type}</Text>
+                        </View> 
 
                     </View>
 
@@ -388,18 +388,18 @@ const styles = StyleSheet.create({
         // marginHorizontal: 5
     },
     CardTitle: {
-        fontFamily: FONTFAMILY.poppins_medium,
+        fontFamily: FONTFAMILY.roboto_regular,
         color: COLORS.primaryWhiteHex,
         fontSize: FONTSIZE.size_14,
     },
     CardSubtitle: {
-        fontFamily: FONTFAMILY.poppins_light,
+        fontFamily: FONTFAMILY.roboto_regular,
         color: COLORS.primaryWhiteHex,
         fontSize: FONTSIZE.size_10,
         // marginHorizontal: SPACING.space_10
     },
     CardPriceCurrency: {
-        fontFamily: FONTFAMILY.poppins_semibold,
+        fontFamily: FONTFAMILY.roboto_regular,
         color: COLORS.primaryOrangeHex,
         fontSize: FONTSIZE.size_12,
     },

@@ -9,18 +9,19 @@ import UserFlatList from '../components/UserFlatList';
 const AllUsers: React.FC = () => {
 
     const { isError, data, error, fetchNextPage, hasNextPage, isFetching } = useFetchInfinite("AllPropertyOwners", GET_REGISTERED_USERS_BY_PAGE);
-    console.log("=========== data=========================")
-    console.log(data?.pages[0].total)
-    console.log("==========data=====================")
+
+    // console.log("=========== data=========================")
+    // console.log(data?.pages[0].total)
+    // console.log("==========data=====================")
 
 
     //flat the data
     // const flattenedData = data?.pages.flatMap(page => page.results) || [];
     const usersData = data?.pages.flatMap(page => page.data);
 
-    console.log("=============users data length==========================")
-    console.log(usersData);
-    console.log("=============users data length==========================")
+    // console.log("=============users data length==========================")
+    // console.log(usersData);
+    // console.log("=============users data length==========================")
 
 
 

@@ -111,7 +111,7 @@ const ProfileStack = () => {
         name="EditProfile"
         component={EditProfile}
         options={{
-          title: 'Edit Profile',
+          title: 'Profile',
           headerStyle: generalStyles.headerStyle,
           headerTitleStyle: generalStyles.titleHeaderStyles,
           headerTintColor: COLORS.primaryBlackHex,

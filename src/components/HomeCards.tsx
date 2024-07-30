@@ -13,6 +13,7 @@ const HomeCards: React.FC<any> = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const { authToken } = useSelector((state: RootState) => state.user);
+  console.log(authToken)
 
   const isFocused = useIsFocused();
 
@@ -29,10 +30,6 @@ const HomeCards: React.FC<any> = () => {
 
       const response = await fetch(`${GET_AGENT_TOTALS}`, requestOptions);
       const result = await response.json();
-
-      console.log("agent totals")
-      console.log(result)
-      console.log("agent total")
 
       setData(result);
     } catch (error) {
@@ -82,7 +79,7 @@ const HomeCards: React.FC<any> = () => {
         >
           <View style={[{ alignItems: 'center', justifyContent: 'space-between' }]}>
             <View>
-              <Text style={[styles.CardTitle]}>{data?.data?.total_bookings ?? 0}</Text>
+              <Text style={[styles.CardTitle]}>{data?.data?.total_properties ?? 0}</Text>
             </View>
             <Text style={[styles.CardSubtitle]}>Properties</Text>
           </View>

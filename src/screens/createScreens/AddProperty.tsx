@@ -71,7 +71,8 @@ const AddProperty = () => {
         "services": [],
         "amenities": [],
         "payment_period_id": "",
-        "public_facilities": ""
+        "public_facilities": "",
+        'room_type':"" ,
     });
 
 
@@ -92,6 +93,25 @@ const AddProperty = () => {
         }, {
             id: 2,
             name: "Unfurnished",
+        }
+    ])
+
+    const [roomTypes , setRoomTypes] = useState<any>([
+        {
+            id: "Single",
+            name: "Single",
+        }, {
+            id: "Double",
+            name: "Double",
+        }, {
+            id: "Triple",
+            name: "Triple",
+        },{
+            id: "Quad",
+            name: "Quad",
+        },{
+            id: "More than Four",
+            name: "More than 4",
         }
     ])
 
@@ -547,6 +567,7 @@ const AddProperty = () => {
                     amenities={amenities}
                     paymentPeriods={paymentPeriods}
                     currencies={currencies}
+                    roomTypes={roomTypes}
 
 
                 />

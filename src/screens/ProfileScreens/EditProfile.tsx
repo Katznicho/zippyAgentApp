@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Text, View, TouchableOpacity, TextInput, StyleSheet, ScrollView } from 'react-native';
+import { Text, View, TextInput, StyleSheet, ScrollView } from 'react-native';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store/dev';
 import { generalStyles } from '../utils/generatStyles';
 import { COLORS } from '../../theme/theme';
 import { showMessage } from 'react-native-flash-message';
 import { causeVibration } from '../utils/helpers/helpers';
-import { ActivityIndicator } from '../../components/ActivityIndicator/ActivityIndicator';
+
 
 const EditProfile = () => {
   const { user, authToken } = useSelector((state: RootState) => state.user);
@@ -107,7 +107,7 @@ const EditProfile = () => {
         contentContainerStyle={{ paddingBottom: 50 }}
         showsVerticalScrollIndicator={false}
       >
-        <Text style={styles.heading}>Edit Profile</Text>
+        <Text style={styles.heading}>Profile</Text>
         <View style={styles.formContainer}>
           <TextInput
             value={firstName}
@@ -142,13 +142,13 @@ const EditProfile = () => {
           />
           {errors.username && <Text style={generalStyles.errorText}>{errors.username}</Text>}
         </View>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={styles.continueButton}
           onPress={onEdit}
         >
           <Text style={styles.continueButtonText}>Save Changes</Text>
         </TouchableOpacity>
-        {loading && <ActivityIndicator />}
+        {loading && <ActivityIndicator />} */}
       </ScrollView>
     </View>
   );

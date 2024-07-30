@@ -208,7 +208,7 @@ const HomeStack = () => {
                 name="UserDetails"
                 component={UserDetails}
                 options={{
-                    title: 'User Details',
+                    title: 'Owner Details',
                     animation: 'slide_from_bottom',
                     // headerShown: false
                     headerStyle: generalStyles.headerStyle,

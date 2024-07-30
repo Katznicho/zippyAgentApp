@@ -34,6 +34,7 @@ const UploadComponent = ({
       width: 300,
       height: 400,
       cropping: true,
+      mediaType: 'photo',
     }).then(image => {
       //   console.log(image);
       setImage({

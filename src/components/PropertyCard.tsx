@@ -32,7 +32,6 @@ import {
     const navigation = useNavigation<any>();
     //const { position  = useGetUserLocation();
     const dispatch = useDispatch<any>();
-    const [liked, setLiked] = useState<boolean>(false);
     const {  authToken } = useSelector( (state: RootState) => state.user);
   
     const isFocused = useNavigation().isFocused();
@@ -56,7 +55,7 @@ import {
       <TouchableOpacity
         activeOpacity={1}
         style={[styles.container]}
-        onPress={() =>nextScreen? navigation.navigate('PropertyDetails', { data: property }):null}
+        onPress={() =>nextScreen? navigation.navigate('PropertyDetails', { item: property , property }):null}
       >
         {/* scroll area */}
         <ScrollView

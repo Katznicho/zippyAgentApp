@@ -18,7 +18,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Share from 'react-native-share';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { logoutUser } from '../redux/store/slices/UserSlice';
 import { LOGOUT } from '../screens/utils/constants/routes';
 
@@ -38,9 +37,9 @@ const DrawerContent = (props: any) => {
 
         try {
             const result = await Share.open({
-                title: 'Install Reuse App',
-                message: 'Check out Reuse App and install it',
-                url: 'https://play.google.com/apps/internaltest/4699919634175995763',
+                title: 'Install Zippy App',
+                message: 'Check out Zippy and install it',
+                url: 'https://play.google.com/store/apps/details?id=com.zippyUser',
             });
             console.log(result);
         } catch (error) {
@@ -123,7 +122,7 @@ const DrawerContent = (props: any) => {
                     onPress={() => {
                         setSelectedItem('Home');
                         // props.navigation.navigate('HomeDrawer')
-                        navigation.navigate('Home');
+                        return navigation.navigate('Home');
                     }}
                     style={[{
                         backgroundColor:
@@ -149,8 +148,7 @@ const DrawerContent = (props: any) => {
                     />}
                     onPress={() => {
                         setSelectedItem('Properties');
-                        // props.navigation.navigate('HomeDrawer')
-                        // navigation.navigate('Properties');
+                        return navigation.navigate('AllProperties');
                     }}
                     style={[{
                         backgroundColor:
@@ -246,7 +244,7 @@ const DrawerContent = (props: any) => {
                         }
                         onPress={() => {
                             setSelectedItem('Website');
-                            Linking.openURL('https://zippy.risidev.com');
+                            Linking.openURL('https://zippyug.com');
                         }}
                         style={[{
                             backgroundColor:
@@ -334,7 +332,7 @@ const HeaderExpandableSection = ({ expanded, setExpanded }: any) => {
     return <View>
         <View style={[generalStyles.flexStyles, { alignItems: "center", justifyContent: "space-between" }, styles.tabStyles]}>
             <View>
-                <Text style={[styles.labelStyle, { fontFamily: FONTFAMILY.poppins_semibold, fontSize: 18 }]}>More Options</Text>
+                <Text style={[styles.labelStyle, { fontFamily: FONTFAMILY.roboto_regular, fontSize: 18 }]}>More Options</Text>
             </View>
             <TouchableOpacity>
                 <Ionicons name={expanded ? "chevron-up" : "chevron-down"}
@@ -354,7 +352,7 @@ export default DrawerContent
 
 const styles = StyleSheet.create({
     labelStyle: {
-        color: COLORS.primaryWhiteHex, fontFamily: FONTFAMILY.poppins_light, fontSize: 14
+        color: COLORS.primaryWhiteHex, fontFamily: FONTFAMILY.roboto_regular, fontSize: 14
     },
     tabStyles: {
         marginVertical: 5,

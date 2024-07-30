@@ -11,7 +11,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 
 
 
-const PropertyDetails = ({ property, setProperty, propertyOwners, currencies, categories, paymentPeriods, goToNextStep, errors }: any) => {
+const PropertyDetails = ({ property, setProperty, propertyOwners, currencies, categories, paymentPeriods, goToNextStep, errors, roomTypes }: any) => {
 
     const tabBarHeight = useBottomTabBarHeight();
     const { authToken } = useSelector((state: RootState) => state.user);
@@ -148,6 +148,52 @@ const PropertyDetails = ({ property, setProperty, propertyOwners, currencies, ca
                     )
                 }
                 {/* property category */}
+
+                {/* select room type */}
+
+
+                {/* select room type */}
+                {
+                     roomTypes.length > 0 &&
+                     (
+                        <View style={styles.formContainer}>
+                        <View>
+                            <Text style={[generalStyles.formInputTextStyle, styles.labelStyles]}>
+                                Select Room Type*</Text>
+                        </View>
+                        <Picker
+                            placeholder=" select room type"
+                            placeholderTextColor={COLORS.primaryLightGreyHex}
+                            value={property?.room_type}
+                            style={[generalStyles.formInput, styles.borderStyles, styles.inlineTextInputStyles]}
+                            enableModalBlur={false}
+                            onChange={item => {
+                                 return setProperty((prev: any) => {
+                                    return { ...prev, room_type: item }
+                                })
+                            }}
+                            trailingAccessory={<View style={styles.iconStyles}>
+                                <Entypo name="chevron-down" size={20} color={COLORS.primaryWhiteHex} />
+                            </View>}
+                            color={COLORS.primaryWhiteHex}
+                            topBarProps={{ title: 'Room Types' }}
+
+                            showSearch
+                            searchPlaceholder={'Search a room types'}
+                            searchStyle={{ color: COLORS.primaryBlackHex, placeholderTextColor: COLORS.primaryLightGreyHex }}
+                        // onSearchChange={value => console.warn('value', value)}
+                        >
+                            {roomTypes.map((item: any) => (
+                                <Picker.Item key={item.id}
+                                    value={item.id}
+                                    label={item.name}
+                                />
+                            ))}
+                        </Picker>
+                    </View>
+                     )
+                }
+
 
                 {/* room details area*/}
 
@@ -390,12 +436,12 @@ const styles = StyleSheet.create({
         borderBottomWidth: 2,
         // height: 45
         fontSize: 15,
-        fontFamily: FONTFAMILY.poppins_light,
+        fontFamily: FONTFAMILY.roboto_regular,
         color: COLORS.primaryWhiteHex
     },
     labelStyles: {
         color: COLORS.primaryWhiteHex,
-        fontFamily: FONTFAMILY.poppins_semibold,
+        fontFamily: FONTFAMILY.roboto_regular,
         fontSize: 15
     },
     iconStyles: {

@@ -11,7 +11,7 @@ import SearchBar from '../components/SearchBar';
 
 
 const AllBooking = () => {
-    const { isError, data, error, fetchNextPage, hasNextPage, isFetching } = useFetchInfinite("allProperties", AGENTBOOKINGS);
+    const { isError, data, error, fetchNextPage, hasNextPage, isFetching } = useFetchInfinite("propertybookings", AGENTBOOKINGS);
 
 
     const propertyData = data?.pages.flatMap(page => page.data);
@@ -30,17 +30,13 @@ const AllBooking = () => {
     return (
         <SafeAreaView style={[generalStyles.ScreenContainer]}>
 
-            {
-                data && propertyData?.length === 0 && <EmptyContainer
-                    title={'No Properties Yet'} />
-            }
             <View style={styles.containerStyle}>
                 <View style={[generalStyles.absoluteStyles, { left: 10, top: 25 }]}>
                     <ArrowBack />
                 </View>
                 <View style={[generalStyles.flexStyles, { alignItems: "center", justifyContent: "center", }]}>
 
-                    <Text style={[generalStyles.CardTitle, styles.textColor]}>Properties</Text>
+                    <Text style={[generalStyles.CardTitle, styles.textColor]}>Property Bookings</Text>
                 </View>
                 <View style={[generalStyles.flexStyles, { alignItems: "center", justifyContent: "center" }]}>
                     <Text style={[generalStyles.CardSubtitle, styles.textColor, { fontSize: FONTSIZE.size_16 }]}>{propertyData?.length} Results</Text>
@@ -52,6 +48,8 @@ const AllBooking = () => {
                 />
             </View>
 
+            
+
             <PropertyFlatList
                 propertyData={propertyData}
                 loadMoreData={loadMoreData}
@@ -61,6 +59,7 @@ const AllBooking = () => {
                 searchText={searchText}
                 resetSearch={resetSearch}
                 setSearchText={setSearchText}
+                isNested={true}
             />
 
         </SafeAreaView >

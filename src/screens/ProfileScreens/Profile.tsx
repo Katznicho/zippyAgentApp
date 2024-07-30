@@ -16,7 +16,7 @@ const Profile = () => {
 
   const [profile_details,] = useState([
     {
-      name: 'Edit Profile',
+      name: 'Profile',
       screen: 'EditProfile',
     },
     

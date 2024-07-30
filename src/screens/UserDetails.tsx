@@ -6,6 +6,7 @@ import { generalStyles } from './utils/generatStyles';
 import { KeyboardAwareScrollView, Avatar } from 'react-native-ui-lib'
 import { COLORS, FONTFAMILY, FONTSIZE } from '../theme/theme';
 import { formattedDate, onMakeCall } from './utils/helpers/helpers';
+import { DEFAULT_USER_PROFILE, PUBLIC_STORAGE } from './utils/constants/constants';
 
 
 const UserDetails: React.FC<any> = () => {
@@ -13,7 +14,10 @@ const UserDetails: React.FC<any> = () => {
     const { item } = useRoute<any>().params
     const navigation = useNavigation<any>();
 
-    console.log(item?.properties)
+    // console.log(item?.properties)
+    const getImageUrl = (displayPicture: string | null) => {
+        return displayPicture ? `${PUBLIC_STORAGE}profile/${displayPicture}` : DEFAULT_USER_PROFILE;
+    }
 
     return (
         <KeyboardAwareScrollView
@@ -32,7 +36,7 @@ const UserDetails: React.FC<any> = () => {
                         animate={true}
                         imageStyle={{ borderRadius: 100 }}
 
-                        source={{ uri: `https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YXZhdGFyfGVufDB8fDB8fHww` }}
+                        source={{ uri: getImageUrl(item?.avatar) }}
                     />
                 </View>
                 {/* avatar area */}
@@ -84,13 +88,10 @@ const UserDetails: React.FC<any> = () => {
                             <Text style={styles.CardSubtitle}>{item?.properties?.length}</Text>
                         </View>
                         <View>
-                            <TouchableOpacity
-                                activeOpacity={1}
-                                style={[generalStyles.loginContainer, { marginTop: 5, padding: 10, width: 100 }]}
-                                onPress={() => onMakeCall(item?.phone_number)}>
-                                <Text style={generalStyles.loginText}>{'Properties '}</Text>
-                            </TouchableOpacity>
+                            <Text style={styles.CardTitle} >Total Bookings</Text>
+                            <Text style={styles.CardSubtitle}>{item?.bookings?.length}</Text>
                         </View>
+
 
                     </View>
 
@@ -132,18 +133,18 @@ const styles = StyleSheet.create({
         marginVertical: 10
     },
     CardTitle: {
-        fontFamily: FONTFAMILY.poppins_medium,
+        fontFamily: FONTFAMILY.roboto_regular,
         color: COLORS.primaryWhiteHex,
         fontSize: FONTSIZE.size_14,
     },
     CardSubtitle: {
-        fontFamily: FONTFAMILY.poppins_light,
+        fontFamily: FONTFAMILY.roboto_regular,
         color: COLORS.primaryWhiteHex,
         fontSize: FONTSIZE.size_10,
         // marginHorizontal: SPACING.space_10
     },
     CardPriceCurrency: {
-        fontFamily: FONTFAMILY.poppins_semibold,
+        fontFamily: FONTFAMILY.roboto_regular,
         color: COLORS.primaryOrangeHex,
         fontSize: FONTSIZE.size_12,
     },

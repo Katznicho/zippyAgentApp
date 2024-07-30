@@ -53,7 +53,7 @@ const UserLocation: React.FC<Props> = ({ openPicker, setOpenPicker, property, se
     return (
         <RBSheet
             ref={refRBSheet}
-            height={300}
+            height={500}
             closeOnDragDown={false}
             closeOnPressMask={false}
             // openDuration={250}
@@ -76,7 +76,7 @@ const UserLocation: React.FC<Props> = ({ openPicker, setOpenPicker, property, se
         >
 
             <View style={styles.viewStyles}>
-                <Text style={[{ fontSize: 20, fontFamily: FONTFAMILY.poppins_bold }, generalStyles.textStyle]}>
+                <Text style={[{ fontSize: 20, fontFamily: FONTFAMILY.roboto_regular }, generalStyles.textStyle]}>
                     {title}
                 </Text>
             </View>

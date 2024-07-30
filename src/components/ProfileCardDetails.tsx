@@ -28,8 +28,8 @@ const ProfileDetailsCard = ({
 
         try {
             const result = await Share.open({
-                title: 'Install Reuse App',
-                message: 'Check out Reuse App and install it',
+                title: 'Install Zippy App',
+                message: 'Check out Zippy App and install it',
                 url: 'https://play.google.com/apps/internaltest/4699919634175995763',
             });
             console.log(result);
@@ -137,7 +137,7 @@ const ProfileDetailsCard = ({
                                         color={COLORS.primaryWhiteHex}
                                         size={28}
                                         style={{
-                                            fontFamily: FONTFAMILY.poppins_light,
+                                            fontFamily: FONTFAMILY.roboto_regular,
                                         }}
                                     />
                                 </TouchableOpacity>
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
     },
     textStyle: {
         // fontWeight: 'bold',
-        fontFamily: FONTFAMILY.poppins_light,
+        fontFamily: FONTFAMILY.roboto_regular,
         color: COLORS.primaryWhiteHex,
         fontSize: 15,
     },
